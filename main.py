@@ -7,11 +7,11 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    boards = data_handler.get_boards()
+
     """
     This is a one-pager which shows all the boards and cards
     """
-    return render_template('index.html', boards=boards)
+    return render_template('index.html')
 
 
 @app.route("/get-boards")
