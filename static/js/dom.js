@@ -29,7 +29,7 @@ export let dom = {
             </ul>
         `;
 
-        let boardsContainer = document.querySelector('#boards');
+        let boardsContainer = document.querySelector('.boards');
         boardsContainer.insertAdjacentHTML("beforeend", outerHtml);
     },
     loadCards: function (boardId) {

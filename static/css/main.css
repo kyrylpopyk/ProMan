@@ -12,8 +12,12 @@ html, body {
     background-size: cover;
 }
 
-#boards {
-    background-color: green;
+.modal-wrapper {
+            position: relative;
+        }
+
+.boards {
+    background-color: lightgrey;
 }
 .navbar-expand-lg {
     border-radius: 0; !important;
