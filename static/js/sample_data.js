@@ -1,5 +1,6 @@
 // It is just an idea how you can structure your data during your page is running.
-// You can use it for testing purposes by simply copy/paste/run in the Console tab in your browser
+// You can use it for testing purposes by simply copy/paste/run in the
+// Console tab in your browser
 
 let keyInLocalStorage = 'proman-data';
 
