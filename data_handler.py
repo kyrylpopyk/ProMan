@@ -1,4 +1,4 @@
-# import persistence
+import persistence
 #
 #
 # def get_card_status(status_id):
