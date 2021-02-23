@@ -1,3 +1,23 @@
+:root {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    background-color: #cdcdcd;
+    height: 1200px;
+    width: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 #boards {
     background-color: green;
 }
+.navbar-expand-lg {
+    border-radius: 0; !important;
+    position: absolute; !important;
+    justify-content: space-between; !important;
+}
+
