@@ -62,6 +62,11 @@ class User(object):
         return False
 
 
+
+
+
+
+
 @connection.connection_handler
 def get_boards(cursor: RealDictCursor) -> list:
     query = """
