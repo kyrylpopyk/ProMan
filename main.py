@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, request
 from util import json_response
 from bcrypt import checkpw
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
@@ -13,14 +13,25 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 
-@app.route("/")
+@login_manager.user_loader
+def load_user(user):
+    return data_handler.User.get(user)
+
+
+@app.route("/", methods=["GET", "POST"])
 def index():
 
     """
     This is a one-pager which shows all the boards and cards
     """
-    return render_template('index.html')
+    if request.method == "POST":
+        register_user()
+    else:
+        return render_template('index.html')
 
+
+def register_user(data):
+    pass
 
 @app.route("/get-boards")
 @json_response

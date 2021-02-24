@@ -6,23 +6,26 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Register new user</h5>
+        <h4 class="modal-title">Register new user</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-
-        <form>
+        <form id="registerUserForm">
           <div class="form-group">
             <label for="newUserName">User name</label>
-            <input type="text" class="form-control" id="newUserName">
+            <input type="text" class="form-control" id="newUserName" name="newUserName">
+          </div>
+          <div class="form-group">
+            <label for="newUserEmail">Email</label>
+            <input type="email" class="form-control" id="newUserEmail" name="newUserEmail">
           </div>
           <div class="form-group">
             <label for="newUserPassword">Password</label>
-            <input type="password" class="form-control" id="newUserPassword">
+            <input type="password" class="form-control" id="newUserPassword" name="newUserPassword">
           </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-primary" id="registerNewUser">Register new User</button>
         </form>
       </div>
       </div>

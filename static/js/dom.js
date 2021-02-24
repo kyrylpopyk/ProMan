@@ -51,5 +51,14 @@ export let dom = {
             console.log("clicked");
         });
     },
+    registerNewUser: function () {
+        const registerForm = document.querySelector("#registerUserForm");
+        registerForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            dataHandler.registerUser(formData)
+        });
+
+    }
 
 };

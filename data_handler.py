@@ -29,6 +29,7 @@ import bcrypt
 #          card['status_id'] = get_card_status(card['status_id'])  # Set textual status for the card
 #          matching_cards.append(card)
 #  return matching_cards
+
 class User(object):
     """An admin user capable of viewing reports.
 
@@ -76,3 +77,15 @@ def get_boards(cursor: RealDictCursor) -> list:
         """
     cursor.execute(query)
     return cursor.fetchall()
+
+@connection.connection_handler
+def add_user(cursor: RealDictCursor, user):
+    command = """
+            INSERT INTO users("userName", email, password)
+            VALUES (%(username)s, %(email)s, %(password)s)"""
+    param = {
+        "username": user["username"],
+        "email": user["email"],
+        "password": user["password"]
+    }
+    cursor.execute(command, param)
