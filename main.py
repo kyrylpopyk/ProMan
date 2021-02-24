@@ -1,8 +1,16 @@
 from flask import Flask, render_template, url_for
 from util import json_response
+from bcrypt import checkpw
+from flask_login import LoginManager, current_user, login_user, logout_user, login_required
+import os
+from os import urandom
+
 import data_handler
 
 app = Flask(__name__)
+app.secret_key = urandom(16)
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 
 @app.route("/")
