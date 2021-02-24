@@ -1,3 +1,5 @@
+'use strict'
+
 // It uses data_handler.js to visualize elements
 import { dataHandler } from "./data_handler.js";
 
@@ -40,4 +42,14 @@ export let dom = {
         // it adds necessary event listeners also
     },
     // here comes more features
+
+
+    listenNewUserBtn:  function() {
+        document.querySelector("#newUserBtn").addEventListener("click", () => {
+            document.querySelector("#newUser").style.visibility = "visible";
+            document.querySelector("#newUser").style.display = 'block';
+            console.log("clicked");
+        });
+    },
+
 };
