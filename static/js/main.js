@@ -9,9 +9,12 @@ function init() {
     dom.loadBoards();
 
 }
+
 function eventHandlers() {
     dom.listenNewUserBtn();
+    dom.listenNewLoginBtn();
 }
+
 init();
 eventHandlers();
 

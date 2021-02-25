@@ -51,6 +51,21 @@ export let dom = {
             console.log("clicked");
         });
     },
+    listenNewLoginBtn:  function() {
+        document.querySelector(".loginBtn").addEventListener("click", () => {
+            let minPasswordLength = 5;
+            let logBtn = document.querySelector(".loginBtn");
+            let email = document.querySelector(".login-email-text-box").value;
+            let password = document.querySelector(".login-password-text-box").value;
+            if (email.indexOf('@') && password.length >= minPasswordLength){
+                window.$('#Modal').modal('hide');
+            }
+            else{
+                console.log('Incorrect data!');
+            }
+            console.log("clicked");
+        });
+    },
     registerNewUser: function () {
         const registerForm = document.querySelector("#registerUserForm");
         registerForm.addEventListener("submit", function (event) {
