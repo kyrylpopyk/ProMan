@@ -39,10 +39,12 @@ class User(object):
     """
     #__tablename__ = 'user'
 
-    def __init__(self,user):
+    def __init__(self, user):
         self.id = user['id']
-        self.userName = user['userName']
-        self.password = user['password']
+        self.login = user['login']
+        self.password = user['passwordhash']
+        self.registration_date = user['registration_date']
+        self.reputation = user['reputation']
         self.authenticated = True
 
 
@@ -90,3 +92,27 @@ def add_user(cursor: RealDictCursor, user):
         "password": user["password"]
     }
     cursor.execute(command, param)
+
+
+@connection.connection_handler
+def get_user_by_login(cursor: RealDictCursor, user_login: str):
+    query = """
+    SELECT *
+    FROM users
+    WHERE users.login = %(user_login)s;
+    """
+    param = {'user_login': user_login}
+    cursor.execute(query, param)
+    return cursor.fetchall()[0]
+
+
+@connection.connection_handler
+def get_user_by_id(cursor: RealDictCursor, id: str):
+    query = """
+        SELECT *
+        FROM users
+        WHERE users.id = %(id)s;
+        """
+    param = {'id': id}
+    cursor.execute(query, param)
+    return cursor.fetchall()[0]

@@ -51,6 +51,44 @@ export let dom = {
             this.registerNewUser();
         });
     },
+    listenNewLoginBtn:  function() {
+        document.querySelector(".loginBtn").addEventListener("click", () => {
+            let minPasswordLength = 5;
+            let email = document.querySelector(".login-email-text-box").value;
+            let password = document.querySelector(".login-password-text-box").value;
+            if (email.indexOf('@') && password.length >= minPasswordLength){
+                window.$('#Modal').modal('hide');
+                fetch(`${window.location.origin}/login`,{
+                    headers: new Headers({
+                        'content-type': 'application/json'
+                    }),
+                    body: JSON.stringify({
+                        password: password,
+                        login: email
+                    }),
+                    method: 'POST'
+                })
+                    .then( (response) => { return response.json() })
+                    .then( (data) => { console.log(data)})
+            }
+            else{
+                console.log('Incorrect data!');
+            }
+            console.log("clicked");
+        });
+    },
+    listenNewLogOutBtn:  function() {
+        document.querySelector(".log-out-btn").addEventListener("click", () => {
+            fetch(`${window.location.origin}/logout`,{
+                headers: new Headers({
+                    'content-type': 'application/json'
+                }),
+                method: 'GET'
+            })
+                .then(console.log('Do something'))
+            console.log("clicked");
+        });
+    },
     registerNewUser: function () {
         const registerBtn = document.querySelector("#registerNewUser");
         registerBtn.addEventListener("click", function () {
@@ -67,6 +105,24 @@ export let dom = {
             dataHandler.registerUser(data)
         });
 
+    },
+    checkUserSatus: function(){
+        fetch(`${window.location.origin}/checkLogin`,{
+            method: 'GET',
+            headers: new Headers({
+                'content-type': 'application/json'
+            })
+        })
+            .then( (response) => {return JSON.stringify(response)} )
+            .then( (data) => {
+                if (data.toLowerCase() == 'true'){
+                    console.log('Set header');
+                }
+                else{
+                    console.log('Do not set headers');
+                }
+
+            })
     }
 
 };
