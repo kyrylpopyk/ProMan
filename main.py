@@ -4,6 +4,7 @@ from bcrypt import checkpw
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 import os
 from os import urandom
+import util
 
 import data_handler
 
@@ -18,20 +19,25 @@ def load_user(user):
     return data_handler.User.get(user)
 
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/")
 def index():
 
     """
     This is a one-pager which shows all the boards and cards
     """
-    if request.method == "POST":
-        register_user()
-    else:
-        return render_template('index.html')
+    return render_template('index.html')
 
 
-def register_user(data):
-    pass
+@app.route("/register", methods=["POST"])
+@json_response
+def register_user():
+    form_data = request.get_json()
+    hash_password = util.password_encryption(form_data["password"])
+    form_data["password"] = hash_password
+    data_handler.add_user(form_data)
+
+
+
 
 @app.route("/get-boards")
 @json_response

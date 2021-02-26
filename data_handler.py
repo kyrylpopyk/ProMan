@@ -82,7 +82,8 @@ def get_boards(cursor: RealDictCursor) -> list:
 def add_user(cursor: RealDictCursor, user):
     command = """
             INSERT INTO users("userName", email, password)
-            VALUES (%(username)s, %(email)s, %(password)s)"""
+            VALUES (%(username)s, %(email)s, %(password)s)
+            """
     param = {
         "username": user["username"],
         "email": user["email"],

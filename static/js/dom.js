@@ -48,15 +48,23 @@ export let dom = {
         document.querySelector("#newUserBtn").addEventListener("click", () => {
             document.querySelector("#newUser").style.visibility = "visible";
             document.querySelector("#newUser").style.display = 'block';
-            console.log("clicked");
+            this.registerNewUser();
         });
     },
     registerNewUser: function () {
-        const registerForm = document.querySelector("#registerUserForm");
-        registerForm.addEventListener("submit", function (event) {
-            event.preventDefault();
-            const formData = new FormData(this);
-            dataHandler.registerUser(formData)
+        const registerBtn = document.querySelector("#registerNewUser");
+        registerBtn.addEventListener("click", function () {
+            let username = document.querySelector("#newUserName").value;
+            let email = document.querySelector("#newUserEmail").value;
+            let password = document.querySelector("#newUserPassword").value;
+
+            let data = {
+                "username": username,
+                "email": email,
+                "password": password
+            }
+
+            dataHandler.registerUser(data)
         });
 
     }

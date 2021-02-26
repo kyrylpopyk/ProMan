@@ -22,11 +22,15 @@ export let dataHandler = {
 
         fetch(url, {
             method: 'POST',
+            headers: new Headers({
+                        'content-type': 'application/json'
+                    }),
             credentials: 'same-origin',
             body: JSON.stringify(data)
         })
-            .then(response => response.json())
-            .then(data => console.log(data));
+        .then( (response) => { return response.json() })
+            .then(response => alert(response));
+
 
     },
     init: function () {
@@ -63,7 +67,7 @@ export let dataHandler = {
         // creates new card, saves it and calls the callback function with its data
     },
     registerUser: function (formData) {
-        this._api_post("/", formData)
+        this._api_post(`${window.location.origin}/register`, formData)
     }
     // here comes more features
 };

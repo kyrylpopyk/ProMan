@@ -1,5 +1,6 @@
 from functools import wraps
 from flask import jsonify
+import bcrypt
 
 
 def json_response(func):
@@ -13,3 +14,8 @@ def json_response(func):
         return jsonify(func(*args, **kwargs))
 
     return decorated_function
+
+
+def password_encryption(password):
+    hash_bytes = bcrypt.hashpw(password.encode("UTF-8"), bcrypt.gensalt())
+    return hash_bytes
