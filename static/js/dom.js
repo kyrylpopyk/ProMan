@@ -69,7 +69,14 @@ export let dom = {
                     method: 'POST'
                 })
                     .then( (response) => { return response.json() })
-                    .then( (data) => { console.log(data)})
+                    .then( (data) => {
+                        let loginBtn = document.querySelector('.log-in-btn');
+                        let regBtn = document.querySelector('.reg-btn');
+                        let logOutBtn = document.querySelector('.log-out-btn');
+                        loginBtn.hidden = true;
+                        regBtn.hidden = true;
+                        logOutBtn.hidden = false;
+                    })
             }
             else{
                 console.log('Incorrect data!');
@@ -85,7 +92,14 @@ export let dom = {
                 }),
                 method: 'GET'
             })
-                .then(console.log('Do something'))
+                .then(() => {
+                    let loginBtn = document.querySelector('.log-in-btn');
+                        let regBtn = document.querySelector('.reg-btn');
+                        let logOutBtn = document.querySelector('.log-out-btn');
+                        loginBtn.hidden = false;
+                        regBtn.hidden = false;
+                        logOutBtn.hidden = true;
+                })
             console.log("clicked");
         });
     },
