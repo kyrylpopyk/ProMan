@@ -64,7 +64,7 @@ export let dom = {
                     }),
                     body: JSON.stringify({
                         password: password,
-                        email: email
+                        login: email
                     }),
                     method: 'POST'
                 })
@@ -77,6 +77,18 @@ export let dom = {
             console.log("clicked");
         });
     },
+    listenNewLogOutBtn:  function() {
+        document.querySelector(".log-out-btn").addEventListener("click", () => {
+            fetch(`${window.location.origin}/logout`,{
+                headers: new Headers({
+                    'content-type': 'application/json'
+                }),
+                method: 'GET'
+            })
+                .then(console.log('Do something'))
+            console.log("clicked");
+        });
+    },
     registerNewUser: function () {
         const registerForm = document.querySelector("#registerUserForm");
         registerForm.addEventListener("submit", function (event) {
@@ -85,6 +97,24 @@ export let dom = {
             dataHandler.registerUser(formData)
         });
 
+    },
+    checkUserSatus: function(){
+        fetch(`${window.location.origin}/checkLogin`,{
+            method: 'GET',
+            headers: new Headers({
+                'content-type': 'application/json'
+            })
+        })
+            .then( (response) => {return JSON.stringify(response)} )
+            .then( (data) => {
+                if (data.toLowerCase() == 'true'){
+                    console.log('Set header');
+                }
+                else{
+                    console.log('Do not set headers');
+                }
+
+            })
     }
 
 };

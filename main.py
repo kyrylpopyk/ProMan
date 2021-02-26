@@ -17,8 +17,11 @@ login_manager.init_app(app)
 
 
 @login_manager.user_loader
-def load_user(user):
-    return data_handler.User.get(user)
+def load_user(user_id: str):
+    user_data = data_handler.get_user_by_id(user_id)
+    user = data_handler.User(user_data)
+    print('Load user function')
+    return user
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -34,17 +37,38 @@ def index():
 
 
 @app.route('/login', methods=['POST'])
-def user_login() -> 'json_response':
+def user_login():
+
     login_data = request.get_json()
-    password = data_handler.get_password_by_email(user_email=login_data.get('email'))
-    if data_manager.check_password(login_password=login_data['password'], db_password=password):
+    user_data = data_handler.get_user_by_login(login_data.get('login'))
+    if data_manager.check_password(login_password=login_data['password'], db_password=user_data['passwordhash']):
+        user = data_handler.User(user_data)
+        login_user(user)
+        _current_user = current_user
         return jsonify('You are logged in')
     else:
         return jsonify('Failed login')
 
 
+@app.route('/logout', methods=['GET'])
+@login_required
+def logout():
+    data = current_user
+    if current_user.is_authenticated:
+        logout_user()
+    return jsonify('You have logged out')
+
+
+@app.route('/checkLogin', methods=['GET'])
+def check_login():
+
+    return jsonify(True) if current_user.is_authenticated else jsonify(False)
+
+
+
 def register_user(data):
     pass
+
 
 @app.route("/get-boards")
 @json_response

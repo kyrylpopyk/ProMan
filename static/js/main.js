@@ -7,12 +7,15 @@ function init() {
     dom.init();
     // loads the boards to the screen
     dom.loadBoards();
+    // set user status
+    dom.checkUserSatus();
 
 }
 
 function eventHandlers() {
     dom.listenNewUserBtn();
     dom.listenNewLoginBtn();
+    dom.listenNewLogOutBtn();
 }
 
 init();
