@@ -11,9 +11,9 @@ CREATE DATABASE "ProMan"
 CREATE TABLE public.users
 (
     id serial NOT NULL,
-    "userName" character varying(20) COLLATE pg_catalog."default" NOT NULL,
-    email character varying(30) COLLATE pg_catalog."default" NOT NULL,
-    password character varying(30) COLLATE pg_catalog."default" NOT NULL,
+    "userName" character varying COLLATE pg_catalog."default" NOT NULL UNIQUE,
+    email character varying COLLATE pg_catalog."default" NOT NULL UNIQUE,
+    password character varying COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT users_pkey PRIMARY KEY (id)
 )
 
@@ -25,7 +25,7 @@ ALTER TABLE public.users
 CREATE TABLE public.statuses
 (
     id serial NOT NULL,
-    title character varying(25) COLLATE pg_catalog."default" NOT NULL,
+    title character varying COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT statuses_pkey PRIMARY KEY (id)
 )
 
@@ -37,7 +37,7 @@ ALTER TABLE public.statuses
 CREATE TABLE public.boards
 (
     id serial NOT NULL,
-    title character varying(25) COLLATE pg_catalog."default" NOT NULL,
+    title character varying COLLATE pg_catalog."default" NOT NULL,
     user_id integer NOT NULL,
     type character varying COLLATE pg_catalog."default",
     CONSTRAINT boards_pkey PRIMARY KEY (id),
@@ -57,7 +57,7 @@ CREATE TABLE public.cards
 (
     id serial NOT NULL,
     board_id integer NOT NULL,
-    title character varying(150) COLLATE pg_catalog."default" NOT NULL,
+    title character varying COLLATE pg_catalog."default" NOT NULL,
     status_id integer NOT NULL,
     user_id integer NOT NULL,
     CONSTRAINT p_id PRIMARY KEY (id),
