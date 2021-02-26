@@ -54,11 +54,22 @@ export let dom = {
     listenNewLoginBtn:  function() {
         document.querySelector(".loginBtn").addEventListener("click", () => {
             let minPasswordLength = 5;
-            let logBtn = document.querySelector(".loginBtn");
             let email = document.querySelector(".login-email-text-box").value;
             let password = document.querySelector(".login-password-text-box").value;
             if (email.indexOf('@') && password.length >= minPasswordLength){
                 window.$('#Modal').modal('hide');
+                fetch(`${window.location.origin}/login`,{
+                    headers: new Headers({
+                        'content-type': 'application/json'
+                    }),
+                    body: JSON.stringify({
+                        password: password,
+                        email: email
+                    }),
+                    method: 'POST'
+                })
+                    .then( (response) => { return response.json() })
+                    .then( (data) => { console.log(data)})
             }
             else{
                 console.log('Incorrect data!');

@@ -7,6 +7,7 @@ import os
 from os import urandom
 
 import data_handler
+import data_manager
 
 
 app = Flask(__name__)
@@ -34,7 +35,12 @@ def index():
 
 @app.route('/login', methods=['POST'])
 def user_login() -> 'json_response':
-    return jsonify('You are logged in')
+    login_data = request.get_json()
+    password = data_handler.get_password_by_email(user_email=login_data.get('email'))
+    if data_manager.check_password(login_password=login_data['password'], db_password=password):
+        return jsonify('You are logged in')
+    else:
+        return jsonify('Failed login')
 
 
 def register_user(data):

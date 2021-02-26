@@ -89,3 +89,15 @@ def add_user(cursor: RealDictCursor, user):
         "password": user["password"]
     }
     cursor.execute(command, param)
+
+@connection.connection_handler
+def get_password_by_email(cursor: RealDictCursor, user_email: str):
+    query = """
+    SELECT users.password
+    FROM users
+    WHERE users.email = %(user_email)s;
+    """
+    param = {'user_email': user_email}
+    cursor.execute(query, param)
+    data = cursor.fetchall()[0]['password']
+    return data
