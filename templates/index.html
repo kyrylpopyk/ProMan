@@ -32,7 +32,7 @@
                           <a class="nav-link waves-light" href="#"><span class="glyphicon glyphicon-th-large">Boards</span></a>
                       </li>
                       <li class="nav-item">
-                          <a class="nav-link waves-light" href="#"><span class="glyphicon glyphicon-plus"></span></a>
+                          <a class="nav-link waves-light" href="#" id="newBoardBtn" data-toggle="modal" data-target="#newBoard"><span class="glyphicon glyphicon-plus"></span></a>
                       </li>
                   </ul>
                   <ul class="navbar-nav ml-auto" style="float: right">
@@ -50,6 +50,8 @@
     </div>
     {% include 'user_registration.html' %}
     {% include 'user_login.html' %}
+    {% include 'new_board.html' %}
+
 
     <h1>ProMan</h1>
     <div class="boards">Boards are loading...</div>

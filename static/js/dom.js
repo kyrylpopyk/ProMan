@@ -1,4 +1,4 @@
-'use strict'
+
 
 // It uses data_handler.js to visualize elements
 import { dataHandler } from "./data_handler.js";
@@ -76,7 +76,7 @@ export let dom = {
                         loginBtn.hidden = true;
                         regBtn.hidden = true;
                         logOutBtn.hidden = false;
-                    })
+                    });
             }
             else{
                 console.log('Incorrect data!');
@@ -99,10 +99,35 @@ export let dom = {
                         loginBtn.hidden = false;
                         regBtn.hidden = false;
                         logOutBtn.hidden = true;
-                })
+                });
             console.log("clicked");
         });
     },
+    listenNewBoardBtn: function() {
+        const newBoardModal = document.querySelector('#newBoard');
+        document.querySelector("#newBoardBtn").addEventListener('click', ()=> {
+          newBoardModal.style.visibility = "visible";
+          newBoardModal.style.display = 'block';
+          this.addNewBoard();
+        });
+    },
+
+    addNewBoard: function () {
+        const newBoardBtn = document.querySelector(".addBoardBtn");
+        newBoardBtn.addEventListener('click', function () {
+           let newBoardTitle = document.querySelector('#newBoardTitle').value;
+           let newBoardData = {
+
+               'title': newBoardTitle
+           };
+
+           dataHandler.addNewBoard(newBoardData);
+        });
+    },
+
+
+
+
     registerNewUser: function () {
         const registerBtn = document.querySelector("#registerNewUser");
         registerBtn.addEventListener("click", function () {
@@ -114,9 +139,9 @@ export let dom = {
                 "username": username,
                 "email": email,
                 "password": password
-            }
+            };
 
-            dataHandler.registerUser(data)
+            dataHandler.registerUser(data);
         });
 
     },
@@ -136,7 +161,7 @@ export let dom = {
                     console.log('Do not set headers');
                 }
 
-            })
+            });
     }
 
 };
