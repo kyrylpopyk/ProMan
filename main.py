@@ -37,10 +37,12 @@ def index():
 @app.route("/register", methods=["POST"])
 @json_response
 def register_user():
+    print("ok")
     form_data = request.get_json()
     # if form_data.headers["Status"] == 200:
     hash_password = util.password_encryption(form_data["password"])
     form_data["password"] = hash_password
+    print(form_data)
     data_handler.add_user(form_data)
     return "You have been registered"
     # else:

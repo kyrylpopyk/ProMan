@@ -100,7 +100,7 @@ def add_user(cursor: RealDictCursor, user):
     param = {
         "username": user["username"],
         "login": user["login"],
-        "password": user["password"]
+        "passwordhash": user["password"]
     }
     cursor.execute(command, param)
 
