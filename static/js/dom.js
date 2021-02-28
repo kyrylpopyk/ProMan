@@ -17,22 +17,68 @@ export let dom = {
         // shows boards appending them to #boards div
         // it adds necessary event listeners also
 
-        let boardList = '';
 
-        for(let board of boards){
-            boardList += `
-                <li>${board.title}</li>
-            `;
-        }
+        // const privateBoardsContainer = document.querySelector("#privateBoardsContainer");
+        // const publicBoardsContainer = document.querySelector("#publicBoardsContainer");
+        //
+        // let howManyColInRow = 5;
+        // let rowPrivate = 0;
+        // let rowPublic = 0;
+        // let row;
+        // let mainContainer;
+        //
+        // for(let i = 0; i < boards.length; i++) {
+        //     let colPrivate = 0;
+        //     let colPublic = 0;
+        //     let col;
+        //     if(boards[i].type === "private") {
+        //         mainContainer = privateBoardsContainer;
+        //     } else {
+        //         mainContainer = publicBoardsContainer;
+        //         }
+        //     // create row
+        //     let divRow = document.createElement("div");
+        //     divRow.className = "row";
+        //
+        //     for(;col < howManyColInRow; col++) {
+        //         // create col
+        //         let divCol
+        //
+        //         let divCard = document.createElement("div");
+        //         divCard.className = "card text-white bg-dark mb-3";
+        //
+        //
+        //         let divHeader = document.createElement("div");
+        //         divHeader.className = "card-header";
+        //         divCard.appendChild(divHeader);
+        //
+        //         let linkToBoard = document.createElement("a");
+        //         divHeader.appendChild(linkToBoard);
+        //         linkToBoard.innerText = boards[i].title;
+        //         linkToBoard.href = "#"
+        //     }
+        //
+        //
+        //
+        //
+        // }
 
-        const outerHtml = `
-            <ul class="board-container">
-                ${boardList}
-            </ul>
-        `;
-
-        let boardsContainer = document.querySelector('.boards');
-        boardsContainer.insertAdjacentHTML("beforeend", outerHtml);
+        // let boardList = '';
+        //
+        // for(let board of boards){
+        //     boardList += `
+        //         <li>${board.title}</li>
+        //     `;
+        // }
+        //
+        // const outerHtml = `
+        //     <ul class="board-container">
+        //         ${boardList}
+        //     </ul>
+        // `;
+        //
+        // let boardsContainer = document.querySelector('.boards');
+        // boardsContainer.insertAdjacentHTML("beforeend", outerHtml);
     },
     loadCards: function (boardId) {
         // retrieves cards and makes showCards called
@@ -109,6 +155,7 @@ export let dom = {
             let username = document.querySelector("#newUserName").value;
             let email = document.querySelector("#newUserEmail").value;
             let password = document.querySelector("#newUserPassword").value;
+
 
             let data = {
                 "username": username,

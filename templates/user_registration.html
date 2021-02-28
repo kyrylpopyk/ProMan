@@ -15,15 +15,15 @@
         <form id="registerUserForm">
           <div class="form-group">
             <label for="newUserName">User name</label>
-            <input type="text" class="form-control" id="newUserName" name="newUserName">
+            <input type="text" class="form-control" id="newUserName" name="newUserName" minlength="3" maxlength="30" required>
           </div>
           <div class="form-group">
             <label for="newUserEmail">Email</label>
-            <input type="email" class="form-control" id="newUserEmail" name="newUserEmail">
+            <input type="email" class="form-control" id="newUserEmail" name="newUserEmail" minlength="5" maxlength="50" required>
           </div>
           <div class="form-group">
             <label for="newUserPassword">Password</label>
-            <input type="password" class="form-control" id="newUserPassword" name="newUserPassword">
+            <input type="password" class="form-control" id="newUserPassword" name="newUserPassword" minlength="5" maxlength="30" required>
           </div>
           <button type="submit" class="btn btn-primary" id="registerNewUser">Register new User</button>
         </form>
