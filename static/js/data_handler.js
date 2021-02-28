@@ -57,12 +57,12 @@ export let dataHandler = {
         // the board is retrieved and then the callback function is called with the board
     },
     registerUser: function (formData) {
-        this._api_post(`${window.location.origin}/register`, formData)
+        this._api_post(`${window.location.origin}/register`, formData);
     },
 
     addNewBoard: function(boardData) {
         console.log(boardData);
-        this._api_post(`${window.location.origin}/new_board`, boardData)
+        this._api_post(`${window.location.origin}/new_board`, boardData);
     },
 
 

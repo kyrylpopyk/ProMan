@@ -42,7 +42,7 @@ class User(object):
     def __init__(self, user):
         self.id = user['id']
         self.login = user['login']
-        self.userName = user['userName']
+        self.userName = user['username']
         self.password = user['passwordhash']
 
         self.authenticated = True
