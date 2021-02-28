@@ -43,8 +43,6 @@ class User(object):
         self.id = user['id']
         self.login = user['login']
         self.password = user['passwordhash']
-        self.registration_date = user['registration_date']
-        self.reputation = user['reputation']
         self.authenticated = True
 
 
