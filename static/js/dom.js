@@ -76,23 +76,31 @@ export let dom = {
             if (email.indexOf('@') && password.length >= minPasswordLength){
                 window.$('#Modal').modal('hide');
                 fetch(`${window.location.origin}/login`,{
-                    headers: new Headers({
-                        'content-type': 'application/json'
-                    }),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                    },
                     body: JSON.stringify({
                         password: password,
                         login: email
                     }),
-                    method: 'POST'
+                    method: 'POST',
+                    credentials: 'include'
                 })
                     .then( (response) => { return response.json() })
                     .then( (data) => {
                         let loginBtn = document.querySelector('.log-in-btn');
                         let regBtn = document.querySelector('.reg-btn');
                         let logOutBtn = document.querySelector('.log-out-btn');
-                        loginBtn.hidden = true;
-                        regBtn.hidden = true;
-                        logOutBtn.hidden = false;
+                        if (data){
+                            informationPopup('User logged successful');
+                            loginBtn.hidden = true;
+                            regBtn.hidden = true;
+                            logOutBtn.hidden = false;
+                        }
+                        else{
+                            informationPopup('Failed login');
+                        }
                     })
             }
             else{
@@ -116,6 +124,7 @@ export let dom = {
                         loginBtn.hidden = false;
                         regBtn.hidden = false;
                         logOutBtn.hidden = true;
+                        informationPopup('User log out successful');
                 })
             console.log("clicked");
         });
@@ -158,3 +167,10 @@ export let dom = {
     }
 
 };
+
+function informationPopup(information){
+        let inf_pop_title = document.querySelector('.information-popup-title')
+        inf_pop_title.innerHTML = information;
+        window.$('.information-popup').modal('show');
+        setTimeout( () =>{window.$('.information-popup').modal('hide')}, 1000)
+    }

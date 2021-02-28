@@ -6,12 +6,12 @@ CREATE DATABASE "ProMan"
     TABLESPACE = pg_default
     CONNECTION LIMIT = -1;
 
-CREATE TABLE public.users
-(
+CREATE TABLE users (
     id serial NOT NULL,
-    "userName" character varying COLLATE pg_catalog."default" NOT NULL UNIQUE,
-    email character varying COLLATE pg_catalog."default" NOT NULL UNIQUE,
-    password character varying COLLATE pg_catalog."default" NOT NULL,
+    login text NOT NULL UNIQUE,
+    passwordhash text NOT NULL,
+    registration_date timestamp without time zone,
+    reputation integer
     CONSTRAINT users_pkey PRIMARY KEY (id)
 )
 

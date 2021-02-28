@@ -53,22 +53,26 @@ def user_login():
 
     login_data = request.get_json()
     user_data = data_handler.get_user_by_login(login_data.get('login'))
-    if data_manager.check_password(login_password=login_data['password'], db_password=user_data['passwordhash']):
-        user = data_handler.User(user_data)
-        login_user(user)
-        _current_user = current_user
-        return jsonify('You are logged in')
-    else:
-        return jsonify('Failed login')
+    if 'id' in user_data:
+        if data_manager.check_password(login_password=login_data['password'], db_password=user_data['passwordhash']):
+            user = data_handler.User(user_data)
+            login_user(user)
+            _current_user = current_user
+            resp = app.make_response(jsonify('True'))
+            resp.set_cookie('id', str(user_data['id']))
+            return resp
+
+    return jsonify(False)
 
 
 @app.route('/logout', methods=['GET'])
 @login_required
 def logout():
-    data = current_user
+    resp = app.make_response(jsonify('You have logged out'))
+    resp.set_cookie('id', '')
     if current_user.is_authenticated:
         logout_user()
-    return jsonify('You have logged out')
+    return resp
 
 
 @app.route('/checkLogin', methods=['GET'])

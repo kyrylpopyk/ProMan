@@ -90,7 +90,7 @@ def add_user(cursor: RealDictCursor, user):
 
 
 @connection.connection_handler
-def get_user_by_login(cursor: RealDictCursor, user_login: str):
+def get_user_by_login(cursor: RealDictCursor, user_login: str) -> str:
     query = """
     SELECT *
     FROM users
@@ -98,7 +98,8 @@ def get_user_by_login(cursor: RealDictCursor, user_login: str):
     """
     param = {'user_login': user_login}
     cursor.execute(query, param)
-    return cursor.fetchall()[0]
+    password = cursor.fetchall()
+    return password[0] if len(password) > 0 else {}
 
 
 @connection.connection_handler
