@@ -93,13 +93,13 @@ def get_users(cursor: RealDictCursor) -> list:
 @connection.connection_handler
 def add_user(cursor: RealDictCursor, user):
     command = """
-            INSERT INTO users("userName", email, password)
-            VALUES (%(username)s, %(email)s, %(password)s)
+            INSERT INTO users(username, login, passwordhash)
+            VALUES (%(username)s, %(login)s, %(passwordhash)s)
             """
     param = {
         "username": user["username"],
-        "email": user["email"],
-        "password": user["password"]
+        "email": user["login"],
+        "passwordhash": user["passwordhash"]
     }
     cursor.execute(command, param)
 
@@ -130,14 +130,14 @@ def get_user_by_id(cursor: RealDictCursor, id: str):
 
 
 @connection.connection_handler
-def add_new_board(cursor: RealDictCursor, board_title, user):
+def add_new_board(cursor: RealDictCursor, board_title, user_id):
     command = """
             INSERT INTO boards(title, user_id, type)
             VALUES (%(id)s, %(title)s, %(user_id)s, %(type)s)
             """
     param = {
         "title": board_title,
-        "user_id": user["id"],
+        "user_id": user_id,
         "type": "public"
     }
     cursor.execute(command, param)

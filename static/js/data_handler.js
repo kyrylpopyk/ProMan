@@ -53,7 +53,8 @@ export let dataHandler = {
     },
 
     addNewBoard: function(boardData) {
-        this._api_post(`${window.location.origin}/`, boardData)
+        console.log(boardData);
+        this._api_post(`${window.location.origin}/new_board`, boardData)
     },
 
 

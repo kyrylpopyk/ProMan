@@ -19,8 +19,11 @@ login_manager.init_app(app)
 
 @login_manager.user_loader
 def load_user(user_id: str):
+
     user_data = data_handler.get_user_by_id(user_id)
     user = data_handler.User(user_data)
+    if not user.is_authenticated():
+        user = None
     print('Load user function')
     return user
 
@@ -88,19 +91,20 @@ def get_boards():
 
 
 
-@app.route("/", methods=['POST'])
+@app.route("/new_board", methods=['POST'])
 @json_response
 @login_required
 def add_new_board():
     """
     Adds new board
     """
+    print("ok")
     board_data = request.get_json()
     board_title = board_data['title']
     print(board_title)
-    user_id = current_user
+    user_id = current_user.id
     print(user_id)
-    return data_handler.add_new_board(board_title,user)
+    return data_handler.add_new_board(board_title,user_id)
 
 
 
