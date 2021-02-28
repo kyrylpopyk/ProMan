@@ -16,7 +16,7 @@ ALTER TABLE public.users
 
 CREATE TABLE public.statuses
 (
-    id integer NOT NULL,
+    id serial NOT NULL,
     title character varying(25) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT statuses_pkey PRIMARY KEY (id)
 )
@@ -28,7 +28,7 @@ ALTER TABLE public.statuses
 
 CREATE TABLE public.boards
 (
-    id integer NOT NULL,
+    id serial NOT NULL,
     title character varying(25) COLLATE pg_catalog."default" NOT NULL,
     user_id integer NOT NULL,
     type character varying COLLATE pg_catalog."default",
@@ -47,7 +47,7 @@ ALTER TABLE public.boards
 
 CREATE TABLE public.cards
 (
-    id integer NOT NULL,
+    id serial NOT NULL,
     board_id integer NOT NULL,
     title character varying(150) COLLATE pg_catalog."default" NOT NULL,
     status_id integer NOT NULL,

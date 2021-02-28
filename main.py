@@ -107,7 +107,7 @@ def get_public_boards():
 
 @app.route("/new_board", methods=['POST'])
 @json_response
-@login_required
+
 def add_new_board():
     """
     Adds new board

@@ -135,7 +135,7 @@ def get_user_by_id(cursor: RealDictCursor, id: str):
 def add_new_board(cursor: RealDictCursor, board_title, user_id):
     command = """
             INSERT INTO boards(title, user_id, type)
-            VALUES (%(id)s, %(title)s, %(user_id)s, %(type)s)
+            VALUES  (%(title)s, %(user_id)s, %(type)s)
             """
     param = {
         "title": board_title,
