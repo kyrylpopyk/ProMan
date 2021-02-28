@@ -89,14 +89,9 @@ export let dom = {
                 })
                     .then( (response) => { return response.json() })
                     .then( (data) => {
-                        let loginBtn = document.querySelector('.log-in-btn');
-                        let regBtn = document.querySelector('.reg-btn');
-                        let logOutBtn = document.querySelector('.log-out-btn');
                         if (data){
                             informationPopup('User logged successful');
-                            loginBtn.hidden = true;
-                            regBtn.hidden = true;
-                            logOutBtn.hidden = false;
+                            setLogBtn(data)
                         }
                         else{
                             informationPopup('Failed login');
@@ -118,13 +113,8 @@ export let dom = {
                 method: 'GET'
             })
                 .then(() => {
-                    let loginBtn = document.querySelector('.log-in-btn');
-                        let regBtn = document.querySelector('.reg-btn');
-                        let logOutBtn = document.querySelector('.log-out-btn');
-                        loginBtn.hidden = false;
-                        regBtn.hidden = false;
-                        logOutBtn.hidden = true;
-                        informationPopup('User log out successful');
+                    setLogBtn(false)
+                    informationPopup('User log out successful');
                 })
             console.log("clicked");
         });
@@ -154,19 +144,30 @@ export let dom = {
                 'content-type': 'application/json'
             })
         })
-            .then( (response) => {return JSON.stringify(response)} )
+            .then( (response) => {return response.json()} )
             .then( (data) => {
-                if (data.toLowerCase() == 'true'){
-                    console.log('Set header');
-                }
-                else{
-                    console.log('Do not set headers');
-                }
+                setLogBtn(data)
 
             })
     }
 
 };
+
+function setLogBtn(status){
+    let loginBtn = document.querySelector('.log-in-btn');
+    let regBtn = document.querySelector('.reg-btn');
+    let logOutBtn = document.querySelector('.log-out-btn');
+    if (status){
+        loginBtn.hidden = true;
+        regBtn.hidden = true;
+        logOutBtn.hidden = false;
+    }
+    else{
+        loginBtn.hidden = false;
+        regBtn.hidden = false;
+        logOutBtn.hidden = true;
+    }
+}
 
 function informationPopup(information){
         let inf_pop_title = document.querySelector('.information-popup-title')
