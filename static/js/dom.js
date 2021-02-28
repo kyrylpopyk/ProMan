@@ -9,76 +9,47 @@ export let dom = {
     },
     loadBoards: function () {
         // retrieves boards and makes showBoards called
-        dataHandler.getBoards(function(boards){
-            dom.showBoards(boards);
+        dataHandler.getPrivateBoards(function(boards){
+            dom.showBoards(boards, "private");
+        });
+        dataHandler.getPublicBoards(function (boards){
+           dom.showBoards(boards, "public");
         });
     },
-    showBoards: function (boards) {
+    showBoards: function (boards, type) {
         // shows boards appending them to #boards div
         // it adds necessary event listeners also
 
+        const privateBoardsContainer = document.querySelector("#privateBoardsContainer");
+        const publicBoardsContainer = document.querySelector("#publicBoardsContainer");
 
-        // const privateBoardsContainer = document.querySelector("#privateBoardsContainer");
-        // const publicBoardsContainer = document.querySelector("#publicBoardsContainer");
-        //
-        // let howManyColInRow = 5;
-        // let rowPrivate = 0;
-        // let rowPublic = 0;
-        // let row;
-        // let mainContainer;
-        //
-        // for(let i = 0; i < boards.length; i++) {
-        //     let colPrivate = 0;
-        //     let colPublic = 0;
-        //     let col;
-        //     if(boards[i].type === "private") {
-        //         mainContainer = privateBoardsContainer;
-        //     } else {
-        //         mainContainer = publicBoardsContainer;
-        //         }
-        //     // create row
-        //     let divRow = document.createElement("div");
-        //     divRow.className = "row";
-        //
-        //     for(;col < howManyColInRow; col++) {
-        //         // create col
-        //         let divCol
-        //
-        //         let divCard = document.createElement("div");
-        //         divCard.className = "card text-white bg-dark mb-3";
-        //
-        //
-        //         let divHeader = document.createElement("div");
-        //         divHeader.className = "card-header";
-        //         divCard.appendChild(divHeader);
-        //
-        //         let linkToBoard = document.createElement("a");
-        //         divHeader.appendChild(linkToBoard);
-        //         linkToBoard.innerText = boards[i].title;
-        //         linkToBoard.href = "#"
-        //     }
-        //
-        //
-        //
-        //
-        // }
+        let mainContainer;
 
-        // let boardList = '';
-        //
-        // for(let board of boards){
-        //     boardList += `
-        //         <li>${board.title}</li>
-        //     `;
-        // }
-        //
-        // const outerHtml = `
-        //     <ul class="board-container">
-        //         ${boardList}
-        //     </ul>
-        // `;
-        //
-        // let boardsContainer = document.querySelector('.boards');
-        // boardsContainer.insertAdjacentHTML("beforeend", outerHtml);
+        if (type === "public"){
+            mainContainer = publicBoardsContainer;
+        } else {
+            mainContainer = privateBoardsContainer;
+        }
+
+        for (let i = 0; i < boards.length; i++) {
+
+                // create div card
+                let divCard = document.createElement("div");
+                mainContainer.appendChild(divCard);
+                divCard.className = "card text-white bg-dark mb-3";
+                divCard.style.width = "18rem"
+
+
+                let linkToBoard = document.createElement("a");
+                divCard.appendChild(linkToBoard);
+                linkToBoard.href = "#"
+
+                // create div header
+                let divHeader = document.createElement("div");
+                divCard.appendChild(divHeader);
+                divHeader.className = "card-header";
+                divHeader.innerText = boards[i].title;
+            }
     },
     loadCards: function (boardId) {
         // retrieves cards and makes showCards called

@@ -77,11 +77,6 @@ def check_login():
     return jsonify(True) if current_user.is_authenticated else jsonify(False)
 
 
-
-def register_user(data):
-    pass
-
-
 @app.route("/get-boards")
 @json_response
 def get_boards():
@@ -89,6 +84,18 @@ def get_boards():
     All the boards
     """
     return data_handler.get_boards()
+
+
+@app.route("/get-private-boards")
+@json_response
+def get_private_boards():
+    return data_handler.get_boards_by_type("private")
+
+
+@app.route("/get-public-boards")
+@json_response
+def get_public_boards():
+    return data_handler.get_boards_by_type("public")
 
 
 @app.route("/get-cards/<int:board_id>")

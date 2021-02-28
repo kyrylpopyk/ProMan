@@ -65,11 +65,6 @@ class User(object):
         return False
 
 
-
-
-
-
-
 @connection.connection_handler
 def get_boards(cursor: RealDictCursor) -> list:
     query = """
@@ -116,3 +111,18 @@ def get_user_by_id(cursor: RealDictCursor, id: str):
     param = {'id': id}
     cursor.execute(query, param)
     return cursor.fetchall()[0]
+
+
+@connection.connection_handler
+def get_boards_by_type(cursor: RealDictCursor, type):
+    query = """
+            SELECT *
+            FROM boards
+            WHERE boards.type = %(type)s """
+
+    param = {
+        "type": type
+    }
+    cursor.execute(query, param)
+    return cursor.fetchall()
+
