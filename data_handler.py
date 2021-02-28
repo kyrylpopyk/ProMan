@@ -42,7 +42,9 @@ class User(object):
     def __init__(self, user):
         self.id = user['id']
         self.login = user['login']
+        self.userName = user['userName']
         self.password = user['passwordhash']
+
         self.authenticated = True
 
 
@@ -63,6 +65,11 @@ class User(object):
         return False
 
 
+
+
+
+
+
 @connection.connection_handler
 def get_boards(cursor: RealDictCursor) -> list:
     query = """
@@ -73,15 +80,26 @@ def get_boards(cursor: RealDictCursor) -> list:
     cursor.execute(query)
     return cursor.fetchall()
 
+
+@connection.connection_handler
+def get_users(cursor: RealDictCursor) -> list:
+    query = """
+        SELECT *
+        FROM users
+        ORDER BY id
+        """
+    cursor.execute(query)
+    return cursor.fetchall()
+
 @connection.connection_handler
 def add_user(cursor: RealDictCursor, user):
     command = """
-            INSERT INTO users("userName", email, password)
-            VALUES (%(username)s, %(email)s, %(password)s)
+             INSERT INTO users(username, login, passwordhash)
+            VALUES (%(username)s, %(login)s, %(passwordhash)s)
             """
     param = {
         "username": user["username"],
-        "email": user["email"],
+        "login": user["login"],
         "password": user["password"]
     }
     cursor.execute(command, param)
@@ -110,6 +128,21 @@ def get_user_by_id(cursor: RealDictCursor, id: str):
     param = {'id': id}
     cursor.execute(query, param)
     return cursor.fetchall()[0]
+
+
+
+@connection.connection_handler
+def add_new_board(cursor: RealDictCursor, board_title, user_id):
+    command = """
+            INSERT INTO boards(title, user_id, type)
+            VALUES (%(id)s, %(title)s, %(user_id)s, %(type)s)
+            """
+    param = {
+        "title": board_title,
+        "user_id": user_id,
+        "type": "public"
+    }
+    cursor.execute(command, param)
 
 
 @connection.connection_handler

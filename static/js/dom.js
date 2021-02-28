@@ -91,7 +91,7 @@ export let dom = {
                     .then( (data) => {
                         if (data){
                             informationPopup('User logged successful');
-                            setLogBtn(data)
+                            setLogBtn(data);
                         }
                         else{
                             informationPopup('Failed login');
@@ -119,21 +119,45 @@ export let dom = {
             console.log("clicked");
         });
     },
+    listenNewBoardBtn: function() {
+        const newBoardModal = document.querySelector('#newBoard');
+        document.querySelector("#newBoardBtn").addEventListener('click', ()=> {
+          newBoardModal.style.visibility = "visible";
+          newBoardModal.style.display = 'block';
+          this.addNewBoard();
+        });
+    },
+
+    addNewBoard: function () {
+        const newBoardBtn = document.querySelector(".addBoardBtn");
+        newBoardBtn.addEventListener('click', function () {
+           let newBoardTitle = document.querySelector('#newBoardTitle').value;
+           let newBoardData = {
+
+               'title': newBoardTitle
+           };
+
+           dataHandler.addNewBoard(newBoardData);
+        });
+    },
+
+
+
+
     registerNewUser: function () {
         const registerBtn = document.querySelector("#registerNewUser");
         registerBtn.addEventListener("click", function () {
             let username = document.querySelector("#newUserName").value;
-            let email = document.querySelector("#newUserEmail").value;
+            let login = document.querySelector("#newUserEmail").value;
             let password = document.querySelector("#newUserPassword").value;
-
 
             let data = {
                 "username": username,
-                "email": email,
+                "login": login,
                 "password": password
-            }
+            };
 
-            dataHandler.registerUser(data)
+            dataHandler.registerUser(data);
         });
 
     },

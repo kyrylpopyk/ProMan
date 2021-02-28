@@ -103,13 +103,33 @@ def get_public_boards():
 
 
 @app.route("/get-cards/<int:board_id>")
+
+@app.route("/new_board", methods=['POST'])
 @json_response
-def get_cards_for_board(board_id: int):
+@login_required
+def add_new_board():
     """
-    All cards that belongs to a board
-    :param board_id: id of the parent board
+    Adds new board
     """
-    return data_handler.get_cards_for_board(board_id)
+    print("ok")
+    board_data = request.get_json()
+    board_title = board_data['title']
+    print(board_title)
+    user_id = current_user.id
+    print(user_id)
+    return data_handler.add_new_board(board_title,user_id)
+
+
+
+# @app.route("/get-cards/<int:board_id>")
+# @json_response
+# def get_cards_for_board(board_id: int):
+#     """
+#     All cards that belongs to a board
+#     :param board_id: id of the parent board
+#     """
+#     return data_handler.get_cards_for_board(board_id)
+
 
 
 def main():
