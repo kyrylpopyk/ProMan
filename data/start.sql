@@ -6,12 +6,12 @@ CREATE DATABASE "ProMan"
     TABLESPACE = pg_default
     CONNECTION LIMIT = -1;
 
-CREATE TABLE users (
+CREATE TABLE public.users
+(
     id serial NOT NULL,
+    userName text NOT NULL,
     login text NOT NULL UNIQUE,
     passwordhash text NOT NULL,
-    registration_date timestamp without time zone,
-    reputation integer
     CONSTRAINT users_pkey PRIMARY KEY (id)
 )
 
@@ -22,8 +22,8 @@ ALTER TABLE public.users
 
 CREATE TABLE public.statuses
 (
-    id serial NOT NULL,
-    title character varying COLLATE pg_catalog."default" NOT NULL,
+    id integer NOT NULL,
+    title character varying(25) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT statuses_pkey PRIMARY KEY (id)
 )
 
@@ -34,8 +34,8 @@ ALTER TABLE public.statuses
 
 CREATE TABLE public.boards
 (
-    id serial NOT NULL,
-    title character varying COLLATE pg_catalog."default" NOT NULL,
+    id integer NOT NULL,
+    title character varying(25) COLLATE pg_catalog."default" NOT NULL,
     user_id integer NOT NULL,
     type character varying COLLATE pg_catalog."default",
     CONSTRAINT boards_pkey PRIMARY KEY (id),
@@ -53,9 +53,9 @@ ALTER TABLE public.boards
 
 CREATE TABLE public.cards
 (
-    id serial NOT NULL,
+    id integer NOT NULL,
     board_id integer NOT NULL,
-    title character varying COLLATE pg_catalog."default" NOT NULL,
+    title character varying(150) COLLATE pg_catalog."default" NOT NULL,
     status_id integer NOT NULL,
     user_id integer NOT NULL,
     CONSTRAINT p_id PRIMARY KEY (id),
