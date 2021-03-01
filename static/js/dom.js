@@ -76,23 +76,26 @@ export let dom = {
             if (validateUser(email, password, "login")){
                 window.$('#Modal').modal('hide');
                 fetch(`${window.location.origin}/login`,{
-                    headers: new Headers({
-                        'content-type': 'application/json'
-                    }),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                    },
                     body: JSON.stringify({
                         password: password,
                         login: email
                     }),
-                    method: 'POST'
+                    method: 'POST',
+                    credentials: 'include'
                 })
                     .then( (response) => { return response.json() })
                     .then( (data) => {
-                        let loginBtn = document.querySelector('.log-in-btn');
-                        let regBtn = document.querySelector('.reg-btn');
-                        let logOutBtn = document.querySelector('.log-out-btn');
-                        loginBtn.hidden = true;
-                        regBtn.hidden = true;
-                        logOutBtn.hidden = false;
+                        if (data){
+                            informationPopup('User logged successful');
+                            setLogBtn(data);
+                        }
+                        else{
+                            informationPopup('Failed login');
+                        }
                     })
             }
             else{
@@ -110,32 +113,50 @@ export let dom = {
                 method: 'GET'
             })
                 .then(() => {
-                    let loginBtn = document.querySelector('.log-in-btn');
-                        let regBtn = document.querySelector('.reg-btn');
-                        let logOutBtn = document.querySelector('.log-out-btn');
-                        loginBtn.hidden = false;
-                        regBtn.hidden = false;
-                        logOutBtn.hidden = true;
+                    setLogBtn(false)
+                    informationPopup('User log out successful');
                 })
             console.log("clicked");
         });
     },
+    listenNewBoardBtn: function() {
+        const newBoardModal = document.querySelector('#newBoard');
+        document.querySelector("#newBoardBtn").addEventListener('click', ()=> {
+          newBoardModal.style.visibility = "visible";
+          newBoardModal.style.display = 'block';
+          this.addNewBoard();
+        });
+    },
+
+    addNewBoard: function () {
+        const newBoardBtn = document.querySelector(".addBoardBtn");
+        newBoardBtn.addEventListener('click', function () {
+           let newBoardTitle = document.querySelector('#newBoardTitle').value;
+           let newBoardData = {
+
+               'title': newBoardTitle
+           };
+
+           dataHandler.addNewBoard(newBoardData);
+        });
+    },
+
     registerNewUser: function () {
         const registerBtn = document.querySelector("#registerNewUser");
         registerBtn.addEventListener("click", function () {
+            let  username = document.querySelector("#newUsername").value;
             let email = document.querySelector("#newUserEmail").value;
             let password = document.querySelector("#newUserPassword").value;
             if (validateUser(email, password, "register")) {
                 let data = {
-                "email": email,
+                "username": username,
+                "login": email,
                 "password": password
             }
-
                 dataHandler.registerUser(data)
             } else {
                 console.log("Incorrect data!")
             }
-
         });
 
     },
@@ -146,30 +167,49 @@ export let dom = {
                 'content-type': 'application/json'
             })
         })
-            .then( (response) => {return JSON.stringify(response)} )
+            .then( (response) => {return response.json()} )
             .then( (data) => {
-                if (data.toLowerCase() == 'true'){
-                    console.log('Set header');
-                }
-                else{
-                    console.log('Do not set headers');
-                }
+                setLogBtn(data)
 
             })
     },
 
 
 };
-
-
 function validateUser (login, password, type) {
-    let minLenght = 5;
-    let maxLenght = 50;
-    if ((login.lenght > minLenght && login.lenght < maxLenght) && (password.lenght > minLenght && password.lenght < maxLenght) && (login.indexOf("@"))) {
-        if (type === "register") {
-            let logins = dataHandler.getLogins();
-            return !login in logins;  // if login not in logins return true else false
-        }
+    let minLength = 5;
+    let maxLength = 50;
+    if ((login.length > minLength && login.length < maxLength) && (password.length > minLength && password.length < maxLength) && (login.indexOf("@"))) {
+        // if (type === "register") {
+        //     let logins = dataHandler.getLogins();
+        //     return !login in logins;  // if login not in logins return true else false
+        // }
         return true;
-        }
+    } else {
+        return false
     }
+}
+
+function setLogBtn(status){
+    let loginBtn = document.querySelector('.log-in-btn');
+    let regBtn = document.querySelector('.reg-btn');
+    let logOutBtn = document.querySelector('.log-out-btn');
+    if (status){
+        loginBtn.hidden = true;
+        regBtn.hidden = true;
+        logOutBtn.hidden = false;
+    }
+    else{
+        loginBtn.hidden = false;
+        regBtn.hidden = false;
+        logOutBtn.hidden = true;
+    }
+}
+
+function informationPopup(information){
+        let inf_pop_title = document.querySelector('.information-popup-title')
+        inf_pop_title.innerHTML = information;
+        window.$('.information-popup').modal('show');
+        setTimeout( () =>{window.$('.information-popup').modal('hide')}, 1000)
+    }
+

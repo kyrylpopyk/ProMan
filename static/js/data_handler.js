@@ -28,10 +28,9 @@ export let dataHandler = {
             credentials: 'same-origin',
             body: JSON.stringify(data)
         })
-        .then( (response) => { return response.json() })
-            .then(response => alert(response));
-
-
+            .then(response => response.json())
+            .then(response => callback(response))
+            .catch(error => callback(error));
     },
     init: function () {
     },
@@ -56,6 +55,19 @@ export let dataHandler = {
     getBoard: function (boardId, callback) {
         // the board is retrieved and then the callback function is called with the board
     },
+    registerUser: function (formData) {
+        this._api_post(`${window.location.origin}/register`, formData, (response) => {
+            alert(response);
+        });
+    },
+
+    addNewBoard: function(boardData) {
+        console.log(boardData);
+        this._api_post(`${window.location.origin}/new_board`, boardData);
+    },
+
+
+
     getStatuses: function (callback) {
         // the statuses are retrieved and then the callback function is called with the statuses
     },
@@ -74,12 +86,10 @@ export let dataHandler = {
     createNewCard: function (cardTitle, boardId, statusId, callback) {
         // creates new card, saves it and calls the callback function with its data
     },
-    registerUser: function (formData) {
-        this._api_post(`${window.location.origin}/register`, formData);
-    },
     getLogins: function () {
        return this._api_get('/get-logins');
 
     }
+
     // here comes more features
 };
