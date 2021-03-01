@@ -38,14 +38,10 @@ def index():
 @json_response
 def register_user():
     form_data = request.get_json()
-    # if form_data.headers["Status"] == 200:
     hash_password = util.password_encryption(form_data["password"])
     form_data["password"] = hash_password
     data_handler.add_user(form_data)
     return "You have been registered"
-    # else:
-    #     return "Registration failed"
-
 
 
 @app.route('/login', methods=['POST'])
@@ -106,6 +102,12 @@ def get_cards_for_board(board_id: int):
     :param board_id: id of the parent board
     """
     return data_handler.get_cards_for_board(board_id)
+
+
+@app.route("/get-logins")
+@json_response
+def get_logins():
+    return data_handler.get_logins()
 
 
 def main():

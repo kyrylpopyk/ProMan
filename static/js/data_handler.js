@@ -75,7 +75,11 @@ export let dataHandler = {
         // creates new card, saves it and calls the callback function with its data
     },
     registerUser: function (formData) {
-        this._api_post(`${window.location.origin}/register`, formData)
+        this._api_post(`${window.location.origin}/register`, formData);
+    },
+    getLogins: function () {
+       return this._api_get('/get-logins');
+
     }
     // here comes more features
 };

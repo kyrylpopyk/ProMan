@@ -78,8 +78,8 @@ def get_boards(cursor: RealDictCursor) -> list:
 @connection.connection_handler
 def add_user(cursor: RealDictCursor, user):
     command = """
-            INSERT INTO users("userName", email, password)
-            VALUES (%(username)s, %(email)s, %(password)s)
+            INSERT INTO users(login, passwordhash)
+            VALUES (%(email)s, %(password)s)
             """
     param = {
         "username": user["username"],
@@ -126,3 +126,11 @@ def get_boards_by_type(cursor: RealDictCursor, type):
     cursor.execute(query, param)
     return cursor.fetchall()
 
+@connection.connection_handler
+def get_logins(cursor: RealDictCursor):
+    query = """
+            SELECT login
+            FROM users"""
+
+    cursor.execute(query)
+    return cursor.fetchall()

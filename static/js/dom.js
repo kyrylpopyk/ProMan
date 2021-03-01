@@ -3,6 +3,7 @@
 // It uses data_handler.js to visualize elements
 import { dataHandler } from "./data_handler.js";
 
+
 export let dom = {
     init: function () {
         // This function should run once, when the page is loaded.
@@ -70,10 +71,9 @@ export let dom = {
     },
     listenNewLoginBtn:  function() {
         document.querySelector(".loginBtn").addEventListener("click", () => {
-            let minPasswordLength = 5;
             let email = document.querySelector(".login-email-text-box").value;
             let password = document.querySelector(".login-password-text-box").value;
-            if (email.indexOf('@') && password.length >= minPasswordLength){
+            if (validateUser(email, password, "login")){
                 window.$('#Modal').modal('hide');
                 fetch(`${window.location.origin}/login`,{
                     headers: new Headers({
@@ -123,18 +123,19 @@ export let dom = {
     registerNewUser: function () {
         const registerBtn = document.querySelector("#registerNewUser");
         registerBtn.addEventListener("click", function () {
-            let username = document.querySelector("#newUserName").value;
             let email = document.querySelector("#newUserEmail").value;
             let password = document.querySelector("#newUserPassword").value;
-
-
-            let data = {
-                "username": username,
+            if (validateUser(email, password, "register")) {
+                let data = {
                 "email": email,
                 "password": password
             }
 
-            dataHandler.registerUser(data)
+                dataHandler.registerUser(data)
+            } else {
+                console.log("Incorrect data!")
+            }
+
         });
 
     },
@@ -155,6 +156,20 @@ export let dom = {
                 }
 
             })
-    }
+    },
+
 
 };
+
+
+function validateUser (login, password, type) {
+    let minLenght = 5;
+    let maxLenght = 50;
+    if ((login.lenght > minLenght && login.lenght < maxLenght) && (password.lenght > minLenght && password.lenght < maxLenght) && (login.indexOf("@"))) {
+        if (type === "register") {
+            let logins = dataHandler.getLogins();
+            return !login in logins;  // if login not in logins return true else false
+        }
+        return true;
+        }
+    }
