@@ -55,18 +55,22 @@ def register_user():
 @app.route('/login', methods=['POST'])
 def user_login():
 
-    login_data = request.get_json()
-    user_data = data_handler.get_user_by_login(login_data.get('login'))
-    if 'id' in user_data:
-        if data_manager.check_password(login_password=login_data['password'], db_password=user_data['passwordhash']):
-            user = data_handler.User(user_data)
-            login_user(user)
-            _current_user = current_user
-            resp = app.make_response(jsonify('True'))
-            resp.set_cookie('id', str(user_data['id']))
-            return resp
+    try:
+        login_data = request.get_json()
+        user_data = data_handler.get_user_by_login(login_data.get('login'))
+        if 'id' in user_data:
+            if data_manager.check_password(login_password=login_data['password'],
+                                           db_password=user_data['passwordhash']):
+                user = data_handler.User(user_data)
+                login_user(user)
+                _current_user = current_user
+                resp = app.make_response(jsonify('True'))
+                resp.set_cookie('id', str(user_data['id']))
+                return resp
 
-    return jsonify(False)
+        return jsonify(False)
+    except Exception():
+        return jsonify(False)
 
 
 @app.route('/logout', methods=['GET'])
