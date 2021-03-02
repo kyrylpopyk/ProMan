@@ -43,7 +43,7 @@ export let dom = {
 
                 let linkToBoard = document.createElement("a");
                 divCard.appendChild(linkToBoard);
-                linkToBoard.href = "#"
+                linkToBoard.href = "#";
 
                 // create div header
                 let divHeader = document.createElement("div");

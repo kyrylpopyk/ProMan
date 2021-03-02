@@ -118,12 +118,10 @@ def add_new_board():
     """
     Adds new board
     """
-    print("ok")
+
     board_data = request.get_json()
     board_title = board_data['title']
-    print(board_title)
     user_id = current_user.id
-    print(user_id)
     return data_handler.add_new_board(board_title,user_id)
 
 

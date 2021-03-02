@@ -66,7 +66,10 @@ export let dataHandler = {
         this._api_post(`${window.location.origin}/new_board`, boardData);
     },
 
+    createNewCard: function (cardTitle, boardId, statusId, callback) {
+        // creates new card, saves it and calls the callback function with its data
 
+    },
 
     getStatuses: function (callback) {
         // the statuses are retrieved and then the callback function is called with the statuses
@@ -80,12 +83,8 @@ export let dataHandler = {
     getCard: function (cardId, callback) {
         // the card is retrieved and then the callback function is called with the card
     },
-    createNewBoard: function (boardTitle, callback) {
-        // creates new board, saves it and calls the callback function with its data
-    },
-    createNewCard: function (cardTitle, boardId, statusId, callback) {
-        // creates new card, saves it and calls the callback function with its data
-    },
+
+
     getLogins: function () {
        return this._api_get('/get-logins');
 
