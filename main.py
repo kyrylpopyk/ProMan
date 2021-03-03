@@ -144,7 +144,10 @@ def get_logins():
 @app.route("/get-board", methods=["POST"])
 def get_board_by_id():
     board_id = request.get_json()
-    data = data_handler.get_board_by_id(board_id)
+    board_data = data_handler.get_board_by_id(board_id)
+    cards_data = data_handler.get_cards_by_board_id(board_id)
+    statuses_data = data_handler.get_statuses()
+    data = {'boardData': board_data, 'cardsData': cards_data, 'statusesData': statuses_data}
     return jsonify(data)
 
 

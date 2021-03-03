@@ -3,6 +3,8 @@
 
 // (watch out: when you would like to use a property/function of an object from the
 // object itself then you must use the 'this' keyword before. For example: 'this._data' below)
+import { dom } from "./dom.js";
+
 export let dataHandler = {
     _data: {}, // it is a "cache for all data received: boards, cards and statuses. It is not accessed from outside.
     _api_get: function (url, callback) {
@@ -31,8 +33,8 @@ export let dataHandler = {
             .then((response) => {
                 return response.json()
             })
-            .then((response) => {
-                let data = callback(response);
+            .then( response => {
+                console.log(response);
             })
             // .catch(error => callback(error));
     },
@@ -79,7 +81,7 @@ export let dataHandler = {
 
     getStatuses: function (callback) {
         // the statuses are retrieved and then the callback function is called with the statuses
-        return this._api_get("/get-statuses");
+        return this._api_get("/get-statuses", callback);
     },
     getStatus: function (statusId, callback) {
         // the status is retrieved and then the callback function is called with the status
@@ -96,6 +98,24 @@ export let dataHandler = {
     getLogins: function () {
        return this._api_get('/get-logins');
 
+    },
+
+    getDataForBoard: function (url, data, callback){
+        fetch(url, {
+        method: 'POST',
+        headers: new Headers({
+            'content-type': 'application/json'
+        }),
+        credentials: 'same-origin',
+        body: JSON.stringify(data)
+    })
+        .then((response) => {
+            return response.json()
+        })
+        .then((response) => {
+            let board_data = response;
+            dom.showBoard(board_data['boardData'], board_data['statusesData'], board_data['cardsData']);
+        })
     }
 
     // here comes more features
