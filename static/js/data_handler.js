@@ -28,9 +28,13 @@ export let dataHandler = {
             credentials: 'same-origin',
             body: JSON.stringify(data)
         })
-            .then(response => response.json())
-            .then(response => callback(response))
-            .catch(error => callback(error));
+            .then((response) => {
+                return response.json()
+            })
+            .then((response) => {
+                let data = callback(response);
+            })
+            // .catch(error => callback(error));
     },
     init: function () {
     },
@@ -54,6 +58,8 @@ export let dataHandler = {
 
     getBoard: function (boardId, callback) {
         // the board is retrieved and then the callback function is called with the board
+        let data = this._api_post("/get-board", boardId, callback);
+        return data;
     },
     registerUser: function (formData) {
         this._api_post(`${window.location.origin}/register`, formData, (response) => {
@@ -63,7 +69,7 @@ export let dataHandler = {
 
     addNewBoard: function(boardData) {
         console.log(boardData);
-        this._api_post(`${window.location.origin}/new_board`, boardData);
+        return this._api_post(`${window.location.origin}/new_board`, boardData);
     },
 
     createNewCard: function (cardTitle, boardId, statusId, callback) {
@@ -73,12 +79,14 @@ export let dataHandler = {
 
     getStatuses: function (callback) {
         // the statuses are retrieved and then the callback function is called with the statuses
+        return this._api_get("/get-statuses");
     },
     getStatus: function (statusId, callback) {
         // the status is retrieved and then the callback function is called with the status
     },
     getCardsByBoardId: function (boardId, callback) {
         // the cards are retrieved and then the callback function is called with the cards
+        return this._api_post("/get-cards", boardId);
     },
     getCard: function (cardId, callback) {
         // the card is retrieved and then the callback function is called with the card

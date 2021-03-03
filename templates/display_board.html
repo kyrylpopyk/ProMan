@@ -1,5 +1,7 @@
-{% block display_board %}
-    <div class="board_container" id="boardContainer">
+{% extends "index.html" %}
+{% block content %}
+    <div class="container" id="boardContainer" hidden>
+        <h3 id="boardTitle"></h3>
         <button class="btn btn-primary" id="newCardBtn">
             <span class="addBoardBtn">add new card</span></button>
 

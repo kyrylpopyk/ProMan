@@ -110,8 +110,6 @@ def get_public_boards():
     return data_handler.get_boards_by_type("public")
 
 
-@app.route("/get-cards/<int:board_id>")
-
 @app.route("/new_board", methods=['POST'])
 @json_response
 def add_new_board():
@@ -141,6 +139,31 @@ def add_new_board():
 @json_response
 def get_logins():
     return data_handler.get_logins()
+
+
+@app.route("/get-board", methods=["POST"])
+def get_board_by_id():
+    board_id = request.get_json()
+    data = data_handler.get_board_by_id(board_id)
+    return jsonify(data)
+
+
+@app.route("/get-cards", methods=["POST"])
+def get_cards_by_board_id():
+    board_id = request.get_json()
+    data = data_handler.get_cards_by_board_id(board_id)
+    return jsonify(data)
+
+
+@app.route("/get-statuses")
+def get_statuses():
+    data = data_handler.get_statuses()
+    return jsonify(data)
+
+
+@app.route("/display-board")
+def display_board():
+    return render_template("display_board.html")
 
 
 def main():

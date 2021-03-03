@@ -18,6 +18,7 @@ function eventHandlers() {
     dom.listenNewLoginBtn();
     dom.listenNewLogOutBtn();
     dom.listenNewBoardBtn();
+
 }
 
 init();

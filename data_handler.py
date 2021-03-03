@@ -66,10 +66,6 @@ class User(object):
 
 
 
-
-
-
-
 @connection.connection_handler
 def get_boards(cursor: RealDictCursor) -> list:
     query = """
@@ -163,6 +159,42 @@ def get_logins(cursor: RealDictCursor) -> list:
     query = """
             SELECT login
             FROM users"""
+
+    cursor.execute(query)
+    return cursor.fetchall()
+
+@connection.connection_handler
+def get_board_by_id(cursor: RealDictCursor, board_id):
+    query = """
+            SELECT *
+            FROM boards
+            WHERE id = %(board_id)s"""
+
+    param = {
+        "board_id": board_id
+    }
+    cursor.execute(query, param)
+    return cursor.fetchone()
+
+
+@connection.connection_handler
+def get_cards_by_board_id(cursor: RealDictCursor, board_id):
+    query = """
+               SELECT *
+               FROM cards
+               WHERE id = %(board_id)s"""
+
+    param = {
+        "board_id": board_id
+    }
+    cursor.execute(query, param)
+    return cursor.fetchall()
+
+@connection.connection_handler
+def get_statuses(cursor: RealDictCursor):
+    query = """
+               SELECT *
+               FROM statuses"""
 
     cursor.execute(query)
     return cursor.fetchall()
