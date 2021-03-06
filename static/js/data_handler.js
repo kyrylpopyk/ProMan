@@ -115,7 +115,15 @@ export let dataHandler = {
             let board_data = response;
             dom.showBoard(board_data['boardData'], board_data['statusesData'], board_data['cardsData']);
         })
-    }
+    },
+    addNewCard: function (cardData) {
+        console.log(cardData);
+        this._api_post(`${window.location.origin}/new_card`, cardData, (response) => {
+            alert(response);
+        });
+        // creates new card, saves it and calls the callback function with its data
+
+    },
 
     // here comes more features
 };

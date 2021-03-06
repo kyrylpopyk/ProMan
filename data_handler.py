@@ -236,4 +236,18 @@ def get_cards_by_user(cursor: RealDictCursor, user_id: int):
     cursor.execute(query, param)
     return cursor.fetchall()
 
+@connection.connection_handler
+def add_new_card(cursor: RealDictCursor, board_id, card_title, status_id, user_id):
+    command = """
+            INSERT INTO cards(board_id, title, status_id, user_id)
+            VALUES  (%(board_id)s, %(title)s, %(status_id)s, %(user_id)s)
+            """
+    param = {
+        "board_id": board_id,
+        "title": card_title,
+        "status_id": status_id,
+        "user_id": user_id,
+    }
+    cursor.execute(command, param)
+
 

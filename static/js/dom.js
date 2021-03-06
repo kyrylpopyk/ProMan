@@ -17,45 +17,6 @@ export let dom = {
            dom.showBoards(boards, "public");
         });
     },
-    showBoards: function (boards, type) {
-        // shows boards appending them to #boards div
-        // it adds necessary event listeners also
-
-        const privateBoardsContainer = document.querySelector("#privateBoardsContainer");
-        const publicBoardsContainer = document.querySelector("#publicBoardsContainer");
-
-        let mainContainer;
-
-        if (type === "public"){
-            mainContainer = publicBoardsContainer;
-        } else {
-            mainContainer = privateBoardsContainer;
-        }
-
-        for (let i = 0; i < boards.length; i++) {
-
-                let buttonToBoard = document.createElement("button");
-                mainContainer.appendChild(buttonToBoard);
-                buttonToBoard.type = "button";
-                buttonToBoard.className = "btn btn-dark";
-                buttonToBoard.id = "showBoardBtn";
-                buttonToBoard.dataset.boardId = boards[i]["id"]
-
-
-
-                // create div card
-                let divCard = document.createElement("div");
-                buttonToBoard.appendChild(divCard);
-                divCard.className = "card text-white bg-dark mb-3";
-                divCard.style.width = "18rem"
-
-                // create div header
-                let divHeader = document.createElement("div");
-                divCard.appendChild(divHeader);
-                divHeader.className = "card-header";
-                divHeader.innerText = boards[i].title;
-            }
-    },
     loadCards: function (boardId) {
         // retrieves cards and makes showCards called
     },
@@ -129,8 +90,8 @@ export let dom = {
         document.querySelector("#newBoardBtn").addEventListener('click', ()=> {
           newBoardModal.style.visibility = "visible";
           newBoardModal.style.display = 'block';
-          this.addNewBoard();
         });
+        this.addNewBoard();
     },
 
     addNewBoard: function () {
@@ -174,14 +135,87 @@ export let dom = {
         })
             .then( (response) => {return response.json()} )
             .then( (data) => {
-                setLogBtn(data)
+                setLogBtn(data);
+                if (data){
+                    dataHandler.makeBoards();
+                }
 
             })
     },
+    showBoard: function (boards, statuses, cards) {
+        let body_element = document.querySelector('#body');
+        let base_list_boards = document.querySelector('#lists_boards');
+        let base_container = document.querySelector('#base_container');
+        let base_board_name = document.querySelector('#base_board_name');
+        let base_card_space = document.querySelector('#base_cards_space');
+        let base_status_name = document.querySelector('#base_status_name');
+        let base_card = document.querySelector('#base_card');
+        let base_card_name = document.querySelector('#base_card_name');
 
-    showBoard: function (board, statuses, cards) {
 
-    }
+
+        for (let board of boards){
+            let board_container = base_container.content.cloneNode(true);
+            let board_name = board_container.querySelector('#base_board_name');
+            board_name.innerHTML = board['title'];
+            for (let status of statuses){
+                if (status['board_id'] == board['id']){
+                    let status_name = base_status_name.content.cloneNode(true);
+                    status_name.querySelector('#status_name').innerHTML = status['title'];
+                    board_container.querySelector('#base_cards_space').appendChild(status_name);
+
+                    for (let card of cards){
+                        if ((card['status_id']) == status['id'] && card['board_id'] == board['id']){
+                            let card_element = base_card.content.cloneNode(true);
+                            card_element.querySelector('#base_card_name').innerHTML = card['title'];
+
+                            board_container.querySelector('#base_cards_space').appendChild(card_element);
+                        }
+                    }
+                }
+            }
+            body_element.appendChild(board_container);
+        }
+
+
+
+        /*
+        * lists_boards - #lists_boards
+           base_container - #base_container
+           board_name - #base_board_name
+           cards_space - #base_cards_space
+           status_name - #base_status_name
+           base_card - #base_card
+           card_name - #base_card_name*/
+    },
+    listenNewCardBtn: function() {
+        const newCardModal = document.querySelector('#newCard');
+        document.querySelector("#newCardBtn").addEventListener('click', (event)=> {
+          newCardModal.style.visibility = "visible";
+          newCardModal.style.display = 'block';
+          event.preventDefault();
+        });
+        dom.addNewCard();
+    },
+
+
+    addNewCard: function () {
+        let boardId = document.querySelector('#boarId'); //do wrzucenia w template boarda!!!
+        const submitCardBtn = document.querySelector("#submitCardBtn");
+        submitCardBtn.addEventListener('click', function (event) {
+           let newCardTitle = document.querySelector('#newCardTitle').value;
+           let newCardStatus = document.querySelector('#newCardStatus').value;
+           event.preventDefault();
+           let newCardData = {
+
+               'title': newCardTitle,
+               'status': newCardStatus
+
+           };
+
+           dataHandler.addNewCard(newCardData);
+        });
+    },
 
 
 };

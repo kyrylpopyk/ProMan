@@ -170,6 +170,22 @@ def display_board():
     return render_template("display_board.html")
 
 
+@app.route("/new_card", methods=['POST'])
+@json_response
+def add_new_card(board_id=1):
+    """
+    Adds new card
+    """
+
+    card_data = request.get_json()
+    card_title = card_data['title']
+    card_status = card_data['status']
+    status_id = int(data_handler.default_card_statuses[card_status])
+    user_id = current_user.id
+    print(current_user)
+    return data_handler.add_new_card(board_id, card_title, status_id, user_id)
+
+
 def main():
     app.run(debug=True)
 
