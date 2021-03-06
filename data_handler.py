@@ -176,6 +176,19 @@ def get_board_by_id(cursor: RealDictCursor, board_id):
     cursor.execute(query, param)
     return cursor.fetchone()
 
+@connection.connection_handler
+def get_board_by_id(cursor: RealDictCursor, board_id):
+    query = """
+            SELECT *
+            FROM boards
+            WHERE id = %(board_id)s"""
+
+    param = {
+        "board_id": board_id
+    }
+    cursor.execute(query, param)
+    return cursor.fetchone()
+
 
 @connection.connection_handler
 def get_cards_by_board_id(cursor: RealDictCursor, board_id):
@@ -191,10 +204,36 @@ def get_cards_by_board_id(cursor: RealDictCursor, board_id):
     return cursor.fetchall()
 
 @connection.connection_handler
-def get_statuses(cursor: RealDictCursor):
+def get_statuses_by_user(cursor: RealDictCursor, user_id: int):
     query = """
-               SELECT *
-               FROM statuses"""
+        SELECT * FROM statuses
+        where user_id = %(user_id)s;
+    """
 
-    cursor.execute(query)
+    param = {'user_id': user_id}
+    cursor.execute(query, param)
     return cursor.fetchall()
+
+@connection.connection_handler
+def get_boards_by_user(cursor: RealDictCursor, user_id: int):
+    query = """
+        SELECT boards.id, boards.title, boards.type
+        FROM boards
+        where user_id = %(user_id)s;
+    """
+    param = {'user_id': user_id}
+    cursor.execute(query, param)
+    return cursor.fetchall()
+
+@connection.connection_handler
+def get_cards_by_user(cursor: RealDictCursor, user_id: int):
+    query = """
+        SELECT cards.id, cards.board_id, cards.title, cards.status_id
+        FROM cards
+        where user_id = %(user_id)s;
+    """
+    param = {'user_id': user_id}
+    cursor.execute(query, param)
+    return cursor.fetchall()
+
+

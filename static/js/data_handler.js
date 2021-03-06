@@ -100,14 +100,13 @@ export let dataHandler = {
 
     },
 
-    getDataForBoard: function (url, data, callback){
-        fetch(url, {
+    makeBoards: function (){
+        fetch(`${window.location.origin}/get-boards`, {
         method: 'POST',
         headers: new Headers({
             'content-type': 'application/json'
         }),
-        credentials: 'same-origin',
-        body: JSON.stringify(data)
+        credentials: 'same-origin'
     })
         .then((response) => {
             return response.json()

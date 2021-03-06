@@ -55,7 +55,6 @@ export let dom = {
                 divHeader.className = "card-header";
                 divHeader.innerText = boards[i].title;
             }
-        dom.listenShowBoardBtn();
     },
     loadCards: function (boardId) {
         // retrieves cards and makes showCards called
@@ -97,8 +96,7 @@ export let dom = {
                         if (data){
                             informationPopup('User logged successful');
                             setLogBtn(data);
-                            let listBoards = document.querySelector("#listBoards");
-                            listBoards.hidden = false;
+                            dataHandler.makeBoards()
                         }
                         else{
                             informationPopup('Failed login');
@@ -180,56 +178,10 @@ export let dom = {
 
             })
     },
-    listenShowBoardBtn: function () {
-        const showBoardBtn = document.querySelector("#showBoardBtn");
-        showBoardBtn.addEventListener("click", function () {
-            let boardId = parseInt(showBoardBtn.dataset.boardId);
-            dataHandler.getDataForBoard(`${window.location.origin}/get-board`, boardId.toString())
-
-            /*let boardId = parseInt(showBoardBtn.dataset.boardId);
-            let board = dataHandler.getBoard(boardId, (response) => { return response });
-            let statuses = dataHandler.getStatuses((response) => { return response });
-            let cards = dataHandler.getCardsByBoardId(boardId);*/
-        })
-    },
 
     showBoard: function (board, statuses, cards) {
-    const defaultStatuses = ["New", "In Progress", "Testing", "Done"];
-    const boardContainer = document.querySelector("#boardContainer");
-    const boardTitle = document.querySelector("#boardTitle");
 
-    boardTitle.innerText = board["title"];
-    boardTitle.style.alignContent = "center";
-
-    let statusesTitles;
-
-    if (cards.length === 0) {
-        statusesTitles = defaultStatuses;
-    } else {
-        let statusesFromCards = [];
-        for(let i = 0; i < cards.length; i++) {
-            let statusId = cards[i]["status_id"];
-            for (let j = 0; j < statuses.length; j++) {
-                let statusTitle = statuses[j]["title"];
-                if ((statuses[j]["id"] === statusId) && (!statusTitle in statusesFromCards)) {
-                    statusesFromCards.push(statusTitle);
-                }
-            }
-        }
-        statusesTitles = statusesFromCards;
     }
-
-    for(let i = 0; i < statusesTitles.length; i++) {
-        let col = document.createElement("div");
-        boardContainer.appendChild(col);
-        col.className = "col g-2";
-
-        let name = document.createElement("h4");
-        col.appendChild(col);
-        name.innerText = statusesTitles[i];
-    }
-
-}
 
 
 };
@@ -269,42 +221,4 @@ function informationPopup(information){
         window.$('.information-popup').modal('show');
         setTimeout( () =>{window.$('.information-popup').modal('hide')}, 1000)
     }
-
-function showBoard(board, statuses, cards) {
-    const defaultStatuses = ["New", "In Progress", "Testing", "Done"];
-    const boardContainer = document.querySelector("#boardContainer");
-    const boardTitle = document.querySelector("#boardTitle");
-
-    boardTitle.innerText = board["title"];
-    boardTitle.style.alignContent = "center";
-
-    let statusesTitles;
-
-    if (cards.length === 0) {
-        statusesTitles = defaultStatuses;
-    } else {
-        let statusesFromCards = [];
-        for(let i = 0; i < cards.length; i++) {
-            let statusId = cards[i]["status_id"];
-            for (let j = 0; j < statuses.length; j++) {
-                let statusTitle = statuses[j]["title"];
-                if ((statuses[j]["id"] === statusId) && (!statusTitle in statusesFromCards)) {
-                    statusesFromCards.push(statusTitle);
-                }
-            }
-        }
-        statusesTitles = statusesFromCards;
-    }
-
-    for(let i = 0; i < statusesTitles.length; i++) {
-        let col = document.createElement("div");
-        boardContainer.appendChild(col);
-        col.className = "col g-2";
-
-        let name = document.createElement("h4");
-        col.appendChild(col);
-        name.innerText = statusesTitles[i];
-    }
-
-}
 
