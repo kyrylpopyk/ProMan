@@ -89,29 +89,9 @@ def check_login():
     return jsonify(True) if current_user.is_authenticated else jsonify(False)
 
 
-@app.route("/get-boards")
-@json_response
-def get_boards():
-    """
-    All the boards
-    """
-    return data_handler.get_boards()
-
-
-@app.route("/get-private-boards")
-@json_response
-def get_private_boards():
-    return data_handler.get_boards_by_type("private")
-
-
-@app.route("/get-public-boards")
-@json_response
-def get_public_boards():
-    return data_handler.get_boards_by_type("public")
-
-
 @app.route("/new_board", methods=['POST'])
 @json_response
+@login_required
 def add_new_board():
     """
     Adds new board
@@ -120,19 +100,7 @@ def add_new_board():
     board_data = request.get_json()
     board_title = board_data['title']
     user_id = current_user.id
-    return data_handler.add_new_board(board_title,user_id)
-
-
-
-# @app.route("/get-cards/<int:board_id>")
-# @json_response
-# def get_cards_for_board(board_id: int):
-#     """
-#     All cards that belongs to a board
-#     :param board_id: id of the parent board
-#     """
-#     return data_handler.get_cards_for_board(board_id)
-
+    return data_handler.add_new_board(board_title, user_id)
 
 
 @app.route("/get-logins")
@@ -152,26 +120,9 @@ def get_user_boards_data():
     return jsonify(data)
 
 
-@app.route("/get-cards", methods=["POST"])
-def get_cards_by_board_id():
-    board_id = request.get_json()
-    data = data_handler.get_cards_by_board_id(board_id)
-    return jsonify(data)
-
-
-@app.route("/get-statuses")
-def get_statuses():
-    data = data_handler.get_statuses()
-    return jsonify(data)
-
-
-@app.route("/display-board")
-def display_board():
-    return render_template("display_board.html")
-
-
 @app.route("/new_card", methods=['POST'])
 @json_response
+@login_required
 def add_new_card(board_id=1):
     """
     Adds new card
