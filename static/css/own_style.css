@@ -1,5 +1,5 @@
 .card-style{
-    background-color: red;
+    background-color: yellow;
     padding: 5px;
     border-radius: 30px;
     margin-bottom: 5px;
@@ -43,4 +43,27 @@
 
 .fixed-navbar:hover{
     box-shadow: red 0 0 10px;
+}
+
+.card_option_btn_style{
+    height: 20px;
+    width: auto;
+    filter: grayscale(100%);
+    transform: translate(-50%, -50%);
+    top: 50%;
+    position: absolute;
+}
+
+.status_option_btn_style{
+    height: 20px;
+    width: auto;
+    filter: grayscale(100%);
+}
+
+.card_option_btn_style:hover{
+    filter: grayscale(0%);
+}
+
+.status_option_btn_style:hover{
+    filter: grayscale(0%);
 }
