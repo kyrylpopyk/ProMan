@@ -154,6 +154,7 @@ def get_boards_by_type(cursor: RealDictCursor, type):
     cursor.execute(query, param)
     return cursor.fetchall()
 
+
 @connection.connection_handler
 def get_logins(cursor: RealDictCursor) -> list:
     query = """
@@ -236,6 +237,7 @@ def get_cards_by_user(cursor: RealDictCursor, user_id: int):
     cursor.execute(query, param)
     return cursor.fetchall()
 
+
 @connection.connection_handler
 def add_new_card(cursor: RealDictCursor, board_id, card_title, status_id, user_id):
     command = """
@@ -249,5 +251,19 @@ def add_new_card(cursor: RealDictCursor, board_id, card_title, status_id, user_i
         "user_id": user_id,
     }
     cursor.execute(command, param)
+
+
+@connection.connection_handler
+def remove_board(cursor: RealDictCursor, board_id: str):
+    command = """
+    DELETE FROM boards 
+    WHERE boards.id = %(board_id)s;
+    """
+    param = {'board_id': board_id}
+    try:
+        cursor.execute(command, param)
+        return True
+    except Exception:
+        return False
 
 

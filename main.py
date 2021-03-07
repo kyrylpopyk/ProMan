@@ -137,6 +137,11 @@ def add_new_card(board_id=1):
     return data_handler.add_new_card(board_id, card_title, status_id, user_id)
 
 
+@app.route('/remove_board', methods=['POST'])
+def remove_board():
+    board_id = request.get_json()['board_id']
+    return data_handler.remove_board(board_id=board_id)
+
 def main():
     app.run(debug=True)
 

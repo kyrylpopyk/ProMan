@@ -8,25 +8,6 @@ export let dom = {
     init: function () {
         // This function should run once, when the page is loaded.
     },
-    loadBoards: function () {
-        // retrieves boards and makes showBoards called
-        dataHandler.getPrivateBoards(function(boards){
-            dom.showBoards(boards, "private");
-        });
-        dataHandler.getPublicBoards(function (boards){
-           dom.showBoards(boards, "public");
-        });
-    },
-    loadCards: function (boardId) {
-        // retrieves cards and makes showCards called
-    },
-    showCards: function (cards) {
-        // shows the cards of a board
-        // it adds necessary event listeners also
-    },
-    // here comes more features
-
-
     listenNewUserBtn:  function() {
         document.querySelector("#newUserBtn").addEventListener("click", () => {
             document.querySelector("#newUser").style.visibility = "visible";
@@ -144,19 +125,17 @@ export let dom = {
     },
     showBoard: function (boards, statuses, cards) {
         let body_element = document.querySelector('#body');
-        let base_list_boards = document.querySelector('#lists_boards');
         let base_container = document.querySelector('#base_container');
-        let base_board_name = document.querySelector('#base_board_name');
-        let base_card_space = document.querySelector('#base_cards_space');
         let base_status_name = document.querySelector('#base_status_name');
         let base_card = document.querySelector('#base_card');
-        let base_card_name = document.querySelector('#base_card_name');
-
-
 
         for (let board of boards){
             let board_container = base_container.content.cloneNode(true);
             let board_name = board_container.querySelector('#base_board_name');
+            let remove_board_btn = board_container.querySelector('#remove_board_btn');
+            remove_board_btn.addEventListener('click', () => {
+                this.listenNewRemoveBoard(board['id']);
+            })
             board_name.innerHTML = board['title'];
             for (let status of statuses){
                 if (status['board_id'] == board['id']){
@@ -168,7 +147,6 @@ export let dom = {
                         if ((card['status_id']) == status['id'] && card['board_id'] == board['id']){
                             let card_element = base_card.content.cloneNode(true);
                             card_element.querySelector('#base_card_name').innerHTML = card['title'];
-
                             board_container.querySelector('#base_cards_space').appendChild(card_element);
                         }
                     }
@@ -176,17 +154,6 @@ export let dom = {
             }
             body_element.appendChild(board_container);
         }
-
-
-
-        /*
-        * lists_boards - #lists_boards
-           base_container - #base_container
-           board_name - #base_board_name
-           cards_space - #base_cards_space
-           status_name - #base_status_name
-           base_card - #base_card
-           card_name - #base_card_name*/
     },
     listenNewCardBtn: function() {
         const newCardModal = document.querySelector('#newCard');
@@ -216,6 +183,21 @@ export let dom = {
            dataHandler.addNewCard(newCardData);
         });
     },
+    listenNewRemoveBoard: function (board_id){
+        fetch(`${window.location.origin}/remove_board`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({
+                board_id: JSON.stringify(board_id)
+            }),
+            method: 'POST',
+            credentials: 'include'
+        })
+            .then( response => response.json())
+            .then( response => console.log(response));
+    }
 
 
 };

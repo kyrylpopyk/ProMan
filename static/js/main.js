@@ -7,7 +7,6 @@ function init() {
     // init data
     dom.init();
     // loads the boards to the screen
-    dom.loadBoards();
     // set user status
     dom.checkUserSatus();
 
