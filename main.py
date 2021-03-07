@@ -123,7 +123,7 @@ def get_user_boards_data():
 @app.route("/new_card", methods=['POST'])
 @json_response
 @login_required
-def add_new_card(board_id=1):
+def add_new_card():
     """
     Adds new card
     """
@@ -146,8 +146,8 @@ def main():
     app.run(debug=True)
 
     # Serving the favicon
-    with app.app_context():
-        app.add_url_rule('/favicon.ico', redirect_to=url_for('static', filename='favicon/favicon.ico'))
+    # with app.app_context():
+    #     app.add_url_rule('/favicon.ico', redirect_to=url_for('static', filename='favicon/favicon.ico'))
 
 
 if __name__ == '__main__':

@@ -30,6 +30,9 @@ import bcrypt
 #          matching_cards.append(card)
 #  return matching_cards
 
+default_card_statuses = {"new": 1, "progress": 2, "testing": 3, "done": 4}
+
+
 class User(object):
     """An admin user capable of viewing reports.
 
