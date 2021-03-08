@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 // It uses data_handler.js to visualize elements
 import { dataHandler } from "./data_handler.js";
@@ -135,10 +135,7 @@ export let dom = {
             remove_board_btn.addEventListener('click', () => {
                 this.listenNewRemoveBoard(board['id']);
             });
-            let newCardBtn = board_container.querySelector('#newCardBtn');
-            newCardBtn.addEventListener('click', () => {
-                this.listenNewCardBtn(board['id']);
-            });
+
 
 
             board_name.innerHTML = board['title'];
@@ -147,6 +144,7 @@ export let dom = {
                     let status_name = base_status_name.content.cloneNode(true);
                     status_name.querySelector('#status_name').innerHTML = status['title'];
                     board_container.querySelector('#base_cards_space').appendChild(status_name);
+
 
 
                     for (let card of cards){
@@ -161,8 +159,13 @@ export let dom = {
                     }
                 }
             }
-
+            let newCardBtn = board_container.querySelector('#newCardBtn');
+            newCardBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                this.listenNewCardBtn(board['id']);
+            });
             body_element.appendChild(board_container);
+
 
         }
     },
@@ -189,7 +192,6 @@ export let dom = {
                'board_id': board_id,
 
            };
-
            dataHandler.addNewCard(newCardData);
         });
     },

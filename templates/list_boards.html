@@ -7,6 +7,7 @@
    base_card - #base_card
    card_name - #base_card_name
 #}
+<div>
 <div class="content" id="lists_boards" hidden>
     <div class="fixed-navbar">
     <div class="container-fluid">
@@ -36,9 +37,9 @@
                       <div class="col-1 text-center">
                           <button type="button" class="btn btn-dark btn-sm">Rename</button>
                       </div>
-                      <div class="col-1 text-center">
-                      <button type="button" class="btn btn-dark btn-sm" id="newCardBtn">Add card</button>
-                      </div>
+{#                      <div class="col-1 text-center">#}
+{#                      <button type="button" class="btn btn-dark btn-sm" id="newCardBtn" data-toggle="modal">Add card</button>#}
+{#                      </div>#}
                   </div>
                   <div class="row board-body-style sm-round-style" style="">
                       <div class="col-3">
@@ -78,10 +79,9 @@
                           <span class="text-bo title-style" id="status_name">New</span>
                       </div>
                       <div class="col-3">
-
-{#                          <a href="" class="float-right align-items-center" id="newCardBtn">#}
-{#                              <img src="../static/img/add.png"  class="status_option_btn_style" alt="">#}
-{#                          </a>#}
+                          <a href="" class="float-right align-items-center" id="newCardBtn" data-toggle="modal">
+                              <img src="../static/img/add.png"  class="status_option_btn_style" alt="">
+                          </a>
                       </div>
                       <div class="col-3">
                           <a href="" class="float-right align-items-center">
@@ -91,7 +91,10 @@
                   </div>
               </div>
         </div>
-    </template>
+     </template>
+</div>
+
+
 
 
 

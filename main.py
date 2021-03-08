@@ -120,7 +120,7 @@ def get_user_boards_data():
     return jsonify(data)
 
 
-@app.route("/new_card/<board_id>", methods=['POST'])
+@app.route("/new_card", methods=['POST'])
 @json_response
 @login_required
 def add_new_card():
@@ -136,6 +136,7 @@ def add_new_card():
     user_id = current_user.id
     print(current_user)
     return data_handler.add_new_card(board_id, card_title, status_id, user_id)
+
 
 
 @app.route('/remove_board', methods=['POST'])
