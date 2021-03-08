@@ -120,7 +120,7 @@ def get_user_boards_data():
     return jsonify(data)
 
 
-@app.route("/new_card", methods=['POST'])
+@app.route("/new_card/<board_id>", methods=['POST'])
 @json_response
 @login_required
 def add_new_card():
@@ -131,6 +131,7 @@ def add_new_card():
     card_data = request.get_json()
     card_title = card_data['title']
     card_status = card_data['status']
+    board_id = card_data['board_id']
     status_id = int(data_handler.default_card_statuses[card_status])
     user_id = current_user.id
     print(current_user)

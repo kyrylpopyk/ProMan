@@ -56,6 +56,11 @@ export let dataHandler = {
         return this._api_post(`${window.location.origin}/new_board`, boardData);
     },
 
+
+    addNewCard: function(cardData) {
+        console.log(cardData);
+        return this._api_post(`${window.location.origin}/new_card`, cardData);
+    },
     createNewCard: function (cardTitle, boardId, statusId, callback) {
         // creates new card, saves it and calls the callback function with its data
 
