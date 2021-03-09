@@ -4,12 +4,16 @@
     text-decoration: none;
 }
 
+*:hover{
+    text-decoration: none !important;
+}
+
 body{
     background-color: rgb(200,200,200);
 }
 
 .content-board-list{
-    margin: 5% 10% 5% 10%;
+    margin: 5% 5% 5% 5%;
 }
 
 .grid-boards-list{
@@ -165,6 +169,7 @@ body{
 .board-header-option-btn:hover{
     font-size: 110%;
     box-shadow: red 0 0 10px;
+    color: white;
 }
 
 .options-btn{

@@ -125,7 +125,7 @@ export let dom = {
     showBoard: function (boards, statuses, cards) {
         let body_element = document.querySelector('#body');
         let base_container = document.querySelector('#base_container');
-        let base_status_name = document.querySelector('#base_status_name');
+        let base_status_name = document.querySelector('#base_status');
         let base_card = document.querySelector('#base_card');
 
         for (let board of boards){
@@ -143,14 +143,18 @@ export let dom = {
                 if (status['board_id'] == board['id']){
                     let status_name = base_status_name.content.cloneNode(true);
                     status_name.querySelector('#status_name').innerHTML = status['title'];
-                    board_container.querySelector('#base_cards_space').appendChild(status_name);
+                    board_container.querySelector('#base_statuses_space').appendChild(status_name);
 
 
 
                     for (let card of cards){
                         if ((card['status_id']) == status['id'] && card['board_id'] == board['id']){
                             let card_element = base_card.content.cloneNode(true);
-
+                            let newCardBtn = board_container.querySelector('#newCardBtn');
+                            newCardBtn.addEventListener('click', (event) => {
+                                event.preventDefault();
+                                this.listenNewCardBtn(board['id']);
+                            });
                             card_element.querySelector('#base_card_name').innerHTML = card['title'];
                             board_container.querySelector('#base_cards_space').appendChild(card_element);
 
@@ -159,11 +163,6 @@ export let dom = {
                     }
                 }
             }
-            let newCardBtn = board_container.querySelector('#newCardBtn');
-            newCardBtn.addEventListener('click', (event) => {
-                event.preventDefault();
-                this.listenNewCardBtn(board['id']);
-            });
             body_element.appendChild(board_container);
 
 
