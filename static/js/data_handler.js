@@ -61,10 +61,6 @@ export let dataHandler = {
         console.log(cardData);
         return this._api_post(`${window.location.origin}/new_card`, cardData);
     },
-    createNewCard: function (cardTitle, boardId, statusId, callback) {
-        // creates new card, saves it and calls the callback function with its data
-
-    },
 
     getStatuses: function (callback) {
         // the statuses are retrieved and then the callback function is called with the statuses

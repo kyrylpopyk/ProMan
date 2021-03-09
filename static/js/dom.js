@@ -164,8 +164,6 @@ export let dom = {
                 }
             }
             body_element.appendChild(board_container);
-
-
         }
     },
     listenNewCardBtn: function(board_id) {
@@ -192,6 +190,8 @@ export let dom = {
 
            };
            dataHandler.addNewCard(newCardData);
+           let modal = document.querySelector('#newCardModal');
+           modal.style.visibility = 'hidden';
         });
     },
     listenNewRemoveBoard: function (board_id){
