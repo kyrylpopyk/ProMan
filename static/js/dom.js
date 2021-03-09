@@ -153,7 +153,7 @@ export let dom = {
                             let newCardBtn = board_container.querySelector('#newCardBtn');
                             newCardBtn.addEventListener('click', (event) => {
                                 event.preventDefault();
-                                this.listenNewCardBtn(board['id']);
+                                this.listenNewCardBtn(board['id'], status['id']);
                             });
                             card_element.querySelector('#base_card_name').innerHTML = card['title'];
                             board_container.querySelector('#base_cards_space').appendChild(card_element);
@@ -166,27 +166,26 @@ export let dom = {
             body_element.appendChild(board_container);
         }
     },
-    listenNewCardBtn: function(board_id) {
+    listenNewCardBtn: function(boardId, statusId) {
         console.log('karta');
         const newCardModal = document.querySelector('#newCardModal');
         newCardModal.style.visibility = "visible";
         newCardModal.style.display = 'block';
-        dom.addNewCard(board_id);
+        dom.addNewCard(boardId, statusId);
     },
 
 
-    addNewCard: function (board_id) {
+    addNewCard: function (boardId, statusId) {
 
         const submitCardBtn = document.querySelector("#submitCardBtn");
         submitCardBtn.addEventListener('click', function (event) {
            let newCardTitle = document.querySelector('#newCardTitle').value;
-           let newCardStatus = document.querySelector('#newCardStatus').value;
            event.preventDefault();
            let newCardData = {
 
                'title': newCardTitle,
-               'status': newCardStatus,
-               'board_id': board_id,
+               'board_id': boardId,
+               'status_id': statusId
 
            };
            dataHandler.addNewCard(newCardData);

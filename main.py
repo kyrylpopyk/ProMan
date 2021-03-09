@@ -130,9 +130,8 @@ def add_new_card():
 
     card_data = request.get_json()
     card_title = card_data['title']
-    card_status = card_data['status']
     board_id = card_data['board_id']
-    status_id = int(data_handler.default_card_statuses[card_status])
+    status_id = card_data['status_id']
     user_id = current_user.id
     print(current_user)
     return data_handler.add_new_card(board_id, card_title, status_id, user_id)
