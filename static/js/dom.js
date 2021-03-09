@@ -143,25 +143,27 @@ export let dom = {
                 if (status['board_id'] == board['id']){
                     let status_name = base_status_name.content.cloneNode(true);
                     status_name.querySelector('#status_name').innerHTML = status['title'];
-                    board_container.querySelector('#base_statuses_space').appendChild(status_name);
-
 
 
                     for (let card of cards){
                         if ((card['status_id']) == status['id'] && card['board_id'] == board['id']){
                             let card_element = base_card.content.cloneNode(true);
-                            let newCardBtn = board_container.querySelector('#newCardBtn');
-                            newCardBtn.addEventListener('click', (event) => {
-                                event.preventDefault();
-                                this.listenNewCardBtn(board['id'], status['id']);
-                            });
                             card_element.querySelector('#base_card_name').innerHTML = card['title'];
-                            board_container.querySelector('#base_cards_space').appendChild(card_element);
+                            status_name.querySelector('#base_cards_space').appendChild(card_element);
 
                         }
 
                     }
+                    board_container.querySelector('#base_statuses_space').appendChild(status_name);
                 }
+            }
+            let addBtnList = board_container.querySelectorAll('#newCardBtn');
+            let actualStatuses = saveDataById(board['id'], statuses);
+            for (let i = 0; i < actualStatuses.length; i++){
+                addBtnList[i].addEventListener('click', (event) => {
+                    event.preventDefault();
+                    functionAdd(board['id'], actualStatuses[i]['id']);
+                })
             }
             body_element.appendChild(board_container);
         }
@@ -246,5 +248,20 @@ function informationPopup(information){
         inf_pop_title.innerHTML = information;
         window.$('.information-popup').modal('show');
         setTimeout( () =>{window.$('.information-popup').modal('hide')}, 1000)
+}
+
+function saveDataById(board_id, data){
+    let new_data = [];
+    for (let i = 0; i < data.length; i++){
+        if (data[i]['board_id'] == board_id){
+            new_data.push(data[i]);
+        }
     }
+    return new_data
+}
+
+function functionAdd(board_id, status_id) {
+    dom.listenNewCardBtn(board_id, status_id);
+}
+
 
