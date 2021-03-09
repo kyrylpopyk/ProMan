@@ -162,11 +162,9 @@ export let dom = {
             let newCardBtn = board_container.querySelector('#newCardBtn');
             newCardBtn.addEventListener('click', (event) => {
                 event.preventDefault();
-                this.listenNewCardBtn(board['id']);
+                dom.listenNewCardBtn(board['id']);
             });
             body_element.appendChild(board_container);
-
-
         }
     },
     listenNewCardBtn: function(board_id) {
@@ -193,6 +191,8 @@ export let dom = {
 
            };
            dataHandler.addNewCard(newCardData);
+           let modal = document.querySelector('#newCardModal');
+           modal.style.visibility = 'hidden';
         });
     },
     listenNewRemoveBoard: function (board_id){
