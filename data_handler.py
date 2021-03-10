@@ -135,6 +135,7 @@ def add_new_board(cursor: RealDictCursor, board_title, user_id):
     command = """
             INSERT INTO boards(title, user_id, type)
             VALUES  (%(title)s, %(user_id)s, %(type)s)
+            RETURNING id
             """
     param = {
         "title": board_title,
@@ -142,6 +143,7 @@ def add_new_board(cursor: RealDictCursor, board_title, user_id):
         "type": "public"
     }
     cursor.execute(command, param)
+    return cursor.fetchone()
 
 
 @connection.connection_handler
@@ -269,4 +271,14 @@ def remove_board(cursor: RealDictCursor, board_id: str):
     except Exception:
         return False
 
+@connection.connection_handler
+def add_card_status(cursor: RealDictCursor, status_tittle, user_id, board_id):
+    command = """INSERT INTO statuses(title, user_id, board_id) 
+                 VALUES (%(title)s, %(user_id)s, %(board_id)s)"""
 
+    param = {
+        "title": status_tittle,
+        "user_id": user_id,
+        "board_id": board_id
+    }
+    cursor.execute(command, param)

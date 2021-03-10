@@ -96,11 +96,15 @@ def add_new_board():
     """
     Adds new board
     """
-
+    default_card_statuses_list = ["New", "In Progress", "Testing", "Done"]
     board_data = request.get_json()
     board_title = board_data['title']
     user_id = current_user.id
-    return data_handler.add_new_board(board_title, user_id)
+    board_id = data_handler.add_new_board(board_title, user_id)
+    for default_card_status in default_card_statuses_list:
+        data_handler.add_card_status(default_card_status, user_id, board_id["id"])
+
+    return "ok"
 
 
 @app.route("/get-logins")
