@@ -84,6 +84,7 @@ export let dom = {
            };
 
            dataHandler.addNewBoard(newBoardData);
+           location.reload();
         });
     },
 
@@ -119,8 +120,7 @@ export let dom = {
                 if (data){
                     dataHandler.makeBoards();
                 }
-
-            })
+            });
     },
     showBoard: function (boards, statuses, cards) {
         let body_element = document.querySelector('#body');
@@ -163,7 +163,7 @@ export let dom = {
                 addBtnList[i].addEventListener('click', (event) => {
                     event.preventDefault();
                     functionAdd(board['id'], actualStatuses[i]['id']);
-                })
+                });
             }
             body_element.appendChild(board_container);
         }
@@ -193,6 +193,7 @@ export let dom = {
            dataHandler.addNewCard(newCardData);
            let modal = document.querySelector('#newCardModal');
            modal.style.visibility = 'hidden';
+            location.reload();
         });
     },
     listenNewRemoveBoard: function (board_id){
@@ -209,6 +210,7 @@ export let dom = {
         })
             .then( response => response.json())
             .then( response => console.log(response));
+        location.reload();
     }
 
 
@@ -257,11 +259,12 @@ function saveDataById(board_id, data){
             new_data.push(data[i]);
         }
     }
-    return new_data
+    return new_data;
 }
 
 function functionAdd(board_id, status_id) {
     dom.listenNewCardBtn(board_id, status_id);
 }
+
 
 
