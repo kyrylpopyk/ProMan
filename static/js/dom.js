@@ -19,7 +19,7 @@ export let dom = {
         document.querySelector(".loginBtn").addEventListener("click", () => {
             let email = document.querySelector(".login-email-text-box").value;
             let password = document.querySelector(".login-password-text-box").value;
-            if (validateUser(email, password, "login")){
+            if (validateUser(email, password)){
                 window.$('#Modal').modal('hide');
                 fetch(`${window.location.origin}/login`,{
                     headers: {
@@ -93,7 +93,7 @@ export let dom = {
             let  username = document.querySelector("#newUsername").value;
             let email = document.querySelector("#newUserEmail").value;
             let password = document.querySelector("#newUserPassword").value;
-            if (validateUser(email, password, "register")) {
+            if (validateUser(email, password)) {
                 let data = {
                 "username": username,
                 "login": email,
@@ -135,7 +135,10 @@ export let dom = {
             remove_board_btn.addEventListener('click', () => {
                 this.listenNewRemoveBoard(board['id']);
             });
-
+            let addStatusBtn = board_container.querySelector("#addStatusBtn");
+            addStatusBtn.addEventListener('click', () => {
+                this.addStatus(board["id"]);
+            })
 
 
             board_name.innerHTML = board['title'];
@@ -209,18 +212,30 @@ export let dom = {
         })
             .then( response => response.json())
             .then( response => console.log(response));
+    },
+    addStatus: function (boardId) {
+        const newStatusModal = document.querySelector("#newStatusModal");
+        newStatusModal.style.visibility = "visible";
+        newStatusModal.style.display = "block";
+
+        let addStatusBtn = document.querySelector("#submitStatusBtn");
+        addStatusBtn.addEventListener('click', (event) => {
+            let statusTitle = document.querySelector("#newStatusTitle").value;
+            let newStatusData = {
+                "title": statusTitle,
+                "board_id": boardId,
+            }
+            dataHandler.addStatus(newStatusData);
+            newStatusModal.style.visibility = "hidden";
+        });
     }
-
-
 };
-function validateUser (login, password, type) {
+
+
+function validateUser (login, password) {
     let minLength = 5;
     let maxLength = 50;
     if ((login.length > minLength && login.length < maxLength) && (password.length > minLength && password.length < maxLength) && (login.indexOf("@"))) {
-        // if (type === "register") {
-        //     let logins = dataHandler.getLogins();
-        //     return !login in logins;  // if login not in logins return true else false
-        // }
         return true;
     } else {
         return false;

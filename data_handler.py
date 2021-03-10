@@ -282,3 +282,4 @@ def add_card_status(cursor: RealDictCursor, status_tittle, user_id, board_id):
         "board_id": board_id
     }
     cursor.execute(command, param)
+

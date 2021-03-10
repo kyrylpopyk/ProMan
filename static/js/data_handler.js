@@ -98,6 +98,20 @@ export let dataHandler = {
             let board_data = response;
             dom.showBoard(board_data['boardData'], board_data['statusesData'], board_data['cardsData']);
         })
+    },
+
+    addStatus: function (data) {
+        fetch("/add-status", {
+            method: "POST",
+            headers: new Headers({
+                "content-type": "application/json"
+            }),
+            credentials: 'same-origin',
+            body: JSON.stringify(data)
+        })
+            .then((response) => {
+                return response.json()
+            })
     }
 
     // here comes more features

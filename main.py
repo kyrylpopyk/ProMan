@@ -141,11 +141,22 @@ def add_new_card():
     return data_handler.add_new_card(board_id, card_title, status_id, user_id)
 
 
-
 @app.route('/remove_board', methods=['POST'])
+@json_response
+@login_required
 def remove_board():
     board_id = request.get_json()['board_id']
     return data_handler.remove_board(board_id=board_id)
+
+
+@app.route('/add-status', methods=['POST'])
+@json_response
+@login_required
+def add_status():
+    status = request.get_json()
+    user_id = current_user.id
+    return data_handler.add_card_status(status["title"], user_id, status["board_id"])
+
 
 def main():
     app.run(debug=True)
