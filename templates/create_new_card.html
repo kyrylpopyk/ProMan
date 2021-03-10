@@ -3,40 +3,31 @@
 <div class="container">
 <div class="row">
     <div class="col-md-12">
-
-        <div class="modal fade" id="newCard" tabindex="-1" role="dialog" style="visibility: hidden">
-            <div class="modal-dialog modal-dialog-centered">
+        <div class="modal" id="newCardModal" tabindex="-1" role="dialog" style="visibility: hidden">
+            <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <div class="row w-100">
-                            <div class="col-sm">
-                                <h3>New card</h3>
-                            </div>
-                            <div class="col-sm">
-                                <button type="button" class="close align-content-end" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                        </div>
+                        <h4 class="modal-title">Add new card</h4>
+                        <button type="button" class="close align-content-end" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label for="newCardTitle">new card title</label>
-                            <textarea class="form-control" id="newCardTitle" rows="3"></textarea>
-                        </div>
-
-                    </div>
-                    <div class="modal-footer align-content-center">
-                        <div class="col text-center">
-                            <button class="btn btn-primary" data-dismiss="modal">
-                                <span class="addCardBtn">add new card</span>
-                            </button>
-                        </div>
+                        <form id="addNewCard">
+                            <div class="form-group">
+                                <label for="newCardTitle">new card title</label>
+                                <textarea class="form-control" id="newCardTitle" rows="3"></textarea>
+                            </div>
+                            <div class="modal-footer align-content-center">
+                                <div class="col text-center">
+                                    <button type='button' class="btn btn-primary"  id='submitCardBtn' data-dismiss="modal">add new card</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 </div>

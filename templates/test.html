@@ -1,0 +1,74 @@
+{% block test %}
+
+    <template id="base_container">
+    <div class="content-board-list">
+        <div class="grid-boards-list">
+            <div class="row-board-grid">
+                <div class="row-board-header-grid">
+                    <div class="col-board-header-title">
+                        <span class="board-title"id="base_board_name">Board Title</span>
+                    </div> <!-- board title -->
+                    <div class="row-board-header-settings-grid">
+                        <div class="col-board-header-add">
+                            <a href="" class="board-header-option-btn">Add Status</a>
+                        </div>
+                        <div class="col-board-header-rename">
+                            <a href="" class="board-header-option-btn">Rename Board</a>
+                        </div>
+                        <div class="col-board-header-remove">
+                            <a href="" class="board-header-option-btn" id="remove_board_btn">Remove Board</a>
+                        </div>
+                    </div> <!-- board options -->
+                </div> <!-- board header -->
+                <div class="row-board-body-grid" id="base_statuses_space">
+                    <!-- status here -->
+                </div> <!-- board body -->
+            </div> <!-- board -->
+        </div>
+    </div>
+    </template>
+
+    <template id="base_card">
+    <div class="row-card-grid">
+        <div class="col-card-title">
+            <span id="base_card_name">Card name</span>
+        </div>
+        <div class="col-card-options">
+            <a href="" class="options-btn">
+                <img src="../static/img/remove.jpg" alt="remove-status" class="status-option-image-card">
+            </a>
+        </div>
+    </div>
+    </template>
+
+    <template id="base_status">
+    <div class="column-status-grid">
+        <div class="row-status-name-grid">
+            <div class="col-status-name">
+                <span class="status-name" id="status_name">Status name</span>
+            </div>
+            <div class="col-status-options-grid">
+                <div class="col-status-option-btn">
+                    <a href="" class="options-btn" id="newCardBtn">
+                        <img src="../static/img/add.png" alt="add-card" class="status-option-image">
+                    </a>
+                </div>
+                <div class="col-status-option-btn">
+                    <a href="" class="options-btn">
+                        <img src="../static/img/rename.png" alt="rename-status" class="status-option-image">
+                    </a>
+                </div>
+                <div class="col-status-option-btn">
+                    <a href="" class="options-btn">
+                        <img src="../static/img/remove.jpg" alt="remove-status" class="status-option-image">
+                    </a>
+                </div>
+            </div> <!-- Options -->
+        </div>
+        <div class="row-cards-grid" id="base_cards_space">
+            <!-- cards here -->
+        </div> <!-- card-container -->
+    </div>
+    </template>
+
+{% endblock %}

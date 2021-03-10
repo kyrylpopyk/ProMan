@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 // It uses data_handler.js to visualize elements
 import { dataHandler } from "./data_handler.js";
@@ -43,12 +43,11 @@ export let dom = {
                         else{
                             informationPopup('Failed login');
                         }
-                    })
+                    });
             }
             else{
                 console.log('Incorrect data!');
             }
-            console.log("clicked");
         });
     },
     listenNewLogOutBtn:  function() {
@@ -126,7 +125,7 @@ export let dom = {
     showBoard: function (boards, statuses, cards) {
         let body_element = document.querySelector('#body');
         let base_container = document.querySelector('#base_container');
-        let base_status_name = document.querySelector('#base_status_name');
+        let base_status_name = document.querySelector('#base_status');
         let base_card = document.querySelector('#base_card');
 
         for (let board of boards){
@@ -135,52 +134,65 @@ export let dom = {
             let remove_board_btn = board_container.querySelector('#remove_board_btn');
             remove_board_btn.addEventListener('click', () => {
                 this.listenNewRemoveBoard(board['id']);
-            })
+            });
+
+
+
             board_name.innerHTML = board['title'];
             for (let status of statuses){
                 if (status['board_id'] == board['id']){
                     let status_name = base_status_name.content.cloneNode(true);
                     status_name.querySelector('#status_name').innerHTML = status['title'];
-                    board_container.querySelector('#base_cards_space').appendChild(status_name);
+
 
                     for (let card of cards){
                         if ((card['status_id']) == status['id'] && card['board_id'] == board['id']){
                             let card_element = base_card.content.cloneNode(true);
                             card_element.querySelector('#base_card_name').innerHTML = card['title'];
-                            board_container.querySelector('#base_cards_space').appendChild(card_element);
+                            status_name.querySelector('#base_cards_space').appendChild(card_element);
+
                         }
+
                     }
+                    board_container.querySelector('#base_statuses_space').appendChild(status_name);
                 }
+            }
+            let addBtnList = board_container.querySelectorAll('#newCardBtn');
+            let actualStatuses = saveDataById(board['id'], statuses);
+            for (let i = 0; i < actualStatuses.length; i++){
+                addBtnList[i].addEventListener('click', (event) => {
+                    event.preventDefault();
+                    functionAdd(board['id'], actualStatuses[i]['id']);
+                })
             }
             body_element.appendChild(board_container);
         }
     },
-    listenNewCardBtn: function() {
-        const newCardModal = document.querySelector('#newCard');
-        document.querySelector("#newCardBtn").addEventListener('click', (event)=> {
-          newCardModal.style.visibility = "visible";
-          newCardModal.style.display = 'block';
-          event.preventDefault();
-        });
-        dom.addNewCard();
+    listenNewCardBtn: function(boardId, statusId) {
+        console.log('karta');
+        const newCardModal = document.querySelector('#newCardModal');
+        newCardModal.style.visibility = "visible";
+        newCardModal.style.display = 'block';
+        dom.addNewCard(boardId, statusId);
     },
 
 
-    addNewCard: function () {
-        let boardId = document.querySelector('#boarId'); //do wrzucenia w template boarda!!!
+    addNewCard: function (boardId, statusId) {
+
         const submitCardBtn = document.querySelector("#submitCardBtn");
         submitCardBtn.addEventListener('click', function (event) {
            let newCardTitle = document.querySelector('#newCardTitle').value;
-           let newCardStatus = document.querySelector('#newCardStatus').value;
            event.preventDefault();
            let newCardData = {
 
                'title': newCardTitle,
-               'status': newCardStatus
+               'board_id': boardId,
+               'status_id': statusId
 
            };
-
            dataHandler.addNewCard(newCardData);
+           let modal = document.querySelector('#newCardModal');
+           modal.style.visibility = 'hidden';
         });
     },
     listenNewRemoveBoard: function (board_id){
@@ -211,7 +223,7 @@ function validateUser (login, password, type) {
         // }
         return true;
     } else {
-        return false
+        return false;
     }
 }
 
@@ -236,5 +248,20 @@ function informationPopup(information){
         inf_pop_title.innerHTML = information;
         window.$('.information-popup').modal('show');
         setTimeout( () =>{window.$('.information-popup').modal('hide')}, 1000)
+}
+
+function saveDataById(board_id, data){
+    let new_data = [];
+    for (let i = 0; i < data.length; i++){
+        if (data[i]['board_id'] == board_id){
+            new_data.push(data[i]);
+        }
     }
+    return new_data
+}
+
+function functionAdd(board_id, status_id) {
+    dom.listenNewCardBtn(board_id, status_id);
+}
+
 
