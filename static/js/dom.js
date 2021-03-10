@@ -149,31 +149,48 @@ export let dom = {
                         if ((card['status_id']) == status['id'] && card['board_id'] == board['id']){
                             let card_element = base_card.content.cloneNode(true);
                             card_element.querySelector('#base_card_name').innerHTML = card['title'];
+
                             status_name.querySelector('#base_cards_space').appendChild(card_element);
 
                         }
 
                     }
+
                     board_container.querySelector('#base_statuses_space').appendChild(status_name);
                 }
             }
             let addBtnList = board_container.querySelectorAll('#newCardBtn');
+
             let actualStatuses = saveDataById(board['id'], statuses);
-            for (let i = 0; i < actualStatuses.length; i++){
+            console.log(actualStatuses);
+            for (let i = 0; i < actualStatuses.length; i++) {
                 addBtnList[i].addEventListener('click', (event) => {
                     event.preventDefault();
                     functionAdd(board['id'], actualStatuses[i]['id']);
                 });
+
             }
+            let removeCardBtnList = board_container.querySelectorAll('#removeCardBtn');
+                for (let index = 0; index < cards.length; index++) {
+                    removeCardBtnList[index].addEventListener('click', (event) => {
+                        event.preventDefault();
+                        this.listenRemoveCard(cards[index]['id']);
+                        location.reload();
+                    });
+                }
             body_element.appendChild(board_container);
         }
     },
     listenNewCardBtn: function(boardId, statusId) {
-        console.log('karta');
+
         const newCardModal = document.querySelector('#newCardModal');
         newCardModal.style.visibility = "visible";
         newCardModal.style.display = 'block';
         dom.addNewCard(boardId, statusId);
+    },
+
+    listenRemoveCard: function(cardId) {
+        dataHandler.removeCard(cardId);
     },
 
 

@@ -62,6 +62,10 @@ export let dataHandler = {
         return this._api_post(`${window.location.origin}/new_card`, cardData);
     },
 
+    removeCard: function (cardId) {
+        return this._api_post(`${window.location.origin}/remove_card`, cardId);
+    },
+
     getStatuses: function (callback) {
         // the statuses are retrieved and then the callback function is called with the statuses
         return this._api_get("/get-statuses", callback);

@@ -271,6 +271,20 @@ def remove_board(cursor: RealDictCursor, board_id: str):
     except Exception:
         return False
 
+
+@connection.connection_handler
+def remove_card(cursor: RealDictCursor, card_id: str):
+    command = """
+    DELETE FROM cards 
+    WHERE cards.id = %(card_id)s;
+    """
+    param = {'card_id': card_id}
+    try:
+        cursor.execute(command, param)
+        return True
+    except Exception:
+        return False
+
 @connection.connection_handler
 def add_card_status(cursor: RealDictCursor, status_tittle, user_id, board_id):
     command = """INSERT INTO statuses(title, user_id, board_id) 

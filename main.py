@@ -147,6 +147,12 @@ def remove_board():
     board_id = request.get_json()['board_id']
     return data_handler.remove_board(board_id=board_id)
 
+@app.route('/remove_card', methods=['POST'])
+def remove_card():
+    card_id = request.get_json()
+    return data_handler.remove_card(card_id)
+
+
 def main():
     app.run(debug=True)
 
