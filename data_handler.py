@@ -283,3 +283,12 @@ def add_card_status(cursor: RealDictCursor, status_tittle, user_id, board_id):
     }
     cursor.execute(command, param)
 
+@connection.connection_handler
+def remove_status(cursor: RealDictCursor, status_id):
+    command = """DELETE FROM statuses
+                 WHERE statuses.id = %(status_id)s"""
+
+    param = {
+        "status_id": status_id
+    }
+    cursor.execute(command, param)

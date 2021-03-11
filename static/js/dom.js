@@ -161,14 +161,21 @@ export let dom = {
                 }
             }
             let addBtnList = board_container.querySelectorAll('#newCardBtn');
+            // let removeStatusBtnList = board_container.querySelectorAll("#removeStatusBtn");
             let actualStatuses = saveDataById(board['id'], statuses);
             for (let i = 0; i < actualStatuses.length; i++){
                 addBtnList[i].addEventListener('click', (event) => {
                     event.preventDefault();
                     functionAdd(board['id'], actualStatuses[i]['id']);
-                })
+                });
+                // removeStatusBtnList[i].addEventListener('click', (event) => {
+                //     event.preventDefault();
+                //     let data = { "status_id": actualStatuses[i]["id"] };
+                //     dataHandler.removeStatus(data);
+                // })
             }
             body_element.appendChild(board_container);
+
         }
     },
     listenNewCardBtn: function(boardId, statusId) {

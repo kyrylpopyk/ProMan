@@ -11,6 +11,9 @@ import data_handler
 import data_manager
 
 
+import mimetypes
+mimetypes.add_type("application/javascript", ".js", True)
+
 app = Flask(__name__)
 app.secret_key = urandom(16)
 login_manager = LoginManager()
@@ -156,6 +159,14 @@ def add_status():
     status = request.get_json()
     user_id = current_user.id
     return data_handler.add_card_status(status["title"], user_id, status["board_id"])
+
+
+@app.route('/remove-status', methods=['POST'])
+@json_response
+@login_required
+def remove_status():
+    status_id = request.get_json()["status_id"]
+    return data_handler.remove_status(status_id)
 
 
 def main():

@@ -110,9 +110,22 @@ export let dataHandler = {
             body: JSON.stringify(data)
         })
             .then((response) => {
-                return response.json()
+                return response.json();
             })
-    }
+    },
+    removeStatus: function (statusId) {
+        fetch("/remove-status", {
+            method: "POST",
+            headers: new Headers({
+                "content-type": "application/json"
+            }),
+            credentials: 'same-origin',
+            body: JSON.stringify(statusId)
+        })
+            .then((response) => {
+                return response.json();
+            })
 
+    }
     // here comes more features
 };
