@@ -36,6 +36,7 @@ export let dataHandler = {
             .then( response => {
                 console.log(response);
             })
+
             // .catch(error => callback(error));
     },
     init: function () {
@@ -60,6 +61,10 @@ export let dataHandler = {
     addNewCard: function(cardData) {
         console.log(cardData);
         return this._api_post(`${window.location.origin}/new_card`, cardData);
+    },
+
+    removeCard: function (cardId) {
+        return this._api_post(`${window.location.origin}/remove_card`, cardId);
     },
 
     getStatuses: function (callback) {
@@ -112,6 +117,11 @@ export let dataHandler = {
             .then((response) => {
                 return response.json();
             })
+            .then((response) => {
+                location.reload();
+            })
+
+
     },
     removeStatus: function (statusId) {
         fetch("/remove-status", {
@@ -124,6 +134,9 @@ export let dataHandler = {
         })
             .then((response) => {
                 return response.json();
+            })
+            .then((response) => {
+                location.reload();
             })
 
     }

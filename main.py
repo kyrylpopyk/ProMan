@@ -169,6 +169,12 @@ def remove_status():
     return data_handler.remove_status(status_id)
 
 
+@app.route('/remove_card', methods=['POST'])
+def remove_card():
+    card_id = request.get_json()
+    return data_handler.remove_card(card_id)
+
+
 def main():
     app.run(debug=True)
 

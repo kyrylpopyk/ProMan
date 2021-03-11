@@ -84,6 +84,7 @@ export let dom = {
            };
 
            dataHandler.addNewBoard(newBoardData);
+           location.reload();
         });
     },
 
@@ -106,7 +107,7 @@ export let dom = {
         });
 
     },
-    checkUserSatus: function(){
+    checkUserStatus: function(){
         fetch(`${window.location.origin}/checkLogin`,{
             method: 'GET',
             headers: new Headers({
@@ -119,8 +120,7 @@ export let dom = {
                 if (data){
                     dataHandler.makeBoards();
                 }
-
-            })
+            });
     },
     showBoard: function (boards, statuses, cards) {
         let body_element = document.querySelector('#body');
@@ -152,38 +152,54 @@ export let dom = {
                         if ((card['status_id']) == status['id'] && card['board_id'] == board['id']){
                             let card_element = base_card.content.cloneNode(true);
                             card_element.querySelector('#base_card_name').innerHTML = card['title'];
+
                             status_name.querySelector('#base_cards_space').appendChild(card_element);
 
                         }
 
                     }
+
                     board_container.querySelector('#base_statuses_space').appendChild(status_name);
                 }
             }
             let addBtnList = board_container.querySelectorAll('#newCardBtn');
-            // let removeStatusBtnList = board_container.querySelectorAll("#removeStatusBtn");
+
+            let removeStatusBtnList = board_container.querySelectorAll("#removeStatusBtn");
             let actualStatuses = saveDataById(board['id'], statuses);
-            for (let i = 0; i < actualStatuses.length; i++){
+            console.log(actualStatuses);
+            for (let i = 0; i < actualStatuses.length; i++) {
                 addBtnList[i].addEventListener('click', (event) => {
                     event.preventDefault();
                     functionAdd(board['id'], actualStatuses[i]['id']);
                 });
-                // removeStatusBtnList[i].addEventListener('click', (event) => {
-                //     event.preventDefault();
-                //     let data = { "status_id": actualStatuses[i]["id"] };
-                //     dataHandler.removeStatus(data);
-                // })
+                removeStatusBtnList[i].addEventListener('click', (event) => {
+                    event.preventDefault();
+                    let data = { "status_id": actualStatuses[i]["id"] };
+                    dataHandler.removeStatus(data);
+                });
             }
+            let removeCardBtnList = board_container.querySelectorAll('#removeCardBtn');
+                for (let index = 0; index < cards.length; index++) {
+                    removeCardBtnList[index].addEventListener('click', (event) => {
+                        event.preventDefault();
+                        this.listenRemoveCard(cards[index]['id']);
+                        location.reload();
+                    });
+                }
             body_element.appendChild(board_container);
 
         }
     },
     listenNewCardBtn: function(boardId, statusId) {
-        console.log('karta');
+
         const newCardModal = document.querySelector('#newCardModal');
         newCardModal.style.visibility = "visible";
         newCardModal.style.display = 'block';
         dom.addNewCard(boardId, statusId);
+    },
+
+    listenRemoveCard: function(cardId) {
+        dataHandler.removeCard(cardId);
     },
 
 
@@ -203,6 +219,7 @@ export let dom = {
            dataHandler.addNewCard(newCardData);
            let modal = document.querySelector('#newCardModal');
            modal.style.visibility = 'hidden';
+            location.reload();
         });
     },
     listenNewRemoveBoard: function (board_id){
@@ -235,6 +252,7 @@ export let dom = {
             dataHandler.addStatus(newStatusData);
             newStatusModal.style.visibility = "hidden";
         });
+
     }
 };
 
@@ -279,11 +297,12 @@ function saveDataById(board_id, data){
             new_data.push(data[i]);
         }
     }
-    return new_data
+    return new_data;
 }
 
 function functionAdd(board_id, status_id) {
     dom.listenNewCardBtn(board_id, status_id);
 }
+
 
 
