@@ -11,8 +11,8 @@ import data_handler
 import data_manager
 
 
-import mimetypes
-mimetypes.add_type("application/javascript", ".js", True)
+# import mimetypes
+# mimetypes.add_type("application/javascript", ".js", True)
 
 app = Flask(__name__)
 app.secret_key = urandom(16)
@@ -108,6 +108,19 @@ def add_new_board():
         data_handler.add_card_status(default_card_status, user_id, board_id["id"])
 
     return "ok"
+
+@app.route("/edit_board", methods=['POST'])
+@json_response
+@login_required
+def edit_board():
+    """
+    edits boards
+    """
+    board_data = request.get_json()
+    board_id = board_data['id']
+    edited_board_title = board_data['title']
+    return data_handler.edit_board(board_id,edited_board_title)
+
 
 
 @app.route("/get-logins")

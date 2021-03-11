@@ -74,6 +74,28 @@ export let dom = {
         this.addNewBoard();
     },
 
+    listenEditBoardBtn: function(board) {
+        const editBoardModal = document.querySelector('#editBoard');
+        const submitEditedBoardBtn = editBoardModal.querySelector('#submitEditedBoardBtn')
+        let boardTitleToEdit = editBoardModal.querySelector('#editedTitle');
+        boardTitleToEdit.textContent = board['title'];
+        let boardId = board['id'];
+        editBoardModal.style.visibility = "visible";
+        editBoardModal.style.display = 'block';
+        submitEditedBoardBtn.addEventListener('click', (event) => {
+            event.preventDefault();
+
+            let editedBoardData = {
+
+                'id': boardId,
+                'title': boardTitleToEdit.value
+            };
+            dataHandler.editBoard(editedBoardData);
+            editBoardModal.style.visibility = 'hidden';
+        });
+    },
+
+
     addNewBoard: function () {
         const newBoardBtn = document.querySelector(".addBoardBtn");
         newBoardBtn.addEventListener('click', function () {
@@ -123,6 +145,7 @@ export let dom = {
             });
     },
     showBoard: function (boards, statuses, cards) {
+
         let body_element = document.querySelector('#body');
         let base_container = document.querySelector('#base_container');
         let base_status_name = document.querySelector('#base_status');
@@ -132,13 +155,22 @@ export let dom = {
             let board_container = base_container.content.cloneNode(true);
             let board_name = board_container.querySelector('#base_board_name');
             let remove_board_btn = board_container.querySelector('#remove_board_btn');
-            remove_board_btn.addEventListener('click', () => {
+            remove_board_btn.addEventListener('click', (event) => {
+                event.preventDefault();
                 this.listenNewRemoveBoard(board['id']);
             });
+
+            let editBoardBtn = board_container.querySelector("#editBoardBtn");
+            editBoardBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                this.listenEditBoardBtn(board);
+            });
+
             let addStatusBtn = board_container.querySelector("#addStatusBtn");
-            addStatusBtn.addEventListener('click', () => {
+            addStatusBtn.addEventListener('click', (event) => {
+                event.preventDefault()
                 this.addStatus(board["id"]);
-            })
+            });
 
 
             board_name.innerHTML = board['title'];

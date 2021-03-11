@@ -273,6 +273,31 @@ def remove_board(cursor: RealDictCursor, board_id: str):
 
 
 @connection.connection_handler
+def edit_board(cursor: RealDictCursor, board_id, board_title):
+    command = """
+            UPDATE boards
+            SET title = %(title)s
+            WHERE id = %(id)s        
+            """
+    param = {"id": board_id,
+             "title": board_title}
+
+    return cursor.execute(command, param)
+
+
+    command = """
+    UPDATE boards 
+    WHERE boards.id = %(board_id)s;
+    """
+    param = {'board_id': board_id}
+    try:
+        cursor.execute(command, param)
+        return True
+    except Exception:
+        return False
+
+
+@connection.connection_handler
 def remove_card(cursor: RealDictCursor, card_id: str):
     command = """
     DELETE FROM cards 

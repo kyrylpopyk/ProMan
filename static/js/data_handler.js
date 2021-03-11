@@ -57,6 +57,11 @@ export let dataHandler = {
         return this._api_post(`${window.location.origin}/new_board`, boardData);
     },
 
+    editBoard: function(boardData) {
+        console.log(boardData);
+        return this._api_post(`${window.location.origin}/edit_board`, boardData);
+    },
+
 
     addNewCard: function(cardData) {
         console.log(cardData);
