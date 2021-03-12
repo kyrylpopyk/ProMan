@@ -11,8 +11,8 @@ import data_handler
 import data_manager
 
 
-# import mimetypes
-# mimetypes.add_type("application/javascript", ".js", True)
+import mimetypes
+mimetypes.add_type("application/javascript", ".js", True)
 
 app = Flask(__name__)
 app.secret_key = urandom(16)

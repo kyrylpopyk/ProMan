@@ -209,15 +209,19 @@ export let dom = {
                     let data = { "status_id": actualStatuses[i]["id"] };
                     dataHandler.removeStatus(data);
                 });
+
             }
             let removeCardBtnList = board_container.querySelectorAll('#removeCardBtn');
-                for (let index = 0; index < cards.length; index++) {
-                    removeCardBtnList[index].addEventListener('click', (event) => {
-                        event.preventDefault();
-                        this.listenRemoveCard(cards[index]['id']);
-                        location.reload();
-                    });
+                if (removeCardBtnList === 0){
+                    for (let index = 0; index < cards.length; index++) {
+                        removeCardBtnList[index].addEventListener('click', (event) => {
+                            event.preventDefault();
+                            this.listenRemoveCard(cards[index]['id']);
+                            location.reload();
+                        });
                 }
+
+                    }
             body_element.appendChild(board_container);
 
         }
