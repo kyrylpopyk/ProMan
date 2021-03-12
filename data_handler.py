@@ -196,24 +196,25 @@ def get_board_by_id(cursor: RealDictCursor, board_id):
     return cursor.fetchone()
 
 
-@connection.connection_handler
-def get_cards_by_board_id(cursor: RealDictCursor, board_id):
-    query = """
-               SELECT *
-               FROM cards
-               WHERE id = %(board_id)s"""
-
-    param = {
-        "board_id": board_id
-    }
-    cursor.execute(query, param)
-    return cursor.fetchall()
+# @connection.connection_handler
+# def get_cards_by_board_id(cursor: RealDictCursor, board_id):
+#     query = """
+#                SELECT *
+#                FROM cards
+#                WHERE id = %(board_id)s"""
+#
+#     param = {
+#         "board_id": board_id
+#     }
+#     cursor.execute(query, param)
+#     return cursor.fetchall()
 
 @connection.connection_handler
 def get_statuses_by_user(cursor: RealDictCursor, user_id: int):
     query = """
         SELECT * FROM statuses
-        where user_id = %(user_id)s;
+        where user_id = %(user_id)s
+        ORDER BY id
     """
 
     param = {'user_id': user_id}
@@ -225,7 +226,8 @@ def get_boards_by_user(cursor: RealDictCursor, user_id: int):
     query = """
         SELECT boards.id, boards.title, boards.type
         FROM boards
-        where user_id = %(user_id)s;
+        where user_id = %(user_id)s
+        ORDER BY id
     """
     param = {'user_id': user_id}
     cursor.execute(query, param)
@@ -236,7 +238,8 @@ def get_cards_by_user(cursor: RealDictCursor, user_id: int):
     query = """
         SELECT cards.id, cards.board_id, cards.title, cards.status_id
         FROM cards
-        where user_id = %(user_id)s;
+        where user_id = %(user_id)s
+        ORDER BY id
     """
     param = {'user_id': user_id}
     cursor.execute(query, param)
@@ -329,5 +332,16 @@ def remove_status(cursor: RealDictCursor, status_id):
 
     param = {
         "status_id": status_id
+    }
+    cursor.execute(command, param)
+
+@connection.connection_handler
+def rename_status(cursor: RealDictCursor, status):
+    command = """UPDATE statuses
+                 SET title = %(title)s
+                 WHERE id = %(id)s   """
+    param = {
+        "title": status["title"],
+        "id": status["id"]
     }
     cursor.execute(command, param)

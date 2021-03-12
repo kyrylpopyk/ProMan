@@ -144,6 +144,24 @@ export let dataHandler = {
                 location.reload();
             })
 
-    }
+    },
+    renameStatus: function (status) {
+        fetch("/rename-status", {
+            method: "POST",
+            headers: new Headers({
+                "content-type": "application/json"
+            }),
+            credentials: 'same-origin',
+            body: JSON.stringify(status)
+        })
+            .then((response) => {
+                return response.json();
+            })
+            .then((response) => {
+                location.reload();
+            })
+
+    },
+
     // here comes more features
 };

@@ -164,6 +164,11 @@ def remove_board():
     board_id = request.get_json()['board_id']
     return data_handler.remove_board(board_id=board_id)
 
+@app.route('/remove_card', methods=['POST'])
+def remove_card():
+    card_id = request.get_json()
+    return data_handler.remove_card(card_id)
+
 
 @app.route('/add-status', methods=['POST'])
 @json_response
@@ -182,10 +187,12 @@ def remove_status():
     return data_handler.remove_status(status_id)
 
 
-@app.route('/remove_card', methods=['POST'])
-def remove_card():
-    card_id = request.get_json()
-    return data_handler.remove_card(card_id)
+@app.route('/rename-status', methods=['POST'])
+@json_response
+@login_required
+def rename_status():
+    status = request.get_json()
+    return data_handler.rename_status(status)
 
 
 def main():

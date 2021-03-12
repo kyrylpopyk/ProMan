@@ -195,8 +195,8 @@ export let dom = {
                 }
             }
             let addBtnList = board_container.querySelectorAll('#newCardBtn');
-
             let removeStatusBtnList = board_container.querySelectorAll("#removeStatusBtn");
+            let renameStatusBtnList = board_container.querySelectorAll("#renameStatusBtn");
             let actualStatuses = saveDataById(board['id'], statuses);
             console.log(actualStatuses);
             for (let i = 0; i < actualStatuses.length; i++) {
@@ -209,6 +209,11 @@ export let dom = {
                     let data = { "status_id": actualStatuses[i]["id"] };
                     dataHandler.removeStatus(data);
                 });
+                renameStatusBtnList[i].addEventListener('click', (event) =>{
+                    event.preventDefault();
+                    this.renameStatus(actualStatuses[i]);
+
+                })
 
             }
             let removeCardBtnList = board_container.querySelectorAll('#removeCardBtn');
@@ -289,6 +294,26 @@ export let dom = {
             newStatusModal.style.visibility = "hidden";
         });
 
+    },
+    renameStatus: function (status) {
+        const renameStatusModal = document.querySelector("#renameStatusModal");
+        renameStatusModal.style.visibility = "visible";
+        renameStatusModal.style.display = "block";
+
+        let currentTitleStatus = status["title"];
+        let titleStatus = document.querySelector("#statusTitle");
+        titleStatus.textContent = currentTitleStatus;
+
+        let renameStatusBtn = document.querySelector("#submitRenameStatusBtn");
+
+        renameStatusBtn.addEventListener('click', (event) => {
+            let statusData = {
+                "id": status["id"],
+                "title": titleStatus.value
+            }
+            dataHandler.renameStatus(statusData);
+            renameStatusModal.style.visibility = "hidden";
+        });
     }
 };
 
