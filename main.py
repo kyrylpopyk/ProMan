@@ -1,9 +1,7 @@
-from flask import Flask, render_template, url_for, request, jsonify
+from flask import Flask, render_template, request, jsonify
 
 from util import json_response
-from bcrypt import checkpw
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
-import os
 from os import urandom
 import util
 

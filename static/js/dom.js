@@ -148,7 +148,7 @@ export let dom = {
 
         let body_element = document.querySelector('#body');
         let base_container = document.querySelector('#base_container');
-        let base_status_name = document.querySelector('#base_status');
+        let base_status = document.querySelector('#base_status');
         let base_card = document.querySelector('#base_card');
 
         for (let board of boards){
@@ -176,17 +176,29 @@ export let dom = {
             board_name.innerHTML = board['title'];
             for (let status of statuses){
                 if (status['board_id'] == board['id']){
-                    let status_name = base_status_name.content.cloneNode(true);
+                    let status_name = base_status.content.cloneNode(true);
                     status_name.querySelector('#status_name').innerHTML = status['title'];
+                    // function listenDropStatus(status_name) {
+                    //     status_name.addEventListener('drop', onDrop);
+                    //     status_name.addEventListener('dragover', onDragOver);
+                    //
+                    // }
 
 
                     for (let card of cards){
                         if ((card['status_id']) == status['id'] && card['board_id'] == board['id']){
                             let card_element = base_card.content.cloneNode(true);
                             card_element.querySelector('#base_card_name').innerHTML = card['title'];
-
+                            // let cardDataId = card_element.dataset.cardId;
+                            // cardDataId = card["id"];
                             status_name.querySelector('#base_cards_space').appendChild(card_element);
-
+                    //         let draggableElement = document.querySelector("#draggable_card");
+                    //         card_element.setAttribute.draggable = "true";
+                    //         function listenDropStatus(card_element) {
+                    //             card_element.addEventListener('drop', onDragStart);
+                    //
+                    //
+                    // }
                         }
 
                     }
@@ -227,9 +239,21 @@ export let dom = {
                 }
 
                     }
+            let draggableElements = document.querySelectorAll("#draggable_card");
+               for(let i = 0; i < draggableElements.length; i++) {
+                   let cardDataId = draggableElements[i].dataset.cardId;
+                   cardDataId = cards[i]["id"];
+                   draggableElements[i].setAttribute.draggable = "true";
+                   draggableElement[i].addEventListener('drag', onDragStart);
+               }
             body_element.appendChild(board_container);
 
         }
+    },
+    listenDragCard: function (event, draggableElement) {
+
+        draggableElement.addEventListener('drop', onDragStart);
+
     },
     listenNewCardBtn: function(boardId, statusId) {
 
@@ -365,5 +389,27 @@ function functionAdd(board_id, status_id) {
     dom.listenNewCardBtn(board_id, status_id);
 }
 
+
+function onDragStart(event) {
+  event
+    .dataTransfer
+    .setData('text/plain', event.target.id);
+}
+
+function onDragOver(event) {
+  event.preventDefault();
+}
+
+function onDrop(event) {
+  const id = event
+    .dataTransfer
+    .getData('text');
+    const draggableElement = document.getElementById(id);
+    const dropzone = event.target;
+    dropzone.appendChild(draggableElement);
+    event
+        .dataTransfer
+        .clearData();
+}
 
 
