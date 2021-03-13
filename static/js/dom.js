@@ -304,19 +304,17 @@ function onDrop(event) {
 function createNewBoard(boardData, statusesData, cardsData){
     let base_container = document.querySelector('#base_container');
     let board_container = base_container.content.cloneNode(true);
-    let removeStatusBtnList = board_container.querySelectorAll("#removeStatusBtn");
-    let renameStatusBtnList = board_container.querySelectorAll("#renameStatusBtn");
 
     let editBoardBtn = board_container.querySelector("#editBoardBtn");
     editBoardBtn.addEventListener('click', (event) => {
         event.preventDefault();
-        this.listenEditBoardBtn(board);
+        dom.listenEditBoardBtn(boardData);
     });
 
     let addStatusBtn = board_container.querySelector("#addStatusBtn");
     addStatusBtn.addEventListener('click', (event) => {
         event.preventDefault()
-        this.addStatus(board["id"]);
+        dom.addStatus(boardData["id"]);
     });
 
     let remove_board_btn = board_container.querySelector('#remove_board_btn');
@@ -337,7 +335,10 @@ function createNewBoard(boardData, statusesData, cardsData){
 
     let addBtnList = board_container.querySelectorAll('#newCardBtn');
     let actualStatuses = saveDataById(boardData['id'], statusesData);
-    console.log(actualStatuses);
+
+    let removeStatusBtnList = board_container.querySelectorAll("#removeStatusBtn");
+    let renameStatusBtnList = board_container.querySelectorAll("#renameStatusBtn");
+
     for (let i = 0; i < actualStatuses.length; i++) {
         addBtnList[i].addEventListener('click', (event) => {
             event.preventDefault();
@@ -350,16 +351,16 @@ function createNewBoard(boardData, statusesData, cardsData){
         });
         renameStatusBtnList[i].addEventListener('click', (event) =>{
             event.preventDefault();
-            this.renameStatus(actualStatuses[i]);
+            dom.renameStatus(actualStatuses[i]);
         });
     }
 
     let removeCardBtnList = board_container.querySelectorAll('#removeCardBtn');
-        if (removeCardBtnList === 0){
-            for (let index = 0; index < cards.length; index++) {
+        if (removeCardBtnList.length != 0){
+            for (let index = 0; index < cardsData.length; index++) {
                 removeCardBtnList[index].addEventListener('click', (event) => {
                     event.preventDefault();
-                    this.listenRemoveCard(cards[index]['id']);
+                    dom.listenRemoveCard(cardsData[index]['id']);
                     location.reload();
                 });
             }
@@ -368,9 +369,9 @@ function createNewBoard(boardData, statusesData, cardsData){
     let draggableElements = document.querySelectorAll("#draggable_card");
        for(let i = 0; i < draggableElements.length; i++) {
            let cardDataId = draggableElements[i].dataset.cardId;
-           cardDataId = cards[i]["id"];
+           cardDataId = cardsData[i]["id"];
            draggableElements[i].setAttribute.draggable = "true";
-           draggableElement[i].addEventListener('drag', onDragStart);
+           draggableElements[i].addEventListener('drag', onDragStart);
        }
 
     return board_container
