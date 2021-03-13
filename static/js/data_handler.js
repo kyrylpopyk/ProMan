@@ -34,7 +34,7 @@ export let dataHandler = {
                 return response.json()
             })
             .then( response => {
-                console.log(response);
+                callback(response);
             })
             // .catch(error => callback(error));
     },
@@ -51,9 +51,9 @@ export let dataHandler = {
         });
     },
 
-    addNewBoard: function(boardData) {
+    addNewBoard: function(boardData, callback) {
         console.log(boardData);
-        return this._api_post(`${window.location.origin}/new_board`, boardData);
+        return this._api_post(`${window.location.origin}/new_board`, boardData, callback);
     },
 
 
@@ -65,7 +65,9 @@ export let dataHandler = {
     removeCard: function (cardId) {
         return this._api_post(`${window.location.origin}/remove_card`, cardId);
     },
-
+    removeBoard: function (boardId, callback){
+        return this._api_post(`${window.location.origin}/remove_board`, boardId, callback)
+    },
     getStatuses: function (callback) {
         // the statuses are retrieved and then the callback function is called with the statuses
         return this._api_get("/get-statuses", callback);

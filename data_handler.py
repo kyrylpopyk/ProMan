@@ -182,6 +182,7 @@ def get_board_by_id(cursor: RealDictCursor, board_id):
     cursor.execute(query, param)
     return cursor.fetchone()
 
+
 @connection.connection_handler
 def get_board_by_id(cursor: RealDictCursor, board_id):
     query = """
@@ -296,3 +297,14 @@ def add_card_status(cursor: RealDictCursor, status_tittle, user_id, board_id):
         "board_id": board_id
     }
     cursor.execute(command, param)
+
+
+@connection.connection_handler
+def get_statuses_by_board_id(cursor: RealDictCursor, board_id: str):
+    query = """
+            SELECT * FROM statuses
+            where board_id = %(board_id)s;
+        """
+    param = {'board_id': board_id}
+    cursor.execute(query, param)
+    return cursor.fetchall()

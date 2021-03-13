@@ -83,8 +83,7 @@ export let dom = {
                'title': newBoardTitle
            };
 
-           dataHandler.addNewBoard(newBoardData);
-           location.reload();
+           dataHandler.addNewBoard(newBoardData, appendBoardToHTML);
         });
     },
 
@@ -124,61 +123,8 @@ export let dom = {
     },
     showBoard: function (boards, statuses, cards) {
         let body_element = document.querySelector('#body');
-        let base_container = document.querySelector('#base_container');
-        let base_status_name = document.querySelector('#base_status');
-        let base_card = document.querySelector('#base_card');
-
         for (let board of boards){
-            let board_container = base_container.content.cloneNode(true);
-            let board_name = board_container.querySelector('#base_board_name');
-            let remove_board_btn = board_container.querySelector('#remove_board_btn');
-            remove_board_btn.addEventListener('click', () => {
-                this.listenNewRemoveBoard(board['id']);
-            });
-
-
-
-            board_name.innerHTML = board['title'];
-            for (let status of statuses){
-                if (status['board_id'] == board['id']){
-                    let status_name = base_status_name.content.cloneNode(true);
-                    status_name.querySelector('#status_name').innerHTML = status['title'];
-
-
-                    for (let card of cards){
-                        if ((card['status_id']) == status['id'] && card['board_id'] == board['id']){
-                            let card_element = base_card.content.cloneNode(true);
-                            card_element.querySelector('#base_card_name').innerHTML = card['title'];
-
-                            status_name.querySelector('#base_cards_space').appendChild(card_element);
-
-                        }
-
-                    }
-
-                    board_container.querySelector('#base_statuses_space').appendChild(status_name);
-                }
-            }
-            let addBtnList = board_container.querySelectorAll('#newCardBtn');
-
-            let actualStatuses = saveDataById(board['id'], statuses);
-            console.log(actualStatuses);
-            for (let i = 0; i < actualStatuses.length; i++) {
-                addBtnList[i].addEventListener('click', (event) => {
-                    event.preventDefault();
-                    functionAdd(board['id'], actualStatuses[i]['id']);
-                });
-
-            }
-            let removeCardBtnList = board_container.querySelectorAll('#removeCardBtn');
-                for (let index = 0; index < cards.length; index++) {
-                    removeCardBtnList[index].addEventListener('click', (event) => {
-                        event.preventDefault();
-                        this.listenRemoveCard(cards[index]['id']);
-                        location.reload();
-                    });
-                }
-            body_element.appendChild(board_container);
+            body_element.appendChild(createNewBoard(board, statuses, cards))
         }
     },
     listenNewCardBtn: function(boardId, statusId) {
@@ -214,20 +160,7 @@ export let dom = {
         });
     },
     listenNewRemoveBoard: function (board_id){
-        fetch(`${window.location.origin}/remove_board`, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            },
-            body: JSON.stringify({
-                board_id: JSON.stringify(board_id)
-            }),
-            method: 'POST',
-            credentials: 'include'
-        })
-            .then( response => response.json())
-            .then( response => console.log(response));
-        location.reload();
+        dataHandler.removeBoard(board_id, removeBoardFromHTML);
     }
 
 
@@ -282,6 +215,79 @@ function saveDataById(board_id, data){
 function functionAdd(board_id, status_id) {
     dom.listenNewCardBtn(board_id, status_id);
 }
+
+
+
+function createNewBoard(boardData, statusesData, cardsData){
+    let base_container = document.querySelector('#base_container');
+    let board_container = base_container.content.cloneNode(true);
+    let remove_board_btn = board_container.querySelector('#remove_board_btn');
+
+    board_container.firstElementChild.id = boardData['id'];
+    board_container.querySelector('#base_board_name').innerHTML = boardData['title'];
+    remove_board_btn.addEventListener('click', () => {
+        dom.listenNewRemoveBoard(boardData['id']);
+    });
+    if (statusesData !== null){
+        for (let status of statusesData){
+            if (status['board_id'] == boardData['id']) {
+                board_container.querySelector('#base_statuses_space').appendChild(createNewStatus(status, cardsData, boardData['id']));
+            }
+        }
+    }
+
+    let addBtnList = board_container.querySelectorAll('#newCardBtn');
+    let actualStatuses = saveDataById(boardData['id'], statusesData);
+    console.log(actualStatuses);
+    for (let i = 0; i < actualStatuses.length; i++) {
+        addBtnList[i].addEventListener('click', (event) => {
+            event.preventDefault();
+            functionAdd(boardData['id'], actualStatuses[i]['id']);
+        });
+
+    }
+
+    return board_container
+}
+
+function createNewStatus(statusData, cardsData=null){
+    let base_status_name = document.querySelector('#base_status');
+    let status_name = base_status_name.content.cloneNode(true);
+    status_name.querySelector('#status_name').innerHTML = statusData['title'];
+    if (cardsData != null){
+        for (let card of cardsData){
+            if (card['status_id'] == statusData['id']){
+                status_name.querySelector('#base_cards_space').appendChild(createNewCard(card));
+            }
+        }
+    }
+    return status_name
+}
+
+function createNewCard(cardData){
+    let base_card = document.querySelector('#base_card');
+    let card_element = base_card.content.cloneNode(true);
+    card_element.querySelector('#base_card_name').innerHTML = cardData['title'];
+    return card_element;
+}
+
+function appendBoardToHTML(response){
+    const boardData = response['board_data'];
+    const statusesData = response['statuses_data'];
+    const body_element = document.querySelector('#body');
+    body_element.appendChild(createNewBoard(boardData, statusesData));
+}
+
+function removeBoardFromHTML(response){
+    const boardsHTML = document.querySelector('#body').querySelectorAll('.content-board-list')
+    const board_id = response['id'];
+    for (let board of boardsHTML){
+        if (board.id == board_id){
+            board.remove();
+        }
+    }
+}
+
 
 
 

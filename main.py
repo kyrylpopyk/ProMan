@@ -103,8 +103,9 @@ def add_new_board():
     board_id = data_handler.add_new_board(board_title, user_id)
     for default_card_status in default_card_statuses_list:
         data_handler.add_card_status(default_card_status, user_id, board_id["id"])
+    statuses = data_handler.get_statuses_by_board_id(board_id['id']);
 
-    return "ok"
+    return {'board_data': {'id': board_id['id'], 'title': board_title}, "statuses_data": statuses}
 
 
 @app.route("/get-logins")
@@ -144,8 +145,9 @@ def add_new_card():
 
 @app.route('/remove_board', methods=['POST'])
 def remove_board():
-    board_id = request.get_json()['board_id']
-    return data_handler.remove_board(board_id=board_id)
+    board_id = request.get_json()
+    data_handler.remove_board(board_id=board_id)
+    return {'id': board_id}
 
 @app.route('/remove_card', methods=['POST'])
 def remove_card():
