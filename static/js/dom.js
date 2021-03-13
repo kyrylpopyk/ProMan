@@ -147,14 +147,10 @@ export let dom = {
 
         let body_element = document.querySelector('#body');
         for (let board of boards){
-            body_element.appendChild(createNewBoard(board, statuses, cards))
+            body_element.appendChild(createNewBoard(board, statuses, cards));
         }
     },
-    listenDragCard: function (event, draggableElement) {
 
-        draggableElement.addEventListener('drop', onDragStart);
-
-    },
     listenNewCardBtn: function(boardId, statusId) {
 
         const newCardModal = document.querySelector('#newCardModal');
@@ -338,6 +334,7 @@ function createNewBoard(boardData, statusesData, cardsData){
 
     let removeStatusBtnList = board_container.querySelectorAll("#removeStatusBtn");
     let renameStatusBtnList = board_container.querySelectorAll("#renameStatusBtn");
+    let dropzonelist = board_container.querySelectorAll('#base_cards_space');
 
     for (let i = 0; i < actualStatuses.length; i++) {
         addBtnList[i].addEventListener('click', (event) => {
@@ -353,6 +350,9 @@ function createNewBoard(boardData, statusesData, cardsData){
             event.preventDefault();
             dom.renameStatus(actualStatuses[i]);
         });
+        dropzonelist[i].addEventListener('dragover', onDragOver);
+        dropzonelist[i].addEventListener('drop',onDrop);
+
     }
 
     let removeCardBtnList = board_container.querySelectorAll('#removeCardBtn');
@@ -370,11 +370,11 @@ function createNewBoard(boardData, statusesData, cardsData){
        for(let i = 0; i < draggableElements.length; i++) {
            let cardDataId = draggableElements[i].dataset.cardId;
            cardDataId = cardsData[i]["id"];
-           draggableElements[i].setAttribute.draggable = "true";
-           draggableElements[i].addEventListener('drag', onDragStart);
+           // draggableElements[i].setAttribute.draggable = "true";
+           draggableElements[i].addEventListener('ondrag', onDragStart);
        }
 
-    return board_container
+    return board_container;
 }
 
 function createNewStatus(statusData, cardsData=null){
