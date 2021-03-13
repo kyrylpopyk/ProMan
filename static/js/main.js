@@ -8,7 +8,7 @@ function init() {
     dom.init();
     // loads the boards to the screen
     // set user status
-    dom.checkUserSatus();
+    dom.checkUserStatus();
 
 }
 
@@ -17,7 +17,7 @@ function eventHandlers() {
     dom.listenNewLoginBtn();
     dom.listenNewLogOutBtn();
     dom.listenNewBoardBtn();
-    // dom.listenNewCardBtn();
+
 
 }
 

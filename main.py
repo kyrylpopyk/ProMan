@@ -1,15 +1,16 @@
-from flask import Flask, render_template, url_for, request, jsonify
+from flask import Flask, render_template, request, jsonify
 
 from util import json_response
-from bcrypt import checkpw
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
-import os
 from os import urandom
 import util
 
 import data_handler
 import data_manager
 
+
+import mimetypes
+mimetypes.add_type("application/javascript", ".js", True)
 
 app = Flask(__name__)
 app.secret_key = urandom(16)
@@ -107,6 +108,19 @@ def add_new_board():
 
     return {'board_data': {'id': board_id['id'], 'title': board_title}, "statuses_data": statuses}
 
+@app.route("/edit_board", methods=['POST'])
+@json_response
+@login_required
+def edit_board():
+    """
+    edits boards
+    """
+    board_data = request.get_json()
+    board_id = board_data['id']
+    edited_board_title = board_data['title']
+    return data_handler.edit_board(board_id,edited_board_title)
+
+
 
 @app.route("/get-logins")
 @json_response
@@ -142,8 +156,9 @@ def add_new_card():
     return data_handler.add_new_card(board_id, card_title, status_id, user_id)
 
 
-
 @app.route('/remove_board', methods=['POST'])
+@json_response
+@login_required
 def remove_board():
     board_id = request.get_json()
     data_handler.remove_board(board_id=board_id)
@@ -153,6 +168,31 @@ def remove_board():
 def remove_card():
     card_id = request.get_json()
     return data_handler.remove_card(card_id)
+
+
+@app.route('/add-status', methods=['POST'])
+@json_response
+@login_required
+def add_status():
+    status = request.get_json()
+    user_id = current_user.id
+    return data_handler.add_card_status(status["title"], user_id, status["board_id"])
+
+
+@app.route('/remove-status', methods=['POST'])
+@json_response
+@login_required
+def remove_status():
+    status_id = request.get_json()["status_id"]
+    return data_handler.remove_status(status_id)
+
+
+@app.route('/rename-status', methods=['POST'])
+@json_response
+@login_required
+def rename_status():
+    status = request.get_json()
+    return data_handler.rename_status(status)
 
 
 def main():

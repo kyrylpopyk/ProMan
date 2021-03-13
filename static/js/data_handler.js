@@ -36,6 +36,7 @@ export let dataHandler = {
             .then( response => {
                 callback(response);
             })
+
             // .catch(error => callback(error));
     },
     init: function () {
@@ -54,6 +55,11 @@ export let dataHandler = {
     addNewBoard: function(boardData, callback) {
         console.log(boardData);
         return this._api_post(`${window.location.origin}/new_board`, boardData, callback);
+    },
+
+    editBoard: function(boardData) {
+        console.log(boardData);
+        return this._api_post(`${window.location.origin}/edit_board`, boardData);
     },
 
 
@@ -104,7 +110,60 @@ export let dataHandler = {
             let board_data = response;
             dom.showBoard(board_data['boardData'], board_data['statusesData'], board_data['cardsData']);
         })
-    }
+    },
+
+    addStatus: function (data) {
+        fetch("/add-status", {
+            method: "POST",
+            headers: new Headers({
+                "content-type": "application/json"
+            }),
+            credentials: 'same-origin',
+            body: JSON.stringify(data)
+        })
+            .then((response) => {
+                return response.json();
+            })
+            .then((response) => {
+                location.reload();
+            })
+
+
+    },
+    removeStatus: function (statusId) {
+        fetch("/remove-status", {
+            method: "POST",
+            headers: new Headers({
+                "content-type": "application/json"
+            }),
+            credentials: 'same-origin',
+            body: JSON.stringify(statusId)
+        })
+            .then((response) => {
+                return response.json();
+            })
+            .then((response) => {
+                location.reload();
+            })
+
+    },
+    renameStatus: function (status) {
+        fetch("/rename-status", {
+            method: "POST",
+            headers: new Headers({
+                "content-type": "application/json"
+            }),
+            credentials: 'same-origin',
+            body: JSON.stringify(status)
+        })
+            .then((response) => {
+                return response.json();
+            })
+            .then((response) => {
+                location.reload();
+            })
+
+    },
 
     // here comes more features
 };

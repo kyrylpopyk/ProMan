@@ -19,7 +19,7 @@ export let dom = {
         document.querySelector(".loginBtn").addEventListener("click", () => {
             let email = document.querySelector(".login-email-text-box").value;
             let password = document.querySelector(".login-password-text-box").value;
-            if (validateUser(email, password, "login")){
+            if (validateUser(email, password)){
                 window.$('#Modal').modal('hide');
                 fetch(`${window.location.origin}/login`,{
                     headers: {
@@ -74,6 +74,28 @@ export let dom = {
         this.addNewBoard();
     },
 
+    listenEditBoardBtn: function(board) {
+        const editBoardModal = document.querySelector('#editBoard');
+        const submitEditedBoardBtn = editBoardModal.querySelector('#submitEditedBoardBtn')
+        let boardTitleToEdit = editBoardModal.querySelector('#editedTitle');
+        boardTitleToEdit.textContent = board['title'];
+        let boardId = board['id'];
+        editBoardModal.style.visibility = "visible";
+        editBoardModal.style.display = 'block';
+        submitEditedBoardBtn.addEventListener('click', (event) => {
+            event.preventDefault();
+
+            let editedBoardData = {
+
+                'id': boardId,
+                'title': boardTitleToEdit.value
+            };
+            dataHandler.editBoard(editedBoardData);
+            editBoardModal.style.visibility = 'hidden';
+        });
+    },
+
+
     addNewBoard: function () {
         const newBoardBtn = document.querySelector(".addBoardBtn");
         newBoardBtn.addEventListener('click', function () {
@@ -93,7 +115,7 @@ export let dom = {
             let  username = document.querySelector("#newUsername").value;
             let email = document.querySelector("#newUserEmail").value;
             let password = document.querySelector("#newUserPassword").value;
-            if (validateUser(email, password, "register")) {
+            if (validateUser(email, password)) {
                 let data = {
                 "username": username,
                 "login": email,
@@ -106,7 +128,7 @@ export let dom = {
         });
 
     },
-    checkUserSatus: function(){
+    checkUserStatus: function(){
         fetch(`${window.location.origin}/checkLogin`,{
             method: 'GET',
             headers: new Headers({
@@ -122,10 +144,16 @@ export let dom = {
             });
     },
     showBoard: function (boards, statuses, cards) {
+
         let body_element = document.querySelector('#body');
         for (let board of boards){
             body_element.appendChild(createNewBoard(board, statuses, cards))
         }
+    },
+    listenDragCard: function (event, draggableElement) {
+
+        draggableElement.addEventListener('drop', onDragStart);
+
     },
     listenNewCardBtn: function(boardId, statusId) {
 
@@ -161,18 +189,51 @@ export let dom = {
     },
     listenNewRemoveBoard: function (board_id){
         dataHandler.removeBoard(board_id, removeBoardFromHTML);
+    },
+    addStatus: function (boardId) {
+        const newStatusModal = document.querySelector("#newStatusModal");
+        newStatusModal.style.visibility = "visible";
+        newStatusModal.style.display = "block";
+
+        let addStatusBtn = document.querySelector("#submitStatusBtn");
+        addStatusBtn.addEventListener('click', (event) => {
+            let statusTitle = document.querySelector("#newStatusTitle").value;
+            let newStatusData = {
+                "title": statusTitle,
+                "board_id": boardId,
+            }
+            dataHandler.addStatus(newStatusData);
+            newStatusModal.style.visibility = "hidden";
+        });
+
+    },
+    renameStatus: function (status) {
+        const renameStatusModal = document.querySelector("#renameStatusModal");
+        renameStatusModal.style.visibility = "visible";
+        renameStatusModal.style.display = "block";
+
+        let currentTitleStatus = status["title"];
+        let titleStatus = document.querySelector("#statusTitle");
+        titleStatus.textContent = currentTitleStatus;
+
+        let renameStatusBtn = document.querySelector("#submitRenameStatusBtn");
+
+        renameStatusBtn.addEventListener('click', (event) => {
+            let statusData = {
+                "id": status["id"],
+                "title": titleStatus.value
+            }
+            dataHandler.renameStatus(statusData);
+            renameStatusModal.style.visibility = "hidden";
+        });
     }
-
-
 };
-function validateUser (login, password, type) {
+
+
+function validateUser (login, password) {
     let minLength = 5;
     let maxLength = 50;
     if ((login.length > minLength && login.length < maxLength) && (password.length > minLength && password.length < maxLength) && (login.indexOf("@"))) {
-        // if (type === "register") {
-        //     let logins = dataHandler.getLogins();
-        //     return !login in logins;  // if login not in logins return true else false
-        // }
         return true;
     } else {
         return false;
@@ -217,17 +278,55 @@ function functionAdd(board_id, status_id) {
 }
 
 
+function onDragStart(event) {
+  event
+    .dataTransfer
+    .setData('text/plain', event.target.id);
+}
+
+function onDragOver(event) {
+  event.preventDefault();
+}
+
+function onDrop(event) {
+  const id = event
+    .dataTransfer
+    .getData('text');
+    const draggableElement = document.getElementById(id);
+    const dropzone = event.target;
+    dropzone.appendChild(draggableElement);
+    event
+        .dataTransfer
+        .clearData();
+}
+
 
 function createNewBoard(boardData, statusesData, cardsData){
     let base_container = document.querySelector('#base_container');
     let board_container = base_container.content.cloneNode(true);
-    let remove_board_btn = board_container.querySelector('#remove_board_btn');
+    let removeStatusBtnList = board_container.querySelectorAll("#removeStatusBtn");
+    let renameStatusBtnList = board_container.querySelectorAll("#renameStatusBtn");
 
-    board_container.firstElementChild.id = boardData['id'];
-    board_container.querySelector('#base_board_name').innerHTML = boardData['title'];
+    let editBoardBtn = board_container.querySelector("#editBoardBtn");
+    editBoardBtn.addEventListener('click', (event) => {
+        event.preventDefault();
+        this.listenEditBoardBtn(board);
+    });
+
+    let addStatusBtn = board_container.querySelector("#addStatusBtn");
+    addStatusBtn.addEventListener('click', (event) => {
+        event.preventDefault()
+        this.addStatus(board["id"]);
+    });
+
+    let remove_board_btn = board_container.querySelector('#remove_board_btn');
     remove_board_btn.addEventListener('click', () => {
         dom.listenNewRemoveBoard(boardData['id']);
     });
+
+    board_container.firstElementChild.id = boardData['id'];
+    board_container.querySelector('#base_board_name').innerHTML = boardData['title'];
+
     if (statusesData !== null){
         for (let status of statusesData){
             if (status['board_id'] == boardData['id']) {
@@ -244,8 +343,35 @@ function createNewBoard(boardData, statusesData, cardsData){
             event.preventDefault();
             functionAdd(boardData['id'], actualStatuses[i]['id']);
         });
-
+        removeStatusBtnList[i].addEventListener('click', (event) => {
+            event.preventDefault();
+            let data = { "status_id": actualStatuses[i]["id"] };
+            dataHandler.removeStatus(data);
+        });
+        renameStatusBtnList[i].addEventListener('click', (event) =>{
+            event.preventDefault();
+            this.renameStatus(actualStatuses[i]);
+        });
     }
+
+    let removeCardBtnList = board_container.querySelectorAll('#removeCardBtn');
+        if (removeCardBtnList === 0){
+            for (let index = 0; index < cards.length; index++) {
+                removeCardBtnList[index].addEventListener('click', (event) => {
+                    event.preventDefault();
+                    this.listenRemoveCard(cards[index]['id']);
+                    location.reload();
+                });
+            }
+
+        }
+    let draggableElements = document.querySelectorAll("#draggable_card");
+       for(let i = 0; i < draggableElements.length; i++) {
+           let cardDataId = draggableElements[i].dataset.cardId;
+           cardDataId = cards[i]["id"];
+           draggableElements[i].setAttribute.draggable = "true";
+           draggableElement[i].addEventListener('drag', onDragStart);
+       }
 
     return board_container
 }

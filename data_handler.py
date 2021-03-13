@@ -197,24 +197,25 @@ def get_board_by_id(cursor: RealDictCursor, board_id):
     return cursor.fetchone()
 
 
-@connection.connection_handler
-def get_cards_by_board_id(cursor: RealDictCursor, board_id):
-    query = """
-               SELECT *
-               FROM cards
-               WHERE id = %(board_id)s"""
-
-    param = {
-        "board_id": board_id
-    }
-    cursor.execute(query, param)
-    return cursor.fetchall()
+# @connection.connection_handler
+# def get_cards_by_board_id(cursor: RealDictCursor, board_id):
+#     query = """
+#                SELECT *
+#                FROM cards
+#                WHERE id = %(board_id)s"""
+#
+#     param = {
+#         "board_id": board_id
+#     }
+#     cursor.execute(query, param)
+#     return cursor.fetchall()
 
 @connection.connection_handler
 def get_statuses_by_user(cursor: RealDictCursor, user_id: int):
     query = """
         SELECT * FROM statuses
-        where user_id = %(user_id)s;
+        where user_id = %(user_id)s
+        ORDER BY id
     """
 
     param = {'user_id': user_id}
@@ -226,7 +227,8 @@ def get_boards_by_user(cursor: RealDictCursor, user_id: int):
     query = """
         SELECT boards.id, boards.title, boards.type
         FROM boards
-        where user_id = %(user_id)s;
+        where user_id = %(user_id)s
+        ORDER BY id
     """
     param = {'user_id': user_id}
     cursor.execute(query, param)
@@ -237,7 +239,8 @@ def get_cards_by_user(cursor: RealDictCursor, user_id: int):
     query = """
         SELECT cards.id, cards.board_id, cards.title, cards.status_id
         FROM cards
-        where user_id = %(user_id)s;
+        where user_id = %(user_id)s
+        ORDER BY id
     """
     param = {'user_id': user_id}
     cursor.execute(query, param)
@@ -263,6 +266,31 @@ def add_new_card(cursor: RealDictCursor, board_id, card_title, status_id, user_i
 def remove_board(cursor: RealDictCursor, board_id: str):
     command = """
     DELETE FROM boards 
+    WHERE boards.id = %(board_id)s;
+    """
+    param = {'board_id': board_id}
+    try:
+        cursor.execute(command, param)
+        return True
+    except Exception:
+        return False
+
+
+@connection.connection_handler
+def edit_board(cursor: RealDictCursor, board_id, board_title):
+    command = """
+            UPDATE boards
+            SET title = %(title)s
+            WHERE id = %(id)s        
+            """
+    param = {"id": board_id,
+             "title": board_title}
+
+    return cursor.execute(command, param)
+
+
+    command = """
+    UPDATE boards 
     WHERE boards.id = %(board_id)s;
     """
     param = {'board_id': board_id}
@@ -308,3 +336,24 @@ def get_statuses_by_board_id(cursor: RealDictCursor, board_id: str):
     param = {'board_id': board_id}
     cursor.execute(query, param)
     return cursor.fetchall()
+
+@connection.connection_handler
+def remove_status(cursor: RealDictCursor, status_id):
+    command = """DELETE FROM statuses
+                 WHERE statuses.id = %(status_id)s"""
+
+    param = {
+        "status_id": status_id
+    }
+    cursor.execute(command, param)
+
+@connection.connection_handler
+def rename_status(cursor: RealDictCursor, status):
+    command = """UPDATE statuses
+                 SET title = %(title)s
+                 WHERE id = %(id)s   """
+    param = {
+        "title": status["title"],
+        "id": status["id"]
+    }
+    cursor.execute(command, param)
