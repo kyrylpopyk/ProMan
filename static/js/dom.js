@@ -66,19 +66,21 @@ export let dom = {
         });
     },
     listenNewBoardBtn: function() {
-        const newBoardModal = document.querySelector('#newBoard');
         document.querySelector("#newBoardBtn").addEventListener('click', ()=> {
-          newBoardModal.style.visibility = "visible";
-          newBoardModal.style.display = 'block';
+            createAskModal('ask-about-board-add');
+            const newBoardModal = document.querySelector('#newBoard');
+            newBoardModal.style.visibility = "visible";
+            newBoardModal.style.display = 'block';
+            this.addNewBoard();
         });
-        this.addNewBoard();
     },
 
     listenEditBoardBtn: function(board) {
+        createAskModal('ask-about-board-rename');
         const editBoardModal = document.querySelector('#editBoard');
         const submitEditedBoardBtn = editBoardModal.querySelector('#submitEditedBoardBtn')
         let boardTitleToEdit = editBoardModal.querySelector('#editedTitle');
-        boardTitleToEdit.textContent = board['title'];
+        boardTitleToEdit.textContent = getCurrentBoardTitle(board['id']);
         let boardId = board['id'];
         editBoardModal.style.visibility = "visible";
         editBoardModal.style.display = 'block';
@@ -90,11 +92,10 @@ export let dom = {
                 'id': boardId,
                 'title': boardTitleToEdit.value
             };
-            dataHandler.editBoard(editedBoardData);
-            editBoardModal.style.visibility = 'hidden';
+            dataHandler.editBoard(editedBoardData, renameBoardHTML);
+            closeAskModal('ask-about-board-rename');
         });
     },
-
 
     addNewBoard: function () {
         const newBoardBtn = document.querySelector(".addBoardBtn");
@@ -104,8 +105,8 @@ export let dom = {
 
                'title': newBoardTitle
            };
-
            dataHandler.addNewBoard(newBoardData, appendBoardToHTML);
+           closeAskModal('ask-about-board-add');
         });
     },
 
@@ -155,64 +156,61 @@ export let dom = {
         draggableElement.addEventListener('drop', onDragStart);
 
     },
-    listenNewCardBtn: function(boardId, statusId) {
 
+    listenRemoveCard: function(cardId, callback) {
+        dataHandler.removeCard(cardId, callback);
+    },
+    addNewCardModal: function (boardId, statusId) {
+        createAskModal('ask-about-card-add')
         const newCardModal = document.querySelector('#newCardModal');
         newCardModal.style.visibility = "visible";
         newCardModal.style.display = 'block';
         dom.addNewCard(boardId, statusId);
+
     },
-
-    listenRemoveCard: function(cardId) {
-        dataHandler.removeCard(cardId);
-    },
-
-
-    addNewCard: function (boardId, statusId) {
-
+    addNewCard: function (boardId, statusId){
         const submitCardBtn = document.querySelector("#submitCardBtn");
-        submitCardBtn.addEventListener('click', function (event) {
+        submitCardBtn.onclick = function () {
            let newCardTitle = document.querySelector('#newCardTitle').value;
-           event.preventDefault();
            let newCardData = {
-
                'title': newCardTitle,
                'board_id': boardId,
                'status_id': statusId
-
            };
-           dataHandler.addNewCard(newCardData);
-           let modal = document.querySelector('#newCardModal');
-           modal.style.visibility = 'hidden';
-            location.reload();
-        });
+           dataHandler.addNewCard(newCardData, addCardToHTML);
+           closeAskModal('ask-about-card-add');
+        };
     },
     listenNewRemoveBoard: function (board_id){
         dataHandler.removeBoard(board_id, removeBoardFromHTML);
     },
-    addStatus: function (boardId) {
+    addStatusModal: function (boardId) {
+        createAskModal('ask-about-status-add');
         const newStatusModal = document.querySelector("#newStatusModal");
         newStatusModal.style.visibility = "visible";
         newStatusModal.style.display = "block";
-
+        this.addStatus(boardId);
+    },
+    addStatus: function(boardId){
         let addStatusBtn = document.querySelector("#submitStatusBtn");
-        addStatusBtn.addEventListener('click', (event) => {
+        addStatusBtn.onclick = function(){
             let statusTitle = document.querySelector("#newStatusTitle").value;
             let newStatusData = {
                 "title": statusTitle,
                 "board_id": boardId,
             }
-            dataHandler.addStatus(newStatusData);
-            newStatusModal.style.visibility = "hidden";
-        });
-
+            const newStatusModal = document.querySelector("#newStatusModal");
+            dataHandler.addStatus(newStatusData, addStatusToHTML);
+            closeAskModal('ask-about-status-add');
+        };
     },
     renameStatus: function (status) {
+        createAskModal('ask-about-status-rename');
         const renameStatusModal = document.querySelector("#renameStatusModal");
         renameStatusModal.style.visibility = "visible";
         renameStatusModal.style.display = "block";
 
-        let currentTitleStatus = status["title"];
+        let currentTitleStatus = getCurrentStatusTitle(status['id']);
         let titleStatus = document.querySelector("#statusTitle");
         titleStatus.textContent = currentTitleStatus;
 
@@ -223,10 +221,10 @@ export let dom = {
                 "id": status["id"],
                 "title": titleStatus.value
             }
-            dataHandler.renameStatus(statusData);
-            renameStatusModal.style.visibility = "hidden";
+            dataHandler.renameStatus(statusData, renameStatus);
+            closeAskModal('ask-about-status-rename');
         });
-    }
+    },
 };
 
 
@@ -273,7 +271,7 @@ function saveDataById(board_id, data){
     return new_data;
 }
 
-function functionAdd(board_id, status_id) {
+function functionAddCard(board_id, status_id) {
     dom.listenNewCardBtn(board_id, status_id);
 }
 
@@ -312,9 +310,8 @@ function createNewBoard(boardData, statusesData, cardsData){
     });
 
     let addStatusBtn = board_container.querySelector("#addStatusBtn");
-    addStatusBtn.addEventListener('click', (event) => {
-        event.preventDefault()
-        dom.addStatus(boardData["id"]);
+    addStatusBtn.addEventListener('click', function(){
+        dom.addStatusModal(boardData['id']);
     });
 
     let remove_board_btn = board_container.querySelector('#remove_board_btn');
@@ -333,54 +330,15 @@ function createNewBoard(boardData, statusesData, cardsData){
         }
     }
 
-    let addBtnList = board_container.querySelectorAll('#newCardBtn');
-    let actualStatuses = saveDataById(boardData['id'], statusesData);
-
-    let removeStatusBtnList = board_container.querySelectorAll("#removeStatusBtn");
-    let renameStatusBtnList = board_container.querySelectorAll("#renameStatusBtn");
-
-    for (let i = 0; i < actualStatuses.length; i++) {
-        addBtnList[i].addEventListener('click', (event) => {
-            event.preventDefault();
-            functionAdd(boardData['id'], actualStatuses[i]['id']);
-        });
-        removeStatusBtnList[i].addEventListener('click', (event) => {
-            event.preventDefault();
-            let data = { "status_id": actualStatuses[i]["id"] };
-            dataHandler.removeStatus(data);
-        });
-        renameStatusBtnList[i].addEventListener('click', (event) =>{
-            event.preventDefault();
-            dom.renameStatus(actualStatuses[i]);
-        });
-    }
-
-    let removeCardBtnList = board_container.querySelectorAll('#removeCardBtn');
-        if (removeCardBtnList.length != 0){
-            for (let index = 0; index < cardsData.length; index++) {
-                removeCardBtnList[index].addEventListener('click', (event) => {
-                    event.preventDefault();
-                    dom.listenRemoveCard(cardsData[index]['id']);
-                    location.reload();
-                });
-            }
-
-        }
-    let draggableElements = document.querySelectorAll("#draggable_card");
-       for(let i = 0; i < draggableElements.length; i++) {
-           let cardDataId = draggableElements[i].dataset.cardId;
-           cardDataId = cardsData[i]["id"];
-           draggableElements[i].setAttribute.draggable = "true";
-           draggableElements[i].addEventListener('drag', onDragStart);
-       }
-
     return board_container
 }
 
-function createNewStatus(statusData, cardsData=null){
+function createNewStatus(statusData, cardsData=null, boardId = null){
     let base_status_name = document.querySelector('#base_status');
     let status_name = base_status_name.content.cloneNode(true);
     status_name.querySelector('#status_name').innerHTML = statusData['title'];
+    status_name.firstElementChild.id = statusData['id'];
+
     if (cardsData != null){
         for (let card of cardsData){
             if (card['status_id'] == statusData['id']){
@@ -388,13 +346,49 @@ function createNewStatus(statusData, cardsData=null){
             }
         }
     }
-    return status_name
+
+    let removeStatusBtnList = status_name.querySelector("#removeStatusBtn");
+    let renameStatusBtnList = status_name.querySelector("#renameStatusBtn");
+
+    removeStatusBtnList.addEventListener('click', (event) => {
+        event.preventDefault();
+        let data = { "status_id": statusData["id"] };
+        dataHandler.removeStatus(data, removeStatusFromHTML);
+    });
+
+    renameStatusBtnList.addEventListener('click', (event) =>{
+        event.preventDefault();
+        dom.renameStatus(statusData);
+    });
+
+    let addBtnList = status_name.querySelector('#newCardBtn');
+    addBtnList.onclick = function(){
+        dom.addNewCardModal(boardId, statusData['id']);
+    };
+
+    return status_name;
 }
 
-function createNewCard(cardData){
+function createNewCard(cardData=null){
     let base_card = document.querySelector('#base_card');
     let card_element = base_card.content.cloneNode(true);
     card_element.querySelector('#base_card_name').innerHTML = cardData['title'];
+
+    let removeCardBtnList = card_element.querySelector('#removeCardBtn');
+    removeCardBtnList.addEventListener('click', (event) => {
+        event.preventDefault();
+        dom.listenRemoveCard(cardData['id'], removeCardFromHtml);
+    });
+    card_element.firstElementChild.id = cardData['id'];
+
+    if (cardData != null){
+        // let draggableElements = document.querySelector("#draggable_card");
+        // let cardDataId = draggableElements.dataset.cardId;
+        // cardDataId = cardData["id"];
+        // draggableElements.setAttribute.draggable = "true";
+        // draggableElements.addEventListener('drag', onDragStart);
+    }
+
     return card_element;
 }
 
@@ -411,6 +405,100 @@ function removeBoardFromHTML(response){
     for (let board of boardsHTML){
         if (board.id == board_id){
             board.remove();
+        }
+    }
+}
+
+function renameBoardHTML(response){
+    const boardsHTML = document.querySelector('#body').querySelectorAll('.content-board-list')
+    const newBoardName = response['title'];
+    const boardId = response['id'];
+    for (let board of boardsHTML){
+        if (board.id == boardId){
+            board.querySelector('#base_board_name').innerHTML = newBoardName;
+        }
+    }
+}
+
+function addStatusToHTML(response){
+    const boardId = response['board_id'];
+    const statusData = response['status_data'];
+    const boardsHTML = document.querySelector('#body').querySelectorAll('.content-board-list');
+    for (let board of boardsHTML){
+        if (board.id == boardId){
+            board.querySelector('#base_statuses_space').appendChild(createNewStatus(statusData,null, boardId));
+        }
+    }
+}
+
+function removeStatusFromHTML(response){
+    const statusesHTML = document.querySelectorAll('.column-status-grid');
+    const statusId = response['id'];
+    for (let status of statusesHTML){
+        if (status.id == statusId){
+            status.remove();
+        }
+    }
+}
+
+function renameStatus(response){
+    const statusId = response['id'];
+    const newStatusTitle = response['title'];
+    const allStatuses = document.querySelectorAll('.column-status-grid');
+    for (let status of allStatuses){
+        if (status.id == statusId){
+            status.querySelector('#status_name').innerHTML = newStatusTitle;
+        }
+    }
+}
+
+function addCardToHTML(response){
+    const cardData = response;
+    const statusId = response['status_id'];
+    const allStatuses = document.querySelectorAll('.column-status-grid');
+    for (let status of allStatuses){
+        if (status.id == statusId){
+            status.querySelector('#base_cards_space').appendChild(createNewCard(cardData));
+        }
+    }
+}
+
+function removeCardFromHtml(response){
+    const cardId = response;
+    const cardsHTML = document.querySelectorAll('.row-card-grid');
+    for (let card of cardsHTML){
+        if (card.id == cardId){
+            card.remove();
+        }
+    }
+}
+
+function createAskModal(templateId){
+    const baseAskModal = document.querySelector(`#${templateId}`);
+    const askModal = baseAskModal.content.cloneNode(true);
+    const modalSpace = document.querySelector('#modal-space');
+    modalSpace.appendChild(askModal);
+}
+
+function closeAskModal(templateId){
+    const modalSpace = document.querySelector('#modal-space');
+    modalSpace.querySelector(`#${templateId}`).remove();
+}
+
+function getCurrentStatusTitle(statusId){
+    const statusesHtml = document.querySelectorAll('.column-status-grid');
+    for (let status of statusesHtml){
+        if (status.id == statusId){
+            return status.querySelector('#status_name').innerHTML;
+        }
+    }
+}
+
+function getCurrentBoardTitle(boardId){
+    const boardsHtml = document.querySelectorAll('.content-board-list');
+    for (let board of boardsHtml){
+        if (board.id == boardId){
+            return board.querySelector('#base_board_name').innerHTML;
         }
     }
 }

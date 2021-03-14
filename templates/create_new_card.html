@@ -1,35 +1,36 @@
 {% block create_new_card %}
-
-<div class="container">
-<div class="row">
-    <div class="col-md-12">
-        <div class="modal" id="newCardModal" tabindex="-1" role="dialog" style="visibility: hidden">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Add new card</h4>
-                        <button type="button" class="close align-content-end" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="addNewCard">
-                            <div class="form-group">
-                                <label for="newCardTitle">new card title</label>
-                                <textarea class="form-control" id="newCardTitle" rows="3"></textarea>
-                            </div>
-                            <div class="modal-footer align-content-center">
-                                <div class="col text-center">
-                                    <button type='button' class="btn btn-primary"  id='submitCardBtn' data-dismiss="modal">add new card</button>
+<template id="ask-about-card-add">
+    <div class="container" id="ask-about-card-add">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="modal" id="newCardModal" tabindex="-1" role="dialog" style="visibility: hidden">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Add new card</h4>
+                            <button type="button" class="close align-content-end" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="addNewCard">
+                                <div class="form-group">
+                                    <label for="newCardTitle">new card title</label>
+                                    <textarea class="form-control" id="newCardTitle" rows="3"></textarea>
                                 </div>
-                            </div>
-                        </form>
+                                <div class="modal-footer align-content-center">
+                                    <div class="col text-center">
+                                        <button type='button' class="btn btn-primary"  id='submitCardBtn' data-dismiss="modal">add new card</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-</div>
+    </div>
+</template>
 
 {% endblock %}

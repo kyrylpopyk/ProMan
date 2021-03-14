@@ -57,19 +57,19 @@ export let dataHandler = {
         return this._api_post(`${window.location.origin}/new_board`, boardData, callback);
     },
 
-    editBoard: function(boardData) {
+    editBoard: function(boardData, callback) {
         console.log(boardData);
-        return this._api_post(`${window.location.origin}/edit_board`, boardData);
+        return this._api_post(`${window.location.origin}/edit_board`, boardData, callback);
     },
 
 
-    addNewCard: function(cardData) {
+    addNewCard: function(cardData, callback) {
         console.log(cardData);
-        return this._api_post(`${window.location.origin}/new_card`, cardData);
+        return this._api_post(`${window.location.origin}/new_card`, cardData, callback);
     },
 
-    removeCard: function (cardId) {
-        return this._api_post(`${window.location.origin}/remove_card`, cardId);
+    removeCard: function (cardId, callback) {
+        return this._api_post(`${window.location.origin}/remove_card`, cardId, callback);
     },
     removeBoard: function (boardId, callback){
         return this._api_post(`${window.location.origin}/remove_board`, boardId, callback)
@@ -112,7 +112,7 @@ export let dataHandler = {
         })
     },
 
-    addStatus: function (data) {
+    addStatus: function (data, callback) {
         fetch("/add-status", {
             method: "POST",
             headers: new Headers({
@@ -125,12 +125,12 @@ export let dataHandler = {
                 return response.json();
             })
             .then((response) => {
-                location.reload();
+                callback(response);
             })
 
 
     },
-    removeStatus: function (statusId) {
+    removeStatus: function (statusId, callback) {
         fetch("/remove-status", {
             method: "POST",
             headers: new Headers({
@@ -143,11 +143,11 @@ export let dataHandler = {
                 return response.json();
             })
             .then((response) => {
-                location.reload();
+                callback(response);
             })
 
     },
-    renameStatus: function (status) {
+    renameStatus: function (status, callback) {
         fetch("/rename-status", {
             method: "POST",
             headers: new Headers({
@@ -160,7 +160,7 @@ export let dataHandler = {
                 return response.json();
             })
             .then((response) => {
-                location.reload();
+                callback(response);
             })
 
     },

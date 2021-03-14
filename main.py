@@ -118,7 +118,8 @@ def edit_board():
     board_data = request.get_json()
     board_id = board_data['id']
     edited_board_title = board_data['title']
-    return data_handler.edit_board(board_id,edited_board_title)
+    data_handler.edit_board(board_id, edited_board_title)
+    return {'title': edited_board_title, 'id': board_id}
 
 
 
@@ -152,8 +153,8 @@ def add_new_card():
     board_id = card_data['board_id']
     status_id = card_data['status_id']
     user_id = current_user.id
-    print(current_user)
-    return data_handler.add_new_card(board_id, card_title, status_id, user_id)
+    card_data = data_handler.add_new_card(board_id, card_title, status_id, user_id)
+    return card_data[0]
 
 
 @app.route('/remove_board', methods=['POST'])
@@ -165,9 +166,11 @@ def remove_board():
     return {'id': board_id}
 
 @app.route('/remove_card', methods=['POST'])
+@json_response
 def remove_card():
     card_id = request.get_json()
-    return data_handler.remove_card(card_id)
+    data_handler.remove_card(card_id)
+    return card_id
 
 
 @app.route('/add-status', methods=['POST'])
@@ -176,7 +179,8 @@ def remove_card():
 def add_status():
     status = request.get_json()
     user_id = current_user.id
-    return data_handler.add_card_status(status["title"], user_id, status["board_id"])
+    status_data = data_handler.add_card_status(status["title"], user_id, status["board_id"])
+    return {'board_id': status['board_id'], 'status_data': status_data[0]}
 
 
 @app.route('/remove-status', methods=['POST'])
@@ -184,7 +188,8 @@ def add_status():
 @login_required
 def remove_status():
     status_id = request.get_json()["status_id"]
-    return data_handler.remove_status(status_id)
+    data_handler.remove_status(status_id)
+    return {'id': status_id}
 
 
 @app.route('/rename-status', methods=['POST'])
@@ -192,7 +197,8 @@ def remove_status():
 @login_required
 def rename_status():
     status = request.get_json()
-    return data_handler.rename_status(status)
+    data_handler.rename_status(status)
+    return {'id': status['id'], 'title': status['title']}
 
 
 def main():

@@ -251,7 +251,7 @@ def get_cards_by_user(cursor: RealDictCursor, user_id: int):
 def add_new_card(cursor: RealDictCursor, board_id, card_title, status_id, user_id):
     command = """
             INSERT INTO cards(board_id, title, status_id, user_id)
-            VALUES  (%(board_id)s, %(title)s, %(status_id)s, %(user_id)s)
+            VALUES  (%(board_id)s, %(title)s, %(status_id)s, %(user_id)s) RETURNING *
             """
     param = {
         "board_id": board_id,
@@ -260,6 +260,7 @@ def add_new_card(cursor: RealDictCursor, board_id, card_title, status_id, user_i
         "user_id": user_id,
     }
     cursor.execute(command, param)
+    return cursor.fetchall()
 
 
 @connection.connection_handler
@@ -317,7 +318,8 @@ def remove_card(cursor: RealDictCursor, card_id: str):
 @connection.connection_handler
 def add_card_status(cursor: RealDictCursor, status_tittle, user_id, board_id):
     command = """INSERT INTO statuses(title, user_id, board_id) 
-                 VALUES (%(title)s, %(user_id)s, %(board_id)s)"""
+                 VALUES (%(title)s, %(user_id)s, %(board_id)s) RETURNING *;
+                 """
 
     param = {
         "title": status_tittle,
@@ -325,6 +327,7 @@ def add_card_status(cursor: RealDictCursor, status_tittle, user_id, board_id):
         "board_id": board_id
     }
     cursor.execute(command, param)
+    return cursor.fetchall()
 
 
 @connection.connection_handler
