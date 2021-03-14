@@ -148,15 +148,9 @@ export let dom = {
 
         let body_element = document.querySelector('#body');
         for (let board of boards){
-            body_element.appendChild(createNewBoard(board, statuses, cards))
+            body_element.appendChild(createNewBoard(board, statuses, cards));
         }
     },
-    listenDragCard: function (event, draggableElement) {
-
-        draggableElement.addEventListener('drop', onDragStart);
-
-    },
-
     listenRemoveCard: function(cardId, callback) {
         dataHandler.removeCard(cardId, callback);
     },
@@ -349,6 +343,7 @@ function createNewStatus(statusData, cardsData=null, boardId = null){
 
     let removeStatusBtnList = status_name.querySelector("#removeStatusBtn");
     let renameStatusBtnList = status_name.querySelector("#renameStatusBtn");
+    let dropzone = status_name.querySelector('#base_cards_space');
 
     removeStatusBtnList.addEventListener('click', (event) => {
         event.preventDefault();
@@ -360,6 +355,8 @@ function createNewStatus(statusData, cardsData=null, boardId = null){
         event.preventDefault();
         dom.renameStatus(statusData);
     });
+    dropzone.addEventListener('dragover', onDragOver);
+    dropzone.addEventListener('drop',onDrop);
 
     let addBtnList = status_name.querySelector('#newCardBtn');
     addBtnList.onclick = function(){
@@ -381,12 +378,12 @@ function createNewCard(cardData=null){
     });
     card_element.firstElementChild.id = cardData['id'];
 
-    if (cardData != null){
-        // let draggableElements = document.querySelector("#draggable_card");
-        // let cardDataId = draggableElements.dataset.cardId;
-        // cardDataId = cardData["id"];
+    let draggableElement = document.querySelector("#draggable_card");
+    if (draggableElement != null){
+        let cardDataId = draggableElement.dataset.cardId;
+        cardDataId = cardData["id"];
         // draggableElements.setAttribute.draggable = "true";
-        // draggableElements.addEventListener('drag', onDragStart);
+        draggableElement.addEventListener('ondrag', onDragStart);
     }
 
     return card_element;
