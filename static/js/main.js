@@ -8,7 +8,7 @@ function init() {
     dom.init();
     // loads the boards to the screen
     // set user status
-    dom.checkUserStatus();
+    dom.checkUserStatus(dataHandler.makeBoards);
 
 }
 

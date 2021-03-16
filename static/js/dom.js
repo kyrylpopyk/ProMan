@@ -59,20 +59,31 @@ export let dom = {
                 method: 'GET'
             })
                 .then(() => {
-                    setLogBtn(false)
+                    setLogBtn(false);
+                    removeBoard();
                     informationPopup('User log out successful');
                 })
             console.log("clicked");
         });
     },
     listenNewBoardBtn: function() {
-        document.querySelector("#newBoardBtn").addEventListener('click', ()=> {
-            createAskModal('ask-about-board-add');
-            const newBoardModal = document.querySelector('#newBoard');
-            newBoardModal.style.visibility = "visible";
-            newBoardModal.style.display = 'block';
-            this.addNewBoard();
-        });
+        document.querySelector("#newBoardBtn").onclick = function () {
+            if (actual_Cookies()['id']){
+                createAskModal('ask-about-board-add');
+                const modal = document.querySelector('#modal-space').querySelector('#ask-about-board-add');
+                const close = modal.querySelector('.close-btn');
+                close.onclick = function (){
+                    closeAskModal('ask-about-board-add');
+                }
+                const newBoardModal = document.querySelector('#newBoard');
+                newBoardModal.style.visibility = "visible";
+                newBoardModal.style.display = 'block';
+                dom.addNewBoard();
+            }
+            else {
+                informationPopup('Login or registrate account first :)');
+            }
+        };
     },
 
     listenEditBoardBtn: function(board) {
@@ -99,7 +110,7 @@ export let dom = {
 
     addNewBoard: function () {
         const newBoardBtn = document.querySelector(".addBoardBtn");
-        newBoardBtn.addEventListener('click', function () {
+        newBoardBtn.onclick = function () {
            let newBoardTitle = document.querySelector('#newBoardTitle').value;
            let newBoardData = {
 
@@ -107,7 +118,7 @@ export let dom = {
            };
            dataHandler.addNewBoard(newBoardData, appendBoardToHTML);
            closeAskModal('ask-about-board-add');
-        });
+        };
     },
 
     registerNewUser: function () {
@@ -130,7 +141,7 @@ export let dom = {
 
     },
     checkUserStatus: function(){
-        fetch(`${window.location.origin}/checkLogin`,{
+        return fetch(`${window.location.origin}/checkLogin`,{
             method: 'GET',
             headers: new Headers({
                 'content-type': 'application/json'
@@ -142,6 +153,7 @@ export let dom = {
                 if (data){
                     dataHandler.makeBoards();
                 }
+                return data
             });
     },
     showBoard: function (boards, statuses, cards) {
@@ -249,11 +261,32 @@ function setLogBtn(status){
 }
 
 function informationPopup(information){
-        let inf_pop_title = document.querySelector('.information-popup-title')
-        inf_pop_title.innerHTML = information;
-        window.$('.information-popup').modal('show');
-        setTimeout( () =>{window.$('.information-popup').modal('hide')}, 1000)
+    const base_inf_pop_up = document.querySelector('#information-popup');
+    const inf_pop_up = base_inf_pop_up.content.cloneNode(true);
+    let inf_pop_title = inf_pop_up.querySelector('.information-popup-title')
+    inf_pop_title.innerHTML = information;
+
+    const modalSpace = document.querySelector('#modal-space');
+    modalSpace.appendChild(inf_pop_up);
+    window.$('.information-popup').modal('show');
+    setTimeout( () =>{
+        window.$('.information-popup').modal('hide')
+        const modalSpace = document.querySelector('#modal-space');
+        modalSpace.querySelector('#information-popup').remove();
+    }, 1000)
 }
+
+// function createAskModal(templateId){
+//     const baseAskModal = document.querySelector(`#${templateId}`);
+//     const askModal = baseAskModal.content.cloneNode(true);
+//     const modalSpace = document.querySelector('#modal-space');
+//     modalSpace.appendChild(askModal);
+// }
+//
+// function closeAskModal(templateId){
+//     const modalSpace = document.querySelector('#modal-space');
+//     modalSpace.querySelector(`#${templateId}`).remove();
+// }
 
 function saveDataById(board_id, data){
     let new_data = [];
@@ -498,6 +531,23 @@ function getCurrentBoardTitle(boardId){
             return board.querySelector('#base_board_name').innerHTML;
         }
     }
+}
+
+function removeBoard(){
+    let boards = document.querySelectorAll('.content-board-list');
+    for (let board of boards){
+        board.remove();
+    }
+}
+
+function actual_Cookies(){
+    let cookies = {
+
+    }
+    for (let cookie of document.cookie.split('; ')){
+        cookies[cookie.split('=')[0]] = cookie.split('=')[1];
+    }
+    return cookies;
 }
 
 

@@ -1,7 +1,13 @@
+@import "";
+
 * {
     padding: 0px;
     margin: 0px;
     text-decoration: none;
+}
+
+a{
+    cursor: pointer;
 }
 
 *:hover{
@@ -58,7 +64,11 @@ body{
     border-radius: 20px;
 }
 
-*::-webkit-scrollbar{
+.row-board-body-grid::-webkit-scrollbar{
+    width: 0px;
+}
+
+body::-webkit-scrollbar{
     width: 0px;
 }
 
@@ -137,12 +147,11 @@ body{
 .status-option-image{
     width: 25px;
     height: auto;
-    filter: grayscale(100%);
     transform-origin: center;
 }
 
 .status-option-image:hover{
-    filter: grayscale(0%);
+    filter: drop-shadow(0 0 10px red);
     width: 29px;
 }
 
@@ -154,7 +163,6 @@ body{
 }
 
 .status-option-image-card:hover{
-    filter: grayscale(0%);
     width: 26px;
 }
 
