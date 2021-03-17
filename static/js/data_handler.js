@@ -74,6 +74,9 @@ export let dataHandler = {
     removeBoard: function (boardId, callback){
         return this._api_post(`${window.location.origin}/remove_board`, boardId, callback)
     },
+    changeCardPosition: function (newCardPosData){
+        return this._api_post(`${window.location.origin}/change-card-position`, newCardPosData)
+    },
     getStatuses: function (callback) {
         // the statuses are retrieved and then the callback function is called with the statuses
         return this._api_get("/get-statuses", callback);

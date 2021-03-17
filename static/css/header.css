@@ -39,6 +39,9 @@
 
 .add-board-imag {
     height: 30px;
+    border: white 2px solid;
+    border-radius: 30px;
+    padding: 1px;
 }
 .add-board-imag:hover{
     height: 40px;

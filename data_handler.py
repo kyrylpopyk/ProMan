@@ -340,6 +340,7 @@ def get_statuses_by_board_id(cursor: RealDictCursor, board_id: str):
     cursor.execute(query, param)
     return cursor.fetchall()
 
+
 @connection.connection_handler
 def remove_status(cursor: RealDictCursor, status_id):
     command = """DELETE FROM statuses
@@ -350,6 +351,7 @@ def remove_status(cursor: RealDictCursor, status_id):
     }
     cursor.execute(command, param)
 
+
 @connection.connection_handler
 def rename_status(cursor: RealDictCursor, status):
     command = """UPDATE statuses
@@ -359,4 +361,13 @@ def rename_status(cursor: RealDictCursor, status):
         "title": status["title"],
         "id": status["id"]
     }
+    cursor.execute(command, param)
+
+@connection.connection_handler
+def change_card_position(cursor: RealDictCursor, card_id, new_status_id, new_board_id):
+    command = """
+    UPDATE cards
+    SET board_id = %(new_board_id)s, status_id = %(new_status_id)s
+    WHERE id = %(card_id)s"""
+    param = {'card_id': card_id, 'new_status_id': new_status_id, 'new_board_id': new_board_id}
     cursor.execute(command, param)

@@ -276,56 +276,6 @@ function informationPopup(information){
     }, 1000)
 }
 
-// function createAskModal(templateId){
-//     const baseAskModal = document.querySelector(`#${templateId}`);
-//     const askModal = baseAskModal.content.cloneNode(true);
-//     const modalSpace = document.querySelector('#modal-space');
-//     modalSpace.appendChild(askModal);
-// }
-//
-// function closeAskModal(templateId){
-//     const modalSpace = document.querySelector('#modal-space');
-//     modalSpace.querySelector(`#${templateId}`).remove();
-// }
-
-function saveDataById(board_id, data){
-    let new_data = [];
-    for (let i = 0; i < data.length; i++){
-        if (data[i]['board_id'] == board_id){
-            new_data.push(data[i]);
-        }
-    }
-    return new_data;
-}
-
-function functionAddCard(board_id, status_id) {
-    dom.listenNewCardBtn(board_id, status_id);
-}
-
-
-function onDragStart(event) {
-  event
-    .dataTransfer
-    .setData('text/plain', event.target.id);
-}
-
-function onDragOver(event) {
-  event.preventDefault();
-}
-
-function onDrop(event) {
-  const id = event
-    .dataTransfer
-    .getData('text');
-    const draggableElement = document.getElementById(id);
-    const dropzone = event.target;
-    dropzone.appendChild(draggableElement);
-    event
-        .dataTransfer
-        .clearData();
-}
-
-
 function createNewBoard(boardData, statusesData, cardsData){
     let base_container = document.querySelector('#base_container');
     let board_container = base_container.content.cloneNode(true);
@@ -360,6 +310,17 @@ function createNewBoard(boardData, statusesData, cardsData){
     return board_container
 }
 
+function initiateDragOverStatus(status) {
+    let statusChild = status.firstElementChild;
+    statusChild.addEventListener('dragover', (event) => {
+        event.preventDefault();
+        console.log(`Drag over id ${statusChild.id}`);
+        const dragging = document.querySelector('.dragging');
+        statusChild.querySelector('#base_cards_space').appendChild(dragging);
+        statusChild.querySelector('#base_cards_space').classList.add('lastOverHere');
+    })
+}
+
 function createNewStatus(statusData, cardsData=null, boardId = null){
     let base_status_name = document.querySelector('#base_status');
     let status_name = base_status_name.content.cloneNode(true);
@@ -376,7 +337,6 @@ function createNewStatus(statusData, cardsData=null, boardId = null){
 
     let removeStatusBtnList = status_name.querySelector("#removeStatusBtn");
     let renameStatusBtnList = status_name.querySelector("#renameStatusBtn");
-    let dropzone = status_name.querySelector('#base_cards_space');
 
     removeStatusBtnList.addEventListener('click', (event) => {
         event.preventDefault();
@@ -388,13 +348,13 @@ function createNewStatus(statusData, cardsData=null, boardId = null){
         event.preventDefault();
         dom.renameStatus(statusData);
     });
-    dropzone.addEventListener('dragover', onDragOver);
-    dropzone.addEventListener('drop',onDrop);
 
     let addBtnList = status_name.querySelector('#newCardBtn');
     addBtnList.onclick = function(){
         dom.addNewCardModal(boardId, statusData['id']);
     };
+
+    initiateDragOverStatus(status_name);
 
     return status_name;
 }
@@ -410,14 +370,7 @@ function createNewCard(cardData=null){
         dom.listenRemoveCard(cardData['id'], removeCardFromHtml);
     });
     card_element.firstElementChild.id = cardData['id'];
-
-    let draggableElement = document.querySelector("#draggable_card");
-    if (draggableElement != null){
-        let cardDataId = draggableElement.dataset.cardId;
-        cardDataId = cardData["id"];
-        // draggableElements.setAttribute.draggable = "true";
-        draggableElement.addEventListener('ondrag', onDragStart);
-    }
+    initiateDraggableCard(card_element);
 
     return card_element;
 }
@@ -541,13 +494,56 @@ function removeBoard(){
 }
 
 function actual_Cookies(){
-    let cookies = {
-
-    }
+    let cookies = {};
     for (let cookie of document.cookie.split('; ')){
         cookies[cookie.split('=')[0]] = cookie.split('=')[1];
     }
     return cookies;
+}
+
+function initiateDraggableCard(card){
+    let cardChild = card.firstElementChild;
+    cardChild.addEventListener('dragstart', () => {
+        console.log(`Drag Start. id - ${cardChild.id}`);
+        cardChild.classList.add('dragging');
+    });
+
+    cardChild.addEventListener('dragend', () => {
+        cardChild.classList.remove('dragging');
+        const boardId = Object(findParentElement(cardChild, 'content-board-list')).id;
+        const statusId = Object(findParentElement(cardChild, 'column-status-grid')).id;
+        const cardId = cardChild.id;
+        dataHandler.changeCardPosition({
+            card_id: cardId,
+            new_board_id: boardId,
+            new_status_id: statusId
+        })
+    })
+}
+
+function findParentElement(currentNode, parentSelectorClass){
+    let parent = null;
+
+    while (parent == null){
+        if (isClassHere(currentNode.classList, parentSelectorClass)){
+            parent = currentNode;
+        }
+        else {
+            currentNode = currentNode.parentElement;
+        }
+    }
+    return parent
+}
+
+function isClassHere(classList, parentSelectorClass){
+    for (let _class of classList){
+        if (_class == parentSelectorClass){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 }
 
 

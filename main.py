@@ -201,6 +201,18 @@ def rename_status():
     return {'id': status['id'], 'title': status['title']}
 
 
+@app.route('/change-card-position', methods=['POST'])
+@json_response
+@login_required
+def change_card_position():
+    change_data = request.get_json()
+    card_id = change_data['card_id']
+    new_status_id = change_data['new_status_id']
+    new_board_id = change_data['new_board_id']
+    data_handler.change_card_position(card_id=card_id, new_board_id=new_board_id, new_status_id=new_status_id)
+    return 'Hello'
+
+
 def main():
     app.run(debug=True)
 
