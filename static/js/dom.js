@@ -71,7 +71,7 @@ export let dom = {
             if (actual_Cookies()['id']){
                 createAskModal('ask-about-board-add');
                 const modal = document.querySelector('#modal-space').querySelector('#ask-about-board-add');
-                const close = modal.querySelector('.close-btn');
+                const close = modal.querySelector('.close');
                 close.onclick = function (){
                     closeAskModal('ask-about-board-add');
                 }
@@ -79,6 +79,7 @@ export let dom = {
                 newBoardModal.style.visibility = "visible";
                 newBoardModal.style.display = 'block';
                 dom.addNewBoard();
+
             }
             else {
                 informationPopup('Login or registrate account first :)');
@@ -95,6 +96,12 @@ export let dom = {
         let boardId = board['id'];
         editBoardModal.style.visibility = "visible";
         editBoardModal.style.display = 'block';
+
+        let close = editBoardModal.querySelector(".close");
+            close.addEventListener('click', () => {
+                editBoardModal.style.visibility = "hidden";
+            })
+
         submitEditedBoardBtn.addEventListener('click', (event) => {
             event.preventDefault();
 
@@ -105,6 +112,7 @@ export let dom = {
             };
             dataHandler.editBoard(editedBoardData, renameBoardHTML);
             closeAskModal('ask-about-board-rename');
+
         });
     },
 
@@ -119,6 +127,7 @@ export let dom = {
            dataHandler.addNewBoard(newBoardData, appendBoardToHTML);
            closeAskModal('ask-about-board-add');
         };
+
     },
 
     registerNewUser: function () {
@@ -172,6 +181,10 @@ export let dom = {
         newCardModal.style.visibility = "visible";
         newCardModal.style.display = 'block';
         dom.addNewCard(boardId, statusId);
+        let close = newCardModal.querySelector(".close");
+            close.addEventListener('click', () => {
+                newCardModal.style.visibility = "hidden";
+            })
 
     },
     addNewCard: function (boardId, statusId){
@@ -196,6 +209,10 @@ export let dom = {
         newStatusModal.style.visibility = "visible";
         newStatusModal.style.display = "block";
         this.addStatus(boardId);
+        let close = newStatusModal.querySelector(".close");
+            close.addEventListener('click', () => {
+                newStatusModal.style.visibility = "hidden";
+            })
     },
     addStatus: function(boardId){
         let addStatusBtn = document.querySelector("#submitStatusBtn");
@@ -230,6 +247,10 @@ export let dom = {
             dataHandler.renameStatus(statusData, renameStatus);
             closeAskModal('ask-about-status-rename');
         });
+        let closeBtn = renameStatusModal.querySelector(".close");
+            closeBtn.addEventListener('click', () => {
+                renameStatusModal.style.visibility = "hidden";
+            })
     },
 };
 
