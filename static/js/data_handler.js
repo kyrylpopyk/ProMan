@@ -110,6 +110,8 @@ export let dataHandler = {
             return response.json()
         })
         .then((response) => {
+            const startPage = document.querySelector('.start-inf');
+            startPage.remove();
             let board_data = response;
             dom.showBoard(board_data['boardData'], board_data['statusesData'], board_data['cardsData']);
         })

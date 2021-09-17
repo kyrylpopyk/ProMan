@@ -6,7 +6,10 @@ import { dataHandler } from "./data_handler.js";
 
 export let dom = {
     init: function () {
-        // This function should run once, when the page is loaded.
+        const baseStartPage = document.querySelector('#start-page');
+        const body = document.querySelector('body');
+        let startPage = baseStartPage.content.cloneNode(true);
+        body.appendChild(startPage);
     },
     listenNewUserBtn:  function() {
         document.querySelector("#newUserBtn").addEventListener("click", () => {
@@ -512,6 +515,10 @@ function removeBoard(){
     for (let board of boards){
         board.remove();
     }
+    const baseStartPage = document.querySelector('#start-page');
+    const body = document.querySelector('body');
+    let startPage = baseStartPage.content.cloneNode(true);
+    body.appendChild(startPage);
 }
 
 function actual_Cookies(){

@@ -20,88 +20,12 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="../static/css/test.css">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap" rel="stylesheet">
     </head>
     <body id="body">
-{#    <div class="row" style="justify-content: space-between">#}
-{#            <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark" style="justify-content: space-between">#}
-{#                  <ul class="navbar-nav mr-auto" style="float: left">#}
-{##}
-{#                      <li class="nav-item">#}
-{#                          <a class="nav-link waves-light" href="#"><span class="glyphicon glyphicon-home"></span></a>#}
-{#                      </li>#}
-{#                      <li class="nav-item">#}
-{#                          <a class="nav-link waves-light" href="#"><span class="glyphicon glyphicon-th-large">Boards</span></a>#}
-{#                      </li>#}
-{#                      <li class="nav-item">#}
-{#                          <a class="nav-link waves-light" href="#" id="newBoardBtn" data-toggle="modal" data-target="#newBoard"><span class="glyphicon glyphicon-plus"></span></a>#}
-{#                      </li>#}
-{#                  </ul>#}
-{#                  <ul class="navbar-nav ml-auto" style="float: right">#}
-{#                      <li class="nav-item">#}
-{#                        <a class="nav-link waves-light ml-auto" href="#" data-toggle="modal" data-target="#Modal"><span class="glyphicon glyphicon-user log-in-btn" data>Login</span></a>#}
-{#                      </li>#}
-{#                      <li class="nav-item">#}
-{#                        <a class="nav-link waves-light ml-auto" href="#" data-toggle="modal" data-target="#ModalLogOut"><span class="glyphicon glyphicon-user log-out-btn" hidden data>LogOut</span></a>#}
-{#                      </li>#}
-{#                      <li class="nav-item">#}
-{#                        <a class="nav-link waves-light ml-auto" href="#" id="newUserBtn" data-toggle="modal"  data-target="#newUser"><span class="glyphicon glyphicon-user reg-btn"><span class="glyphicon glyphicon-plus"></span></span></a>#}
-{#                      </li>#}
-{#                  </ul>#}
-{#            </nav>#}
-{#    </div>#}
-
-{#modal#}
-
-{#<div class="container">#}
-{#<div class="row">#}
-{#    <div class="col-md-12">#}
-{##}
-{#        <div class="modal fade" id="newCardModal" tabindex="-1" role="dialog" style="visibility: hidden">#}
-{#            <div class="modal-dialog modal-dialog-centered">#}
-{#                <div class="modal-content">#}
-{#                    <div class="modal-header">#}
-{#                        <div class="row w-100">#}
-{#                            <div class="col-sm">#}
-{#                                <h3>New card</h3>#}
-{#                            </div>#}
-{#                            <div class="col-sm">#}
-{#                                <button type="button" class="close align-content-end" data-dismiss="modal" aria-label="Close">#}
-{#                                    <span aria-hidden="true">&times;</span>#}
-{#                                </button>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                    <div class="modal-body">#}
-{#                        <div class="form-group">#}
-{#                            <label for="newCardTitle">new card title</label>#}
-{#                            <textarea class="form-control" id="newCardTitle" rows="3"></textarea>#}
-{#                        </div>#}
-{#                        <select class="form-select" aria-label="card status" id="newCardStatus">#}
-{#                          <option selected>select card status</option>#}
-{#                          <option value="new">New</option>#}
-{#                          <option value="progress">In progress</option>#}
-{#                          <option value="testing">Testing</option>#}
-{#                            <option value="done">Done</option>#}
-{#                        </select>#}
-{##}
-{#                    </div>#}
-{#                    <div class="modal-footer align-content-center">#}
-{#                        <div class="col text-center">#}
-{#                            <button class="btn btn-primary" id='submitCardBtn' data-dismiss="modal">#}
-{#                                <span class="submitCardBtn">add new card</span>#}
-{#                            </button>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
-{##}
-{#    </div>#}
-{#</div>#}
-{#</div>#}
-
-
     {% include 'header.html' %}
+    {% include 'startPage.html' %}
     {% include 'user_registration.html' %}
     {% include 'user_login.html' %}
     {% include 'new_board.html' %}
@@ -111,6 +35,7 @@
     {% include'add_status.html' %}
     {% include'edit_board.html' %}
     {% include 'rename_status.html' %}
+    {% include 'footer.html' %}
     <div id="modal-space"></div>
 
     </body>
