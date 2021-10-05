@@ -1,0 +1,33 @@
+@import "header.css";
+
+:root {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    background-color: #cdcdcd;
+    width: 100%;
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    box-sizing: border-box;
+}
+
+.modal-wrapper {
+            position: relative;
+        }
+
+.boards {
+    background-color: lightgrey;
+}
+.navbar-expand-lg {
+    border-radius: 0; !important;
+    position: absolute; !important;
+    justify-content: space-between; !important;
+}
+
+.container-boards {
+    margin-left: 45%;
+}

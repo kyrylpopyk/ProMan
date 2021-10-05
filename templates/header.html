@@ -1,0 +1,31 @@
+{% block header %}
+    <div class="header-content">
+        <div class="logo">
+            <span>Trello Killer</span>
+        </div>
+        <div class="add-board-grid">
+            <div class="add-board">
+                <a class="add-board-btn">
+                    <img src="../static/img/add.png" alt="" class="add-board-imag" id="newBoardBtn" data-target="#newBoard" data-toggle="modal">
+                </a>
+            </div>
+            <div class="information-add-board">
+                <span>Add board</span>
+            </div>
+        </div>
+        <div class="right-header-space">
+            <div class="free-space"></div>
+            <div class="login-information-grid">
+                <a class="sign-in-btn">
+                    <img src="../static/img/sign_in.png" class="sign-in-img log-in-btn" data-toggle="modal" data-target="#Modal">
+                </a>
+                <a class="sign-up-btn" id="newUserBtn" data-toggle="modal"  data-target="#newUser">
+                    <img src="../static/img/sign_up.png" class="sign-up-img reg-btn">
+                </a>
+                <a class="log-out-btn" data-toggle="modal" data-target="#ModalLogOut" hidden>
+                    <img src="../static/img/log_out.png" class="log-out-img">
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

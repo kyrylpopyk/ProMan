@@ -1,0 +1,35 @@
+{% block add_status %}
+    <template id="ask-about-status-add">
+    <div class="container" id = "ask-about-status-add">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="modal" id="newStatusModal" tabindex="-1" role="dialog" style="visibility: hidden">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Add new status</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="addNewStatus">
+                                <div class="form-group">
+                                    <label for="newStatusTitle">new status title</label>
+                                    <textarea class="form-control" id="newStatusTitle" rows="3"></textarea>
+                                </div>
+                                <div class="modal-footer align-content-center">
+                                    <div class="col text-center">
+                                        <button type='button' class="btn btn-primary"  id='submitStatusBtn' data-dismiss="modal">add new status</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </template>
+{% endblock %}

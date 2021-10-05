@@ -1,0 +1,101 @@
+{% block board_list %}
+{# lists_boards - #lists_boards
+   base_container - #base_container
+   board_name - #base_board_name
+   cards_space - #base_cards_space
+   status_name - #base_status_name
+   base_card - #base_card
+   card_name - #base_card_name
+#}
+<div>
+<div class="content" id="lists_boards" hidden>
+    <div class="fixed-navbar">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <button type="button" class="btn btn-dark btn-sm">Add Board</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+    <template id="base_container">
+        <div class="container ">
+          <div class="row board-style">
+            <div class="col">
+              <div class="container-fluid">
+                  <div class="row align-items-center sm-round-style board-head-style" style="background-color: white; height: 50px">
+                      <div class="col-9">
+                            <span class="title-style" id="base_board_name">test</span>
+                      </div>
+                      <div class="col-1 text-center">
+                          <button type="button" class="btn btn-dark btn-sm">Add</button>
+                      </div>
+                      <div class="col-1 text-center">
+                          <button type="button" class="btn btn-dark btn-sm" id="remove_board_btn">Remove</button>
+                      </div>
+                      <div class="col-1 text-center">
+                          <button type="button" class="btn btn-dark btn-sm">Rename</button>
+                      </div>
+{#                      <div class="col-1 text-center">#}
+{#                      <button type="button" class="btn btn-dark btn-sm" id="newCardBtn" data-toggle="modal">Add card</button>#}
+{#                      </div>#}
+                  </div>
+                  <div class="row board-body-style sm-round-style" style="">
+                      <div class="col-3">
+                              <div class="container-fluid" id="base_cards_space">
+                            {#    card_name + card    #}
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </template>
+    <template id="base_card">
+        <div class="row align-items-center card-style">
+          <div class="col-7">
+              <span id="base_card_name">Card1</span>
+          </div>
+          <div class="col-5">
+              <div class="container">
+                  <div class="row">
+                      <div class="col">
+                          <a href="" class="float-right align-items-center" style="position: relative">
+                              <img src="../static/img/remove.jpg" class="card_option_btn_style" alt="">
+                          </a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+    </template>
+    <template id="base_status_name">
+        <div class="row justify-content-center">
+              <div class="container-fluid">
+                  <div class="row status-style">
+                      <div class="col-6 justify-content-start">
+                          <span class="text-bo title-style" id="status_name">New</span>
+                      </div>
+                      <div class="col-3">
+                          <a href="" class="float-right align-items-center" id="newCardBtn" data-toggle="modal">
+                              <img src="../static/img/add.png"  class="status_option_btn_style" alt="">
+                          </a>
+                      </div>
+                      <div class="col-3">
+                          <a href="" class="float-right align-items-center">
+                              <img src="../static/img/remove.jpg"  class="status_option_btn_style" alt="">
+                          </a>
+                      </div>
+                  </div>
+              </div>
+        </div>
+     </template>
+</div>
+
+
+
+
+
+{% endblock %}

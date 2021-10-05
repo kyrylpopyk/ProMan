@@ -1,0 +1,40 @@
+{% block registration %}
+
+
+<!-- Modal -->
+<div class="modal" id="newUser" tabindex="-1" role="dialog" style="visibility: hidden" >
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Register new user</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="registerUserForm">
+            <div class="form-group">
+                <label for="newUsername">Username</label>
+                <input type="text" class="form-control" id="newUsername" name="newUsername" placeholder="Username" maxlength="50" minlength="5" required>
+                <small id="loginHelp" class="form-text text-muted">The minimum length: 5 characters. The maximum length: 50 characters</small>
+            </div>
+            <div class="form-group">
+                <label for="newUserEmail">Email</label>
+                <input type="email" class="form-control" id="newUserEmail" name="newUserEmail" placeholder="Email" maxlength="50" minlength="5" required>
+                <small id="emailHelp" class="form-text text-muted">The minimum length: 5 characters. The maximum length: 50 characters</small>
+            </div>
+            <div class="form-group">
+                <label for="newUserPassword">Password</label>
+                <input type="password" class="form-control" id="newUserPassword" name="newUserPassword" placeholder="Password" maxlength="50" minlength="5" required>
+                <small id="passwordHelp" class="form-text text-muted">The minimum length: 5 characters. The maximum length: 50 characters</small>
+            </div>
+            <button type="submit" class="btn btn-primary" id="registerNewUser">Register new User</button>
+        </form>
+      </div>
+      </div>
+    </div>
+  </div>
+
+
+
+{% endblock %}
