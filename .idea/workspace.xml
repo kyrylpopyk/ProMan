@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="9e2e80ff-50f3-446f-8f82-85d953c82275" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/templates/startPage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/test.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/test.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js/data_handler.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/data_handler.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js/dom.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/dom.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/header.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/header.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+        <option value="CSS File" />
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="FlaskConsoleOptions" custom-start-script="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))">
+    <envs>
+      <env key="FLASK_APP" value="app" />
+    </envs>
+    <option name="myCustomStartScript" value="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))" />
+    <option name="myEnvs">
+      <map>
+        <entry key="FLASK_APP" value="app" />
+      </map>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1oquY8sWDluYQ9iBXKol1mI8q7T" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="postgresql" />
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="K:\Programing\Codecool\proman-1-python-kyrylpopyk\templates" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="K:\Programing\Codecool\proman-1-python-kyrylpopyk\static\img" />
+      <recent name="K:\Programing\Codecool\proman-1-python-kyrylpopyk\templates" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="proman-1-python-kyrylpopyk" type="PythonConfigurationType" factoryName="Python">
+      <module name="proman-1-python-kyrylpopyk" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="PSQL_DB_NAME" value="ProMan" />
+        <env name="PSQL_HOST" value="localhost" />
+        <env name="PSQL_PASSWORD" value="popyk03011973" />
+        <env name="PSQL_USER_NAME" value="postgres" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\kyryl\AppData\Local\Programs\Python\Python39\python.exe" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9e2e80ff-50f3-446f-8f82-85d953c82275" name="Default Changelist" comment="" />
+      <created>1614026490581</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1614026490581</updated>
+      <workItem from="1614026493155" duration="2285000" />
+      <workItem from="1614069999418" duration="429000" />
+      <workItem from="1614070453275" duration="852000" />
+      <workItem from="1614192458488" duration="63000" />
+      <workItem from="1614192523850" duration="1581000" />
+      <workItem from="1614195817124" duration="12775000" />
+      <workItem from="1614246154552" duration="340000" />
+      <workItem from="1614283759193" duration="9064000" />
+      <workItem from="1614366177016" duration="12399000" />
+      <workItem from="1614511128558" duration="492000" />
+      <workItem from="1614526679104" duration="12529000" />
+      <workItem from="1614632701929" duration="1887000" />
+      <workItem from="1614634661337" duration="1918000" />
+      <workItem from="1614712857751" duration="802000" />
+      <workItem from="1614726241459" duration="4949000" />
+      <workItem from="1614798898839" duration="11606000" />
+      <workItem from="1614872443077" duration="217000" />
+      <workItem from="1614892944505" duration="4069000" />
+      <workItem from="1614897142482" duration="561000" />
+      <workItem from="1614897720177" duration="6719000" />
+      <workItem from="1614982400352" duration="6489000" />
+      <workItem from="1615017692865" duration="5277000" />
+      <workItem from="1615048916368" duration="22389000" />
+      <workItem from="1615106404735" duration="258000" />
+      <workItem from="1615110691369" duration="7516000" />
+      <workItem from="1615121541759" duration="7427000" />
+      <workItem from="1615235850102" duration="668000" />
+      <workItem from="1615271271113" duration="8857000" />
+      <workItem from="1615288605558" duration="9633000" />
+      <workItem from="1615324734276" duration="5811000" />
+      <workItem from="1615413494042" duration="5668000" />
+      <workItem from="1615493657516" duration="4514000" />
+      <workItem from="1615626157512" duration="23978000" />
+      <workItem from="1615714945164" duration="24221000" />
+      <workItem from="1615841575923" duration="15451000" />
+      <workItem from="1615884535546" duration="682000" />
+      <workItem from="1615896919496" duration="1004000" />
+      <workItem from="1615958953417" duration="8218000" />
+      <workItem from="1616053619115" duration="2939000" />
+      <workItem from="1616133613427" duration="52000" />
+      <workItem from="1616133666967" duration="350000" />
+      <workItem from="1616134499707" duration="3556000" />
+      <workItem from="1616243239457" duration="2702000" />
+      <workItem from="1616261839426" duration="145000" />
+      <workItem from="1616325192357" duration="5093000" />
+      <workItem from="1616499373512" duration="109000" />
+      <workItem from="1622751346606" duration="2854000" />
+      <workItem from="1623403021323" duration="26000" />
+      <workItem from="1625729742021" duration="5000" />
+      <workItem from="1625729762529" duration="2428000" />
+      <workItem from="1625744994902" duration="2158000" />
+      <workItem from="1627578000932" duration="1636000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/main.py</url>
+          <line>155</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/main.py</url>
+          <line>207</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/main_js$proman_1_python_kyrylpopyk.coverage" NAME="proman-1-python-kyrylpopyk Coverage Results" MODIFIED="1627578002341" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/proman_1_python_kyrylpopyk$proman_1_python_kyrylpopyk.coverage" NAME="proman-1-python-kyrylpopyk Coverage Results" MODIFIED="1616336931862" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+  </component>
+</project>
